@@ -17,7 +17,7 @@ export function BrandLogo({
     >
       <Image
         className={`w-auto object-contain ${compact ? "h-10 sm:h-[2.9rem]" : "h-[2.7rem] sm:h-[3.45rem]"}`}
-        src="/br-logo.png"
+        src="/br-logo-transparent.png"
         alt=""
         width={270}
         height={90}

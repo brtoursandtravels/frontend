@@ -19,8 +19,8 @@ export const metadata: Metadata = {
   description:
     "Discover bespoke journeys across India and beyond, thoughtfully shaped by BR Tours and Travels.",
   icons: {
-    icon: "/br-logo.png",
-    apple: "/br-logo.png",
+    icon: "/br-logo-transparent.png",
+    apple: "/br-logo-transparent.png",
   },
   openGraph: {
     type: "website",
