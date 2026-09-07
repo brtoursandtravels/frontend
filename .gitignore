@@ -9,3 +9,4 @@ playwright-report/
 .env*
 *.log
 *.tsbuildinfo
+.vercel
