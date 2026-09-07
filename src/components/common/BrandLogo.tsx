@@ -16,11 +16,11 @@ export function BrandLogo({
       onClick={onNavigate}
     >
       <Image
-        className={`w-auto rounded-md object-contain ${compact ? "h-10 sm:h-[2.9rem]" : "h-[2.7rem] sm:h-[3.45rem]"}`}
+        className={`w-auto object-contain ${compact ? "h-10 sm:h-[2.9rem]" : "h-[2.7rem] sm:h-[3.45rem]"}`}
         src="/br-logo.png"
         alt=""
-        width={1761}
-        height={427}
+        width={270}
+        height={90}
         priority={!compact}
       />
     </Link>
