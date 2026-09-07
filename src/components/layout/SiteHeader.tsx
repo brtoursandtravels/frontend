@@ -9,11 +9,13 @@ import {
   Compass,
   Mail,
   Menu,
+  MessageCircle,
   Phone,
+  Sparkles,
   X,
 } from "lucide-react";
 import type { SiteData } from "@/lib/contracts";
-import { settingText } from "@/lib/presentation";
+import { settingText, whatsappLink } from "@/lib/presentation";
 import { BrandLogo } from "@/components/common/BrandLogo";
 
 const defaultNavigation = [
@@ -44,6 +46,9 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
     .sort((left, right) => left.sortOrder - right.sortOrder);
   const phone = settingText(site, ["contact.phone", "business.phone", "phone"]);
   const email = settingText(site, ["contact.email", "business.email", "email"]);
+  const whatsappHref = whatsappLink(
+    settingText(site, ["contact.whatsapp", "business.whatsapp", "whatsapp"]),
+  );
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 24);
@@ -123,14 +128,54 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
   }, [pathname, roots.length]);
 
   return (
-    <header
-      className={`sticky top-0 z-80 bg-gradient-to-b from-bg-base via-bg-base/92 to-transparent px-3 transition-[padding] duration-500 sm:px-5 ${scrolled ? "py-2" : "py-3 sm:py-4"}`}
-    >
-      <div
-        className={`relative mx-auto flex w-full max-w-7xl items-center gap-4 overflow-hidden rounded-[1.45rem] border px-4 transition-all duration-500 sm:px-5 lg:px-6 ${
+    <>
+      <div className="relative z-80 border-b border-secondary/20 bg-[#051b1c] text-white/75 max-[760px]:hidden">
+        <div className="relative mx-auto flex min-h-9 w-full max-w-7xl items-center gap-5 px-5 text-[0.68rem] font-bold sm:px-8 lg:px-10">
+          <div className="flex items-center gap-5 [&_a]:inline-flex [&_a]:items-center [&_a]:gap-1.5 [&_a]:no-underline [&_a]:transition-colors [&_a:hover]:text-secondary-light">
+            {phone ? (
+              <a href={`tel:${phone}`}>
+                <Phone aria-hidden="true" size={13} /> {phone}
+              </a>
+            ) : null}
+            {email ? (
+              <a className="max-[900px]:hidden" href={`mailto:${email}`}>
+                <Mail aria-hidden="true" size={13} /> {email}
+              </a>
+            ) : null}
+          </div>
+
+          <p className="absolute left-1/2 m-0 flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap text-white/58 max-[1100px]:hidden">
+            <Sparkles aria-hidden="true" className="text-secondary-light" size={13} />
+            Bespoke tours & customized holidays across India
+          </p>
+
+          {whatsappHref ? (
+            <a
+              className="ml-auto inline-flex items-center gap-1.5 font-extrabold text-secondary-light no-underline transition-colors hover:text-white"
+              href={whatsappHref}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <MessageCircle aria-hidden="true" size={13} /> WhatsApp chat
+            </a>
+          ) : (
+            <span className="ml-auto text-white/55">Personal trip planning</span>
+          )}
+        </div>
+      </div>
+
+      <header
+        className={`sticky top-0 z-80 border-b transition-[background-color,border-color,box-shadow] duration-500 ${
           scrolled
-            ? "min-h-[4.25rem] border-primary/12 bg-white/94 shadow-header backdrop-blur-2xl"
-            : "min-h-[4.75rem] border-white/80 bg-white/76 shadow-card backdrop-blur-xl sm:min-h-[5.25rem]"
+            ? "border-white/12 bg-[#082627]/92 shadow-header-dark backdrop-blur-2xl"
+            : "border-secondary/15 bg-[#082728]/98"
+        }`}
+      >
+      <div
+        className={`relative mx-auto flex w-full max-w-7xl items-center gap-4 overflow-hidden px-5 transition-[min-height] duration-500 sm:px-8 lg:px-10 ${
+          scrolled
+            ? "min-h-[4.25rem]"
+            : "min-h-[4.75rem] sm:min-h-[5rem]"
         }`}
       >
         <span
@@ -139,15 +184,15 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
         />
         <span
           aria-hidden="true"
-          className={`pointer-events-none absolute -left-12 top-1/2 size-32 -translate-y-1/2 rounded-full bg-secondary/10 blur-3xl transition-opacity duration-500 ${scrolled ? "opacity-40" : "opacity-100"}`}
+          className={`pointer-events-none absolute -left-10 top-1/2 size-36 -translate-y-1/2 rounded-full bg-secondary/20 blur-3xl transition-opacity duration-500 ${scrolled ? "opacity-45" : "opacity-90"}`}
         />
 
         <div className={`relative z-10 transition-transform duration-500 ${scrolled ? "scale-[0.92] origin-left" : "scale-100"}`}>
-          <BrandLogo />
+          <BrandLogo inverse />
         </div>
 
         <nav
-          className="relative z-10 ml-auto rounded-full border border-primary/8 bg-primary-soft/72 p-1.5 shadow-inner max-[1180px]:hidden"
+          className="relative z-10 ml-auto rounded-full border border-white/10 bg-black/15 p-1.5 shadow-inner backdrop-blur-md max-[1180px]:hidden"
           aria-label="Primary navigation"
         >
           <ul
@@ -156,7 +201,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
           >
             <li
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 left-0 -z-10 rounded-full bg-primary opacity-0 shadow-card transition-[width,transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+              className="pointer-events-none absolute inset-y-0 left-0 -z-10 rounded-full bg-white/14 opacity-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.09),0_8px_24px_rgba(0,0,0,0.18)] transition-[width,transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
               data-testid="active-nav-pill"
               ref={activePillRef}
             />
@@ -176,12 +221,12 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
         </nav>
 
         <Link
-          className="group relative z-10 isolate inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-primary px-5 py-3 text-xs font-extrabold text-white no-underline shadow-accent-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-accent-md max-[1180px]:hidden"
+          className="group relative z-10 isolate inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-gradient-to-r from-secondary to-accent px-5 py-3 text-xs font-extrabold text-white no-underline shadow-accent-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-accent-md max-[1180px]:hidden"
           href="/contact-us"
         >
           <span
             aria-hidden="true"
-            className="absolute inset-0 -z-10 -translate-x-[105%] bg-gradient-to-r from-secondary to-accent transition-transform duration-500 ease-out group-hover:translate-x-0"
+            className="absolute inset-0 -z-10 -translate-x-[105%] bg-gradient-to-r from-accent via-secondary to-accent transition-transform duration-500 ease-out group-hover:translate-x-0"
           />
           Plan my trip
           <span className="flex size-7 items-center justify-center rounded-full bg-white/14 transition-transform duration-300 group-hover:rotate-45 group-hover:bg-white/20">
@@ -190,7 +235,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
         </Link>
 
         <button
-          className="group relative z-10 ml-auto hidden size-11 items-center justify-center overflow-hidden rounded-full border border-primary/15 bg-primary p-0 text-white shadow-accent-sm transition-all duration-300 hover:scale-105 hover:bg-primary-hover max-[1180px]:flex"
+          className="group relative z-10 ml-auto flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-white/8 p-0 text-white shadow-accent-sm transition-all duration-300 hover:scale-105 hover:bg-white/15 min-[1181px]:hidden"
           type="button"
           aria-label={open ? "Close navigation" : "Open navigation"}
           aria-controls="mobile-navigation"
@@ -242,7 +287,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
           />
 
           <div className="relative z-10 flex items-center justify-between border-b border-white/12 pb-5">
-            <BrandLogo compact onNavigate={() => setOpen(false)} />
+            <BrandLogo compact inverse onNavigate={() => setOpen(false)} />
             <button
               className="flex size-11 items-center justify-center rounded-full border border-white/20 bg-white/8 text-white transition duration-300 hover:rotate-90 hover:bg-white/15"
               type="button"
@@ -311,7 +356,8 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
           </div>
         </div>
       </div>
-    </header>
+      </header>
+    </>
   );
 }
 
@@ -327,7 +373,7 @@ function DesktopNavLink({
   const className = `group relative flex items-center gap-1.5 overflow-hidden rounded-full px-2.5 py-2.5 text-[0.61rem] font-extrabold uppercase tracking-[0.045em] no-underline transition-all duration-300 ${
     active
       ? "text-white"
-      : "text-text-heading hover:-translate-y-0.5 hover:bg-white hover:text-primary hover:shadow-card"
+      : "text-white/72 hover:-translate-y-0.5 hover:bg-white/8 hover:text-white"
   }`;
   const content = (
     <>

@@ -67,6 +67,7 @@
   --shadow-glow-gold: 0 0 30px color-mix(in srgb, var(--color-secondary) 35%, transparent);
   --shadow-glow-teal: 0 0 30px color-mix(in srgb, var(--color-primary) 40%, transparent);
   --shadow-header: 0 0.65rem 2rem color-mix(in srgb, var(--color-primary) 8%, transparent);
+  --shadow-header-dark: 0 1rem 2.5rem rgb(1 15 16 / 0.28);
   --shadow-accent-sm: 0 0.7rem 1.5rem color-mix(in srgb, var(--color-accent) 25%, transparent);
   --shadow-accent-md: 0 0.85rem 2rem color-mix(in srgb, var(--color-accent) 22%, transparent);
 
