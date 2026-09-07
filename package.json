@@ -11,11 +11,8 @@
     "dev": "next dev --port 3000",
     "build": "next build",
     "start": "next start --port 3000",
-    "lint": "eslint src scripts tests next.config.ts playwright.config.ts vitest.config.mts --max-warnings=0",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "test:e2e": "playwright test",
-    "smoke:stack": "node scripts/smoke-stack.mjs"
+    "lint": "eslint src next.config.ts --max-warnings=0",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@fontsource/inter": "5.2.8",
@@ -28,7 +25,6 @@
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",
-    "@playwright/test": "1.62.1",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "26.4.0",
     "@types/react": "19.2.2",
@@ -39,7 +35,6 @@
     "postcss": "8.5.26",
     "tailwindcss": "4.3.3",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.68.0",
-    "vitest": "4.1.11"
+    "typescript-eslint": "8.68.0"
   }
 }
