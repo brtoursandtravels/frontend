@@ -295,7 +295,7 @@ export function FlagshipToursShowcase({
             <p className="mb-3 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.16em] text-secondary-hover">
               <MapPin aria-hidden="true" size={16} /> {tour.name}, India
             </p>
-            <h3 className="m-0 font-display text-[clamp(2.25rem,4vw,3.75rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-text-heading">
+            <h3 className="m-0 font-display text-[clamp(2.15rem,3.4vw,3.25rem)] font-semibold leading-[1.05] tracking-[-0.025em] text-text-heading">
               {tour.tagline}
             </h3>
             <p className="my-5 text-sm leading-7 text-text-muted">

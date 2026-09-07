@@ -134,7 +134,7 @@ export function ItineraryTimeline({
           <p className="mb-2 text-[0.65rem] font-extrabold uppercase tracking-[0.16em] text-secondary-hover">
             Day {String(day.dayNumber).padStart(2, "0")}
           </p>
-          <h3 className="m-0 font-display text-[clamp(2rem,4vw,3.25rem)] font-semibold leading-tight text-text-heading">
+          <h3 className="m-0 font-display text-[clamp(1.85rem,3vw,2.75rem)] font-semibold leading-[1.12] text-text-heading">
             {day.title}
           </h3>
           <p className="my-5 text-sm leading-7 text-text-muted">
