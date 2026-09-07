@@ -21,8 +21,8 @@ const defaultNavigation = [
   { id: "about-us", parentId: null, href: "/about-us", label: "About Us", sortOrder: 1 },
   { id: "tours", parentId: null, href: "/packages", label: "Tours / Packages", sortOrder: 2 },
   { id: "gallery", parentId: null, href: "/gallery", label: "Gallery", sortOrder: 3 },
-  { id: "contact-us", parentId: null, href: "/contact-us", label: "Contact Us", sortOrder: 4 },
-  { id: "blog", parentId: null, href: "/blog", label: "Blog", sortOrder: 5 },
+  { id: "blog", parentId: null, href: "/blog", label: "Blog", sortOrder: 4 },
+  { id: "contact-us", parentId: null, href: "/contact-us", label: "Contact Us", sortOrder: 5 },
 ];
 
 export function SiteHeader({ site }: { site?: SiteData | null }) {
@@ -39,7 +39,9 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
     )?.items;
     return configured?.length ? configured : defaultNavigation;
   }, [site]);
-  const roots = items.filter((item) => !item.parentId);
+  const roots = items
+    .filter((item) => !item.parentId)
+    .sort((left, right) => left.sortOrder - right.sortOrder);
   const phone = settingText(site, ["contact.phone", "business.phone", "phone"]);
   const email = settingText(site, ["contact.email", "business.email", "email"]);
 
@@ -154,12 +156,10 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
           >
             <li
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 left-0 -z-10 overflow-hidden rounded-full bg-primary opacity-0 shadow-card transition-[width,transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+              className="pointer-events-none absolute inset-y-0 left-0 -z-10 rounded-full bg-primary opacity-0 shadow-card transition-[width,transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
               data-testid="active-nav-pill"
               ref={activePillRef}
-            >
-              <span className="absolute right-2 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-secondary shadow-glow" />
-            </li>
+            />
             {roots.map((item, index) => (
               <li
                 className="relative z-10 motion-safe:animate-nav-reveal"
