@@ -23,7 +23,7 @@ export function WhyChooseUs() {
       <div className="relative z-2 mx-auto flex min-h-[44rem] w-full max-w-7xl items-center px-5 py-16 sm:px-8 lg:px-10 max-[620px]:min-h-[60rem]">
         <div className="glass-dark my-0 max-w-2xl rounded-xl p-[clamp(1.5rem,4vw,3rem)] text-white max-[620px]:my-8">
           <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-light">Why travel with BR</p>
-          <h2 className="m-0 font-display text-[clamp(2.1rem,4vw,3.75rem)] font-semibold leading-[1.06] text-white">Personal enough to feel effortless.</h2>
+          <h2 className="m-0 font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] text-white">Personal enough to feel effortless.</h2>
           <p className="mt-4 text-white/75">Thoughtful planning is less about adding more and more about choosing well.</p>
           <div className="my-7 grid gap-4">
             {pillars.map((pillar) => {

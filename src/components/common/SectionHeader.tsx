@@ -25,7 +25,7 @@ export function SectionHeader({
         <p className={`mb-3 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-hover ${align === "center" ? "justify-center" : ""}`}>
           {eyebrow}
         </p>
-        <h2 className="m-0 font-display text-[clamp(2.1rem,4vw,3.75rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-text-heading">{title}</h2>
+        <h2 className="m-0 font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] tracking-[-0.025em] text-text-heading">{title}</h2>
         {description ? <p className={`mt-4 max-w-2xl text-base text-text-muted ${align === "center" ? "mx-auto" : ""}`}>{description}</p> : null}
       </div>
       {href ? (

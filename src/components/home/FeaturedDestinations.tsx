@@ -70,7 +70,7 @@ export function FeaturedDestinations({
               <p className="mb-2 flex items-center gap-1.5 text-[0.67rem] font-extrabold uppercase tracking-wider text-secondary-light">
                 <MapPin aria-hidden="true" size={16} /> Curated destination
               </p>
-              <h3 className="m-0 font-display text-3xl font-semibold text-white">
+              <h3 className="m-0 font-display text-[1.65rem] font-semibold leading-tight text-white">
                 {destination.name}
               </h3>
               <span className="mt-2 block max-w-md text-sm leading-relaxed text-white/75">

@@ -182,11 +182,6 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-secondary/70 to-transparent"
         />
-        <span
-          aria-hidden="true"
-          className={`pointer-events-none absolute -left-10 top-1/2 size-36 -translate-y-1/2 rounded-full bg-secondary/20 blur-3xl transition-opacity duration-500 ${scrolled ? "opacity-45" : "opacity-90"}`}
-        />
-
         <div className={`relative z-10 transition-transform duration-500 ${scrolled ? "scale-[0.92] origin-left" : "scale-100"}`}>
           <BrandLogo inverse />
         </div>
