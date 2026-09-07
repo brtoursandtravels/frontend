@@ -25,7 +25,7 @@ export function SiteFooter({ site }: { site?: SiteData | null }) {
       </div>
       <div className="mx-auto grid w-full max-w-7xl grid-cols-[1.4fr_repeat(3,0.75fr)] gap-10 px-5 py-14 sm:px-8 lg:px-10 max-[1100px]:grid-cols-[1.2fr_repeat(2,0.8fr)] max-[620px]:grid-cols-2">
         <div className="max-w-sm max-[620px]:col-span-2">
-          <BrandLogo compact />
+          <BrandLogo compact inverse />
           <p className="mt-5 leading-relaxed">
             Bespoke journeys shaped through real conversations, careful local
             knowledge and clear confirmation.
