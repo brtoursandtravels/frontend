@@ -210,7 +210,7 @@ export function FlagshipToursShowcase({
               </span>
               <span className="hidden h-px w-16 bg-gradient-to-r from-secondary/70 to-transparent sm:block" aria-hidden="true" />
             </div>
-            <h2 className="m-0 text-balance font-display text-[clamp(2.75rem,6vw,5rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-text-heading">
+            <h2 className="m-0 text-balance font-display text-[clamp(2.5rem,4.5vw,4.25rem)] font-semibold leading-[1] tracking-[-0.035em] text-text-heading">
               One country. Five unforgettable moods.
             </h2>
           </div>
@@ -295,7 +295,7 @@ export function FlagshipToursShowcase({
             <p className="mb-3 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.16em] text-secondary-hover">
               <MapPin aria-hidden="true" size={16} /> {tour.name}, India
             </p>
-            <h3 className="m-0 font-display text-[clamp(2.5rem,5vw,4.4rem)] font-semibold leading-none tracking-[-0.035em] text-text-heading">
+            <h3 className="m-0 font-display text-[clamp(2.25rem,4vw,3.75rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-text-heading">
               {tour.tagline}
             </h3>
             <p className="my-5 text-sm leading-7 text-text-muted">

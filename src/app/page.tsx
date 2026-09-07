@@ -101,7 +101,7 @@ export default async function HomePage() {
         <div className="flex items-center justify-between gap-10 rounded-xl bg-[radial-gradient(circle_at_top_right,color-mix(in_srgb,var(--color-accent)_22%,transparent),transparent_24rem)] bg-primary p-[clamp(1.6rem,5vw,4rem)] text-white shadow-dropdown max-[820px]:flex-col max-[820px]:items-start">
           <div>
             <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-light">Your journey, personally considered</p>
-            <h2 className="m-0 font-display text-[clamp(2.25rem,5vw,4.5rem)] font-semibold leading-[1.04] text-white">Have a place in mind—or just a feeling?</h2>
+            <h2 className="m-0 font-display text-[clamp(2.1rem,4vw,3.75rem)] font-semibold leading-[1.06] text-white">Have a place in mind—or just a feeling?</h2>
             <p className="mt-4 max-w-2xl text-white/75">Share what matters. We will help turn the first idea into a clear, considered plan.</p>
           </div>
           <div className="flex shrink-0 flex-wrap gap-3 max-[620px]:grid max-[620px]:w-full">

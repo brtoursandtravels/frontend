@@ -30,7 +30,7 @@ export function HeroSection({
             <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 text-[0.72rem] font-extrabold uppercase tracking-[0.08em] text-accent-pale max-[620px]:rounded-md max-[620px]:text-[0.61rem] max-[620px]:leading-[1.4]">
               <Sparkles aria-hidden="true" size={16} /> Crafted luxury journeys across India & beyond
             </p>
-            <h1 className="m-0 max-w-[15ch] text-balance break-words font-display text-[clamp(3.5rem,6.3vw,6rem)] font-medium leading-[0.92] tracking-[-0.055em] text-white [overflow-wrap:anywhere] max-[620px]:text-[clamp(3.25rem,17vw,5rem)]">{title}</h1>
+            <h1 className="m-0 max-w-[17ch] text-balance break-words font-display text-[clamp(3.25rem,5vw,5.25rem)] font-medium leading-[0.94] tracking-[-0.05em] text-white [overflow-wrap:anywhere] max-[620px]:text-[clamp(2.8rem,13vw,4.25rem)]">{title}</h1>
           </div>
           <div className="flex flex-wrap gap-3 min-[1100px]:justify-end min-[1100px]:pb-1 max-[620px]:grid max-[620px]:grid-cols-1">
               <Link className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gradient-to-br from-accent to-secondary px-6 py-3 text-sm font-extrabold text-white no-underline shadow-accent-md transition hover:-translate-y-0.5 hover:shadow-glow" href="/packages">
