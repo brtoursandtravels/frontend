@@ -42,7 +42,7 @@ export function QuickSearchForm({
   const range = durationRanges[duration];
 
   return (
-    <div className="glass-card mt-[clamp(2.25rem,6vh,4.5rem)] min-w-0 max-w-full overflow-hidden rounded-xl p-2 max-[620px]:mt-8 max-[620px]:rounded-lg">
+    <div className="glass-card mt-[clamp(1.5rem,3.5vh,2.75rem)] min-w-0 max-w-full overflow-hidden rounded-xl p-2 max-[620px]:mt-8 max-[620px]:rounded-lg">
       <form
         className="grid grid-cols-[1.2fr_1fr_1fr_auto] max-[1100px]:grid-cols-3 max-[820px]:grid-cols-1"
         action="/packages"

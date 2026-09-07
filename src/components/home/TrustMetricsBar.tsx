@@ -9,7 +9,7 @@ const metrics = [
 
 export function TrustMetricsBar() {
   return (
-    <div className="mt-5 grid grid-cols-4 gap-2 max-[1100px]:grid-cols-2 max-[620px]:gap-2" aria-label="BR Tours service highlights">
+    <div className="mt-4 grid grid-cols-4 gap-2 max-[1100px]:grid-cols-2 max-[620px]:gap-2" aria-label="BR Tours service highlights">
       {metrics.map((metric) => {
         const Icon = metric.icon;
         return (

@@ -187,7 +187,7 @@ export function FlagshipToursShowcase({
 
   return (
     <section
-      className="scroll-mt-24 overflow-hidden bg-primary-ink py-24 text-white max-[820px]:py-[4.5rem]"
+      className="relative isolate scroll-mt-24 overflow-hidden border-y border-secondary/15 bg-[radial-gradient(circle_at_88%_5%,color-mix(in_srgb,var(--color-secondary)_18%,transparent),transparent_28rem),linear-gradient(145deg,var(--color-bg-muted),var(--color-bg-base)_62%,color-mix(in_srgb,var(--color-primary)_7%,white))] py-24 text-text-body max-[820px]:py-[4.5rem]"
       id="flagship-tours"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -197,17 +197,24 @@ export function FlagshipToursShowcase({
           setPaused(false);
       }}
     >
-      <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-chardham via-secondary to-jaisalmer" />
+      <div aria-hidden="true" className="absolute -right-28 top-24 h-80 w-80 rounded-full border-[4rem] border-secondary/5" />
+      <div aria-hidden="true" className="absolute -left-32 bottom-12 h-72 w-72 rounded-full bg-primary/5 blur-3xl" />
+
+      <div className="relative mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="mb-10 flex items-end justify-between gap-8 max-[820px]:items-start max-[820px]:flex-col">
           <div className="max-w-3xl">
-            <p className="mb-3 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-light">
-              <Sparkles aria-hidden="true" size={16} /> Five flagship journeys
-            </p>
-            <h2 className="m-0 text-balance font-display text-[clamp(2.75rem,6vw,5rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-white">
+            <div className="mb-5 flex items-center gap-3">
+              <span className="inline-flex items-center gap-2 rounded-full border border-secondary/25 bg-white/75 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-hover shadow-sm backdrop-blur-sm">
+                <Sparkles aria-hidden="true" size={16} /> Five flagship journeys
+              </span>
+              <span className="hidden h-px w-16 bg-gradient-to-r from-secondary/70 to-transparent sm:block" aria-hidden="true" />
+            </div>
+            <h2 className="m-0 text-balance font-display text-[clamp(2.75rem,6vw,5rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-text-heading">
               One country. Five unforgettable moods.
             </h2>
           </div>
-          <p className="m-0 max-w-sm text-sm leading-relaxed text-white/65">
+          <p className="m-0 max-w-sm text-sm leading-relaxed text-text-muted">
             Choose a landscape to see its signature route. Every itinerary can
             be refined around your dates, pace and travelling party.
           </p>
@@ -225,8 +232,8 @@ export function FlagshipToursShowcase({
               <button
                 className={`flex min-w-40 flex-1 items-center justify-center gap-2 rounded-full border px-4 py-3 text-sm font-extrabold transition motion-reduce:transition-none ${
                   active
-                    ? "border-white bg-white text-primary shadow-glow-gold"
-                    : "border-white/15 bg-white/5 text-white/70 hover:border-white/35 hover:bg-white/10 hover:text-white"
+                    ? "border-primary bg-primary text-white shadow-[0_16px_38px_rgba(0,61,68,0.2)]"
+                    : "border-primary/15 bg-white/70 text-primary/70 shadow-sm hover:border-primary/30 hover:bg-white hover:text-primary"
                 }`}
                 type="button"
                 role="tab"
@@ -244,7 +251,7 @@ export function FlagshipToursShowcase({
         </div>
 
         <article
-          className="grid min-h-[36rem] grid-cols-[1.18fr_0.82fr] overflow-hidden rounded-xl border border-white/15 bg-white shadow-dropdown motion-safe:animate-showcase-reveal max-[900px]:grid-cols-1"
+          className="grid min-h-[36rem] grid-cols-[1.18fr_0.82fr] overflow-hidden rounded-xl border border-primary/10 bg-white shadow-[0_40px_100px_rgba(31,52,50,0.16)] motion-safe:animate-showcase-reveal max-[900px]:grid-cols-1"
           role="tabpanel"
           id={`flagship-panel-${tour.slug}`}
           aria-labelledby={`flagship-tab-${tour.slug}`}
@@ -352,13 +359,13 @@ export function FlagshipToursShowcase({
           </div>
         </article>
 
-        <div className="mt-5 flex items-center justify-between gap-5 text-xs text-white/55">
+        <div className="mt-5 flex items-center justify-between gap-5 text-xs text-text-muted">
           <span>{paused ? "Paused while you explore" : "Advances every 6 seconds"}</span>
           <div className="flex gap-2" aria-hidden="true">
             {tours.map((item, index) => (
               <span
                 className={`h-1.5 rounded-full transition-all ${
-                  index === activeIndex ? "w-8 bg-secondary" : "w-1.5 bg-white/25"
+                  index === activeIndex ? "w-8 bg-secondary" : "w-1.5 bg-primary/20"
                 }`}
                 key={item.slug}
               />
