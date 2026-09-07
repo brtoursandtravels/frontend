@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import "@fontsource/inter/latin.css";
-import "@fontsource/playfair-display/latin.css";
+import "@fontsource/lato/latin-400.css";
+import "@fontsource/lato/latin-700.css";
+import "@fontsource/roboto/latin-400.css";
+import "@fontsource/roboto/latin-700.css";
 import { FloatingContactBar } from "@/components/layout/FloatingContactBar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
