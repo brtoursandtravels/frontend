@@ -12,7 +12,6 @@ import { TrendingPackages } from "@/components/home/TrendingPackages";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import {
   getBlog,
-  getCategories,
   getDestinations,
   getFaqs,
   getGalleryAlbums,
@@ -29,11 +28,10 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [home, packages, categories, destinations, gallery, testimonials, blog, faqs, site] =
+  const [home, packages, destinations, gallery, testimonials, blog, faqs, site] =
     await Promise.all([
       getHome().catch(() => null),
       getPackages({ pageSize: 12 }).catch(() => null),
-      getCategories().catch(() => null),
       getDestinations().catch(() => null),
       getGalleryAlbums({ pageSize: 5 }).catch(() => null),
       getTestimonials().catch(() => null),
@@ -87,8 +85,6 @@ export default async function HomePage() {
     <>
       <HeroSection
         title={heroTitle}
-        destinations={destinations?.data ?? []}
-        categories={categories?.data ?? []}
       />
       <FlagshipToursShowcase
         packages={packages?.data ?? []}

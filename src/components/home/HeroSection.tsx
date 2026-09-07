@@ -1,20 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, Sparkles } from "lucide-react";
-import type { Category, Destination } from "@/lib/contracts";
-import { QuickSearchForm } from "@/components/forms/QuickSearchForm";
+import { ArrowDown, ArrowUpRight, Sparkles } from "lucide-react";
 import { AnimatedCanvasHero } from "./AnimatedCanvasHero";
 import { TrustMetricsBar } from "./TrustMetricsBar";
 import { animationClasses } from "@/lib/animations";
 
 export function HeroSection({
   title,
-  destinations,
-  categories,
 }: {
   title: string;
-  destinations: Destination[];
-  categories: Category[];
 }) {
   return (
     <section className="relative min-h-[calc(100svh-7.25rem)] overflow-hidden text-white max-[820px]:min-h-0">
@@ -39,12 +33,14 @@ export function HeroSection({
             <h1 className="m-0 max-w-[15ch] text-balance break-words font-display text-[clamp(3.5rem,6.3vw,6rem)] font-medium leading-[0.92] tracking-[-0.055em] text-white [overflow-wrap:anywhere] max-[620px]:text-[clamp(3.25rem,17vw,5rem)]">{title}</h1>
           </div>
           <div className="flex flex-wrap gap-3 min-[1100px]:justify-end min-[1100px]:pb-1 max-[620px]:grid max-[620px]:grid-cols-1">
+              <Link className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-gradient-to-br from-accent to-secondary px-6 py-3 text-sm font-extrabold text-white no-underline shadow-accent-md transition hover:-translate-y-0.5 hover:shadow-glow" href="/packages">
+                Explore journeys <ArrowUpRight aria-hidden="true" size={18} />
+              </Link>
               <Link className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/50 bg-white/10 px-6 py-3 text-sm font-extrabold text-white no-underline transition hover:-translate-y-0.5 hover:bg-white/20" href="/contact-us">
                 Design my trip
               </Link>
           </div>
         </div>
-        <QuickSearchForm destinations={destinations} categories={categories} />
         <TrustMetricsBar />
       </div>
       <a className="absolute bottom-8 right-8 z-3 flex size-11 animate-soft-float items-center justify-center rounded-full border border-white/30 bg-white/10 text-white motion-reduce:animate-none max-[620px]:hidden" href="#flagship-tours" aria-label="Scroll to flagship tours">
