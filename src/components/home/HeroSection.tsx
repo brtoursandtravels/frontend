@@ -13,9 +13,9 @@ export function HeroSection({
   return (
     <section className="relative min-h-[calc(100svh-7.25rem)] overflow-hidden text-white max-[820px]:min-h-0">
       <Image
-        alt="A winding Himalayan road at sunrise"
+        alt="Snow-capped Himalayan peaks above misty pine valleys at sunrise"
         className="scale-[1.015] object-cover object-center max-[820px]:object-[62%_center]"
-        src="/images/tours/main-tours-hero.webp"
+        src="/images/tours/himalayan-morning-hero.webp"
         fill
         loading="eager"
         fetchPriority="high"
