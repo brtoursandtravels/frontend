@@ -21,7 +21,7 @@ import {
   getSite,
   getTestimonials,
 } from "@/lib/api";
-import { contentText, settingText, whatsappLink } from "@/lib/presentation";
+import { settingText, whatsappLink } from "@/lib/presentation";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
@@ -75,11 +75,6 @@ export default async function HomePage() {
 
   const hero = home.data.sections.find((section) => section.type === "HERO");
   const heroTitle = hero?.title ?? "Travel deeper. Return with more.";
-  const heroDescription = contentText(
-    hero?.content,
-    "description",
-    "Bespoke holidays shaped around your pace, your people and the moments you want to remember.",
-  );
   const whatsappHref = whatsappLink(
     settingText(site?.data, [
       "contact.whatsapp",
@@ -92,7 +87,6 @@ export default async function HomePage() {
     <>
       <HeroSection
         title={heroTitle}
-        description={heroDescription}
         destinations={destinations?.data ?? []}
         categories={categories?.data ?? []}
       />
