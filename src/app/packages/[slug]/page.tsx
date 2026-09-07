@@ -107,7 +107,7 @@ export default async function PackageDetailPage({
               {item.destinations.map((entry) => entry.name).join(" · ") ||
                 "Tour idea"}
             </p>
-            <h1 className="m-0 max-w-3xl font-display text-[clamp(2.75rem,4.5vw,4.5rem)] font-semibold leading-[1] tracking-[-0.035em] text-primary">{item.title}</h1>
+            <h1 className="m-0 max-w-4xl font-display text-[clamp(2.4rem,3.5vw,3.25rem)] font-semibold leading-[1.05] tracking-[-0.025em] text-primary">{item.title}</h1>
             <div className="my-4 flex flex-wrap gap-2">
               {item.categories.map((category) => (
                 <span className="rounded-full bg-bg-muted px-3 py-1.5 text-xs font-bold text-primary" key={category.slug}>{category.name}</span>
