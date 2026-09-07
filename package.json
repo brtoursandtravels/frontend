@@ -1,0 +1,45 @@
+{
+  "name": "br-tours-and-travels-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "npm@11.6.4",
+  "engines": {
+    "node": ">=24.0.0 <25",
+    "npm": ">=11.0.0 <12"
+  },
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start --port 3000",
+    "lint": "eslint src scripts tests next.config.ts playwright.config.ts vitest.config.mts --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "smoke:stack": "node scripts/smoke-stack.mjs"
+  },
+  "dependencies": {
+    "@fontsource/inter": "5.2.8",
+    "@fontsource/playfair-display": "5.2.8",
+    "lucide-react": "1.38.0",
+    "next": "16.3.3",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "@playwright/test": "1.62.1",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "26.4.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.3",
+    "globals": "16.4.0",
+    "postcss": "8.5.26",
+    "tailwindcss": "4.3.3",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.68.0",
+    "vitest": "4.1.11"
+  }
+}

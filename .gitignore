@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.next-e2e/
+.next-perf/
+out/
+coverage/
+test-results/
+playwright-report/
+.env*
+*.log
+*.tsbuildinfo
