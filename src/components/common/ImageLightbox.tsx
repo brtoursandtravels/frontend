@@ -17,10 +17,15 @@ function albumTileClass(index: number, total: number) {
   if (total === 3) return index === 0
     ? "col-span-7 row-span-6 max-[700px]:col-span-2 max-[700px]:row-span-2"
     : "col-span-5 row-span-3 max-[700px]:col-span-1 max-[700px]:row-span-2";
-  if (index === 0) return "col-span-7 row-span-6 max-[700px]:col-span-2 max-[700px]:row-span-2";
-  if (index === 1) return "col-span-5 row-span-3 max-[700px]:col-span-1 max-[700px]:row-span-1";
-  if (index === 2) return "col-span-3 row-span-3 max-[700px]:col-span-1 max-[700px]:row-span-1";
-  return "col-span-2 row-span-3 max-[700px]:col-span-1 max-[700px]:row-span-1";
+  if (total === 4) {
+    if (index === 0) return "col-span-7 row-span-6 max-[700px]:col-span-2 max-[700px]:row-span-2";
+    if (index === 1) return "col-span-5 row-span-3 max-[700px]:col-span-2 max-[700px]:row-span-1";
+    if (index === 2) return "col-span-3 row-span-3 max-[700px]:col-span-1 max-[700px]:row-span-1";
+    return "col-span-2 row-span-3 max-[700px]:col-span-1 max-[700px]:row-span-1";
+  }
+  return index === 0
+    ? "col-span-6 row-span-6 max-[700px]:col-span-2 max-[700px]:row-span-2"
+    : "col-span-3 row-span-3 max-[700px]:col-span-1 max-[700px]:row-span-1";
 }
 
 export function ImageLightbox({
@@ -88,7 +93,7 @@ export function ImageLightbox({
     return <div className="grid min-h-72 place-items-center rounded-xl bg-bg-muted text-center text-primary"><div><span className="font-display text-6xl font-semibold">BR</span><p className="mt-3 text-sm text-text-muted">Published photography is being prepared.</p></div></div>;
   }
 
-  const visibleImages = variant === "masonry" ? images : images.slice(0, 5);
+  const visibleImages = variant === "masonry" ? images : images.slice(0, 4);
   const openImage = (index: number, opener: HTMLButtonElement) => {
     openerRef.current = opener;
     setCopied(false);
@@ -116,7 +121,7 @@ export function ImageLightbox({
                 {location ? <small className="inline-flex items-center gap-1 text-[0.64rem] font-extrabold uppercase tracking-[0.1em] text-secondary-light"><MapPin aria-hidden="true" size={12} /> {location}</small> : null}
                 <strong className="line-clamp-2 text-[0.8rem] leading-snug text-white">{image.caption ?? image.altText}</strong>
               </span>
-              {variant === "album" && index === 4 && showViewAllLabel ? <span className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/60 px-4 py-2.5 text-xs font-extrabold text-white backdrop-blur-sm"><Images aria-hidden="true" size={16} /> View all {images.length} photos</span> : variant === "album" && index === 4 && images.length > 5 ? <span className="absolute inset-0 grid place-items-center bg-black/58 text-lg font-extrabold text-white">+{images.length - 5} more views</span> : null}
+              {variant === "album" && index === visibleImages.length - 1 && images.length > visibleImages.length && showViewAllLabel ? <span className="absolute bottom-4 right-4 inline-flex items-center gap-2 rounded-full border border-white/30 bg-black/60 px-4 py-2.5 text-xs font-extrabold text-white backdrop-blur-sm"><Images aria-hidden="true" size={16} /> View all {images.length} photos</span> : variant === "album" && index === visibleImages.length - 1 && images.length > visibleImages.length ? <span className="absolute inset-0 grid place-items-center bg-black/58 text-lg font-extrabold text-white">+{images.length - visibleImages.length} more views</span> : null}
             </button>
           );
         })}
