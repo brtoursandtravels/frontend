@@ -37,8 +37,8 @@ const slides = [
   },
 ] as const;
 
-const SLIDE_DURATION = 5000;
-const FADE_DURATION = 900;
+const SLIDE_DURATION = 3000;
+const FADE_DURATION = 1000;
 
 export function HeroImageSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
