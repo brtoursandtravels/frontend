@@ -16,7 +16,7 @@ export function AboutHero() {
       <div className="absolute inset-0 -z-1 bg-[linear-gradient(90deg,rgba(2,35,36,.48)_0%,rgba(2,35,36,.27)_45%,rgba(2,35,36,.06)_76%,transparent_100%)] max-[700px]:bg-[linear-gradient(90deg,rgba(2,35,36,.58),rgba(2,35,36,.18))]" />
       <div className="mx-auto flex min-h-[34rem] w-full max-w-7xl flex-col justify-center px-5 py-12 sm:px-8 lg:px-10">
         <div className="max-w-[46rem]">
-          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-secondary-light backdrop-blur-sm"><Sparkles aria-hidden="true" size={15} /> Our story &amp; purpose</p>
+          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-secondary-light backdrop-blur-sm"><Sparkles aria-hidden="true" size={15} /> Our story &amp; purpose</p>
           <h1 className="m-0 font-display text-[clamp(2.85rem,4.3vw,4.5rem)] font-medium leading-[0.98] tracking-[-0.045em] text-white [text-shadow:0_3px_16px_rgb(0_0_0_/_0.45)] max-[620px]:text-[clamp(2.5rem,11vw,3.5rem)]" id="about-hero-title">
             Travel made personal.
           </h1>
@@ -27,7 +27,7 @@ export function AboutHero() {
           {trustItems.map(({ icon: Icon, value, label }) => (
             <div className="flex items-center gap-3 rounded-lg border border-white/18 bg-primary-ink/45 px-4 py-3 backdrop-blur-md" key={label}>
               <Icon className="shrink-0 text-secondary-light" aria-hidden="true" size={20} />
-              <p className="m-0 grid leading-tight"><strong className="text-[0.92rem] text-white">{value}</strong><span className="text-[0.72rem] text-white/68">{label}</span></p>
+              <p className="m-0 grid leading-tight"><strong className="text-[0.95rem] text-white">{value}</strong><span className="text-[0.75rem] text-white/70">{label}</span></p>
             </div>
           ))}
         </div>
