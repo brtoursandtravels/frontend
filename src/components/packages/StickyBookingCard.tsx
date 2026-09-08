@@ -113,7 +113,7 @@ export function StickyBookingCard({
     : null;
 
   return (
-    <aside className="sticky top-24 overflow-hidden rounded-xl border border-secondary/25 bg-white p-6 shadow-card after:pointer-events-none after:absolute after:inset-x-0 after:top-0 after:h-1 after:bg-gradient-to-r after:from-secondary after:via-accent after:to-secondary max-[820px]:relative">
+    <aside className="relative overflow-hidden rounded-xl border border-secondary/25 bg-white p-6 shadow-card after:pointer-events-none after:absolute after:inset-x-0 after:top-0 after:h-1 after:bg-gradient-to-r after:from-secondary after:via-accent after:to-secondary">
       <p className="mb-3 text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-secondary-hover">
         Plan this journey
       </p>

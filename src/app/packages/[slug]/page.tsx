@@ -113,7 +113,7 @@ export default async function PackageDetailPage({
         <BreadcrumbNav items={[{ label: "Home", href: "/" }, { label: "Journeys", href: "/packages" }, { label: item.title }]} />
         <PackageGalleryModal images={media} label={item.title} />
         {isCharDham ? <YatraEssentials days={item.days} nights={item.nights} /> : null}
-        <section className="mt-8 grid grid-cols-[1fr_24rem] items-start gap-12 max-[820px]:grid-cols-1">
+        <section className="mt-8">
           <div>
             <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-hover">
               {item.destinations.map((entry) => entry.name).join(" · ") ||
@@ -145,10 +145,9 @@ export default async function PackageDetailPage({
               ) : null}
             </div>
           </div>
-          <div id="package-enquiry"><StickyBookingCard item={item} departures={departureOptions} whatsappHref={whatsappHref} pilgrimageMode={isCharDham} /></div>
         </section>
 
-        <div className="mt-10 grid grid-cols-[minmax(0,1fr)_20rem] items-start gap-8 max-[960px]:grid-cols-1">
+        <div className="mt-10 grid grid-cols-[minmax(0,1fr)_24rem] items-start gap-8 max-[960px]:grid-cols-1">
           <div>
             {isCharDham ? <YatraRouteElevation /> : null}
             {item.highlights.length ? (
@@ -198,9 +197,27 @@ export default async function PackageDetailPage({
               </section>
             ) : null}
           </div>
-          <aside>
+          <aside className="self-stretch max-[960px]:self-auto">
+            <div className="sticky top-24 z-3 grid gap-3 max-[960px]:relative max-[960px]:top-0" id="package-enquiry">
+              <StickyBookingCard item={item} departures={departureOptions} whatsappHref={whatsappHref} pilgrimageMode={isCharDham} />
+              {item.importantInformation ? (
+                <details className="group rounded-lg border border-border-subtle bg-white px-5 shadow-card">
+                  <summary className="cursor-pointer list-none py-4 font-display text-[1rem] font-semibold text-text-heading marker:hidden">Important information <span className="float-right text-secondary transition group-open:rotate-45" aria-hidden="true">+</span></summary>
+                  <p className="mt-0 border-t border-border-subtle py-4 text-[0.82rem] leading-relaxed text-text-muted">{item.importantInformation}</p>
+                </details>
+              ) : null}
+              {item.cancellationRules ? (
+                <details className="group rounded-lg border border-border-subtle bg-white px-5 shadow-card">
+                  <summary className="cursor-pointer list-none py-4 font-display text-[1rem] font-semibold text-text-heading marker:hidden">Cancellation rules <span className="float-right text-secondary transition group-open:rotate-45" aria-hidden="true">+</span></summary>
+                  <div className="border-t border-border-subtle py-4 text-[0.82rem] leading-relaxed text-text-muted">
+                    <p className="mt-0">{item.cancellationRules}</p>
+                    <Link href="/cancellation-policy">General cancellation information →</Link>
+                  </div>
+                </details>
+              ) : null}
+            </div>
             {item.departures.length ? (
-              <section className="mb-6 rounded-xl border border-border-subtle bg-white p-5 shadow-card">
+              <section className="mb-6 mt-6 rounded-xl border border-border-subtle bg-white p-5 shadow-card">
                 <h2 className="mt-0 font-display text-2xl text-text-heading">Upcoming departures</h2>
                 <div className="grid gap-3">
                   {item.departures.map((departure) => (
@@ -220,21 +237,6 @@ export default async function PackageDetailPage({
                 <p className="mt-3 text-xs leading-relaxed text-text-muted">
                   Dates are enquiry options, not guaranteed inventory.
                 </p>
-              </section>
-            ) : null}
-            {item.importantInformation ? (
-              <section className="mb-6 rounded-xl border border-border-subtle bg-white p-5 shadow-card">
-                <h2 className="mt-0 font-display text-2xl text-text-heading">Important information</h2>
-                <p>{item.importantInformation}</p>
-              </section>
-            ) : null}
-            {item.cancellationRules ? (
-              <section className="mb-6 rounded-xl border border-border-subtle bg-white p-5 shadow-card">
-                <h2 className="mt-0 font-display text-2xl text-text-heading">Cancellation rules</h2>
-                <p>{item.cancellationRules}</p>
-                <Link href="/cancellation-policy">
-                  General cancellation information →
-                </Link>
               </section>
             ) : null}
             {item.brochure ? (
