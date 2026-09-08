@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { ArrowUpRight, X } from "lucide-react";
 import { EnquiryForm } from "@/components/forms/EnquiryForm";
 
@@ -74,7 +75,7 @@ export function EnquiryModal({
       <button className="flex min-h-12 w-full items-center justify-center gap-2 rounded-full border-0 bg-gradient-to-br from-accent to-secondary px-5 py-3 text-sm font-extrabold text-white shadow-accent-md transition hover:-translate-y-0.5" type="button" ref={triggerRef} onClick={() => setOpen(true)}>
         {label} <ArrowUpRight aria-hidden="true" size={18} />
       </button>
-      {open ? (
+      {open && typeof document !== "undefined" ? createPortal(
         <div className="fixed inset-0 z-100 grid place-items-center overflow-y-auto bg-primary-ink/65 p-5 backdrop-blur-sm max-[620px]:p-0" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}>
           <section ref={dialogRef} className="my-auto max-h-[94vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-white p-[clamp(1.4rem,4vw,2.5rem)] shadow-dropdown max-[620px]:min-h-screen max-[620px]:max-h-screen max-[620px]:rounded-none" role="dialog" aria-modal="true" aria-labelledby="enquiry-modal-title">
             <header className="flex items-start justify-between gap-5 border-b border-border-subtle pb-5">
@@ -93,7 +94,8 @@ export function EnquiryModal({
               defaultMessage={defaultMessage}
             />
           </section>
-        </div>
+        </div>,
+        document.body,
       ) : null}
     </>
   );

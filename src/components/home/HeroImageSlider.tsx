@@ -10,26 +10,27 @@ const slides = [
     label: "Lake Pichola, Udaipur",
     position: "object-[62%_center]",
   },
+   {
+    src: "/images/hero-slider/jaisalmer-dunes.webp",
+    label: "Thar Desert, Jaisalmer",
+    position: "object-[62%_center]",
+  },
   {
     src: "/images/hero-slider/kerala-backwaters.webp",
     label: "Kerala backwaters",
     position: "object-[62%_center]",
+  },
+   {
+    src: "/images/hero-slider/meghalaya-root-bridge.webp",
+    label: "Living root bridge, Meghalaya",
+    position: "object-[64%_center]",
   },
   {
     src: "/images/hero-slider/varanasi-ghats.webp",
     label: "Varanasi ghats",
     position: "object-[64%_center]",
   },
-  {
-    src: "/images/hero-slider/meghalaya-root-bridge.webp",
-    label: "Living root bridge, Meghalaya",
-    position: "object-[64%_center]",
-  },
-  {
-    src: "/images/hero-slider/jaisalmer-dunes.webp",
-    label: "Thar Desert, Jaisalmer",
-    position: "object-[62%_center]",
-  },
+ 
   {
     src: "/images/hero-slider/ladakh-pangong.webp",
     label: "Pangong Tso, Ladakh",
