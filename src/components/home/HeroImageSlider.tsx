@@ -126,7 +126,7 @@ export function HeroImageSlider() {
         />
       </div>
 
-      <div
+      {/* <div
         className="absolute right-5 top-5 z-3 flex items-center gap-2 rounded-full border border-white/20 bg-primary-ink/35 p-1.5 shadow-card backdrop-blur-md"
         aria-label="Hero image controls"
         role="group"
@@ -160,7 +160,7 @@ export function HeroImageSlider() {
             <Pause aria-hidden="true" size={14} fill="currentColor" />
           )}
         </button>
-      </div>
+      </div> */}
     </>
   );
 }

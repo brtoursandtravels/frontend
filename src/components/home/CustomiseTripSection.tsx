@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, Compass, ShieldCheck, Sparkles, UsersRound } from "lucide-react";
+import { ScrollRevealCard } from "@/components/home/ScrollRevealCard";
 
 const steps = [
   {
@@ -70,7 +71,7 @@ export function CustomiseTripSection() {
             const Icon = step.icon;
             return (
               <div className="contents" key={step.number}>
-                <div className="relative z-1">
+                <ScrollRevealCard index={index}>
                   <article className="glass-card group flex h-full flex-col items-center rounded-xl p-[clamp(1.25rem,2vw,1.6rem)] text-center transition duration-300 hover:-translate-y-1.5 hover:border-secondary/50 hover:shadow-card-hover motion-reduce:transform-none motion-reduce:transition-none">
                     <div className="relative mb-4 grid size-16 place-items-center rounded-[43%_57%_52%_48%/56%_42%_58%_44%] border border-secondary/35 bg-[linear-gradient(145deg,var(--color-accent-soft),white_48%,var(--color-secondary-muted))] text-secondary-hover shadow-accent-sm motion-safe:animate-customise-glow">
                       <span className="font-display text-2xl font-bold" aria-hidden="true">{step.number}</span>
@@ -79,7 +80,7 @@ export function CustomiseTripSection() {
                     <h3 className="m-0 font-display text-[1.15rem] font-semibold leading-tight text-text-heading">{step.title}</h3>
                     <p className="mb-0 mt-2 text-[0.86rem] leading-relaxed text-text-muted">{step.text}</p>
                   </article>
-                </div>
+                </ScrollRevealCard>
                 {index < steps.length - 1 ? (
                   <span className="hidden h-7 items-center justify-center text-xl text-secondary max-[900px]:flex" aria-hidden="true">↓</span>
                 ) : null}
