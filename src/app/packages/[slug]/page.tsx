@@ -7,6 +7,9 @@ import { ItineraryTimeline } from "@/components/packages/ItineraryTimeline";
 import { PackageCard } from "@/components/packages/PackageCard";
 import { PackageGalleryModal } from "@/components/packages/PackageGalleryModal";
 import { StickyBookingCard } from "@/components/packages/StickyBookingCard";
+import { YatraEssentials } from "@/components/packages/YatraEssentials";
+import { YatraPreparationGuide } from "@/components/packages/YatraPreparationGuide";
+import { YatraRouteElevation } from "@/components/packages/YatraRouteElevation";
 import {
   ApiRequestError,
   getFaqs,
@@ -22,6 +25,7 @@ import {
   whatsappLink,
 } from "@/lib/presentation";
 import { serverEnv } from "@/lib/env";
+import { charDhamEditorialMedia } from "@/lib/packageEditorialMedia";
 
 export const dynamic = "force-dynamic";
 
@@ -79,7 +83,14 @@ export default async function PackageDetailPage({
   const whatsappHref = whatsappLink(
     settingText(site, ["contact.whatsapp", "business.whatsapp", "whatsapp"]),
   );
-  const media = item.media.length ? item.media : item.cover ? [item.cover] : [];
+  const isCharDham = /char-dham/i.test(item.slug);
+  const media = isCharDham
+    ? charDhamEditorialMedia
+    : item.media.length
+      ? item.media
+      : item.cover
+        ? [item.cover]
+        : [];
   const departureOptions = item.departures.map((departure) => ({
     id: departure.id,
     label: `${formatDate(departure.startDate)} – ${formatDate(departure.endDate)}${departure.price ? ` · ${formatMoney(departure.price.amount, departure.price.currency)}` : ""}`,
@@ -101,6 +112,7 @@ export default async function PackageDetailPage({
       <div className="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
         <BreadcrumbNav items={[{ label: "Home", href: "/" }, { label: "Journeys", href: "/packages" }, { label: item.title }]} />
         <PackageGalleryModal images={media} label={item.title} />
+        {isCharDham ? <YatraEssentials days={item.days} nights={item.nights} /> : null}
         <section className="mt-8 grid grid-cols-[1fr_24rem] items-start gap-12 max-[820px]:grid-cols-1">
           <div>
             <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-hover">
@@ -133,11 +145,12 @@ export default async function PackageDetailPage({
               ) : null}
             </div>
           </div>
-          <div id="package-enquiry"><StickyBookingCard item={item} departures={departureOptions} whatsappHref={whatsappHref} /></div>
+          <div id="package-enquiry"><StickyBookingCard item={item} departures={departureOptions} whatsappHref={whatsappHref} pilgrimageMode={isCharDham} /></div>
         </section>
 
         <div className="mt-10 grid grid-cols-[minmax(0,1fr)_20rem] items-start gap-8 max-[960px]:grid-cols-1">
           <div>
+            {isCharDham ? <YatraRouteElevation /> : null}
             {item.highlights.length ? (
               <section className="mb-6 rounded-xl border border-border-subtle bg-white p-6 shadow-card">
                 <p className="mb-2 text-xs font-extrabold uppercase tracking-wider text-secondary-hover">What stands out</p>
@@ -152,11 +165,12 @@ export default async function PackageDetailPage({
             <section className="mb-6 rounded-xl border border-border-subtle bg-white p-6 shadow-card">
               <p className="mb-2 text-xs font-extrabold uppercase tracking-wider text-secondary-hover">Day by day</p>
               <h2 className="mt-0 font-display text-3xl text-text-heading">Itinerary</h2>
-              <ItineraryTimeline itinerary={item.itinerary} media={media} />
+              <ItineraryTimeline itinerary={item.itinerary} media={media} yatraMode={isCharDham} />
             </section>
             <section className="mb-6 rounded-xl border border-border-subtle bg-white p-6 shadow-card">
               <InclusionsExclusions inclusions={item.inclusions} exclusions={item.exclusions} />
             </section>
+            {isCharDham ? <YatraPreparationGuide /> : null}
             {item.transportInformation ? (
               <section className="mb-6 rounded-xl border border-border-subtle bg-white p-6 shadow-card">
                 <h2 className="mt-0 font-display text-3xl text-text-heading">Pickup and transport</h2>
@@ -238,6 +252,16 @@ export default async function PackageDetailPage({
             ) : null}
           </aside>
         </div>
+        {isCharDham ? (
+          <section className="mt-10 flex items-center justify-between gap-8 overflow-hidden rounded-xl bg-primary p-[clamp(1.5rem,4vw,3rem)] text-white shadow-dropdown max-[720px]:flex-col max-[720px]:items-start">
+            <div>
+              <p className="mb-2 text-xs font-extrabold uppercase tracking-wider text-secondary-light">Customise this yatra</p>
+              <h2 className="m-0 max-w-2xl font-display text-[clamp(1.75rem,2.7vw,2.75rem)] font-semibold leading-[1.08] text-white">Shape the route around your family.</h2>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/72">Discuss private pickups, a Do Dham variation, slower pacing or helicopter options. Every operational detail is confirmed before commitment.</p>
+            </div>
+            <Link className="inline-flex min-h-12 shrink-0 items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-extrabold text-white no-underline transition hover:bg-accent-hover" href={`/contact-us?package=${encodeURIComponent(item.slug)}&subject=custom-trip#contact-form`}>Customise this yatra</Link>
+          </section>
+        ) : null}
         {item.relatedPackages.length ? (
           <section className="mt-12 rounded-xl border border-border-subtle bg-white p-6 shadow-card">
             <div className="mb-6 flex items-end justify-between gap-5">

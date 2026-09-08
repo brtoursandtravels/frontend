@@ -5,7 +5,7 @@ import { SectionHeader } from "@/components/common/SectionHeader";
 export function TravelJournalPreview({ posts }: { posts: BlogCardData[] }) {
   if (!posts.length) return null;
   return (
-    <section className="bg-bg-muted py-24 max-[820px]:py-[4.5rem]">
+    <section className="defer-render bg-bg-muted py-24 max-[820px]:py-[4.5rem]">
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
         <SectionHeader
           eyebrow="The travel journal"

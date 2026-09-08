@@ -31,7 +31,7 @@ export function FeaturedDestinations({
   if (!items.length) return null;
   return (
     <section
-      className="mx-auto w-full max-w-7xl px-5 py-24 sm:px-8 lg:px-10 max-[820px]:py-[4.5rem]"
+      className="defer-render mx-auto w-full max-w-7xl px-5 py-24 sm:px-8 lg:px-10 max-[820px]:py-[4.5rem]"
       id="featured-destinations"
     >
       <SectionHeader
@@ -67,13 +67,13 @@ export function FeaturedDestinations({
             />
             <span className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 z-2 p-6">
-              <p className="mb-2 flex items-center gap-1.5 text-[0.67rem] font-extrabold uppercase tracking-wider text-secondary-light">
+              <p className="mb-2 flex items-center gap-1.5 text-[0.72rem] font-extrabold uppercase tracking-wider text-secondary-light">
                 <MapPin aria-hidden="true" size={16} /> Curated destination
               </p>
               <h3 className="m-0 font-display text-[1.65rem] font-semibold leading-tight text-white">
                 {destination.name}
               </h3>
-              <span className="mt-2 block max-w-md text-sm leading-relaxed text-white/75">
+              <span className="mt-2 block max-w-md text-[0.95rem] leading-relaxed text-white/80">
                 {destination.summary ??
                   "Discover journeys shaped around this region."}
               </span>

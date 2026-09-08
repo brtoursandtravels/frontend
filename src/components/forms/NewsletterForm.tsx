@@ -85,7 +85,7 @@ export function NewsletterForm() {
       </label>
       <div className="flex items-center rounded-full border border-white/20 bg-white/10 p-1.5">
         <input
-          className="min-w-0 flex-1 border-0 bg-transparent px-4 py-2 text-sm text-white outline-none placeholder:text-white/50"
+          className="min-w-0 flex-1 border-0 bg-transparent px-4 py-2 text-[0.9rem] text-white outline-none placeholder:text-white/55"
           id="newsletter-email"
           name="email"
           type="email"
@@ -103,7 +103,7 @@ export function NewsletterForm() {
           {error}
         </span>
       ) : (
-        <small className="text-white/55">No spam. Your request is saved for staff review.</small>
+        <small className="text-xs text-white/60">No spam. Your request is saved for staff review.</small>
       )}
     </form>
   );

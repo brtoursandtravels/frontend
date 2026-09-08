@@ -6,7 +6,7 @@ type Testimonial = { id: string; publicName: string; quote: string; sortOrder: n
 export function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
   if (!testimonials.length) return null;
   return (
-    <section className="py-24 max-[820px]:py-[4.5rem]">
+    <section className="defer-render py-24 max-[820px]:py-[4.5rem]">
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
         <SectionHeader
           eyebrow="Traveller stories"
@@ -22,7 +22,7 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
                 {Array.from({ length: 5 }, (_, index) => <Star key={index} size={14} fill="currentColor" />)}
               </div>
               <blockquote className="my-4 font-display text-xl leading-relaxed text-text-heading">“{item.quote}”</blockquote>
-              <figcaption className="text-xs font-extrabold uppercase tracking-wider text-primary">{item.publicName}</figcaption>
+              <figcaption className="text-[0.72rem] font-extrabold uppercase tracking-wider text-primary">{item.publicName}</figcaption>
             </figure>
           ))}
         </div>

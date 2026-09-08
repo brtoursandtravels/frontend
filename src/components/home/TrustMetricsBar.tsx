@@ -15,7 +15,7 @@ export function TrustMetricsBar() {
         return (
           <div className="flex items-center gap-3 rounded-lg border border-white/15 bg-white/10 px-4 py-3 backdrop-blur-md max-[620px]:p-2.5" key={metric.label}>
             <Icon className="shrink-0 text-secondary-light" aria-hidden="true" size={21} />
-            <p className="m-0 grid leading-tight"><strong className="text-sm text-white max-[620px]:text-xs">{metric.value}</strong><span className="text-[0.68rem] text-white/65 max-[620px]:text-[0.6rem]">{metric.label}</span></p>
+            <p className="m-0 grid leading-tight"><strong className="text-[0.95rem] text-white max-[620px]:text-sm">{metric.value}</strong><span className="text-[0.75rem] text-white/70 max-[620px]:text-[0.7rem]">{metric.label}</span></p>
           </div>
         );
       })}

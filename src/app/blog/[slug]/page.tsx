@@ -113,8 +113,8 @@ export default async function BlogPostPage({
         </nav>
         <header className="mx-auto max-w-4xl text-center">
           <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-hover">{item.category?.name ?? "Travel journal"}</p>
-          <h1 className="m-0 font-display text-[clamp(3rem,7vw,6rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-text-heading">{item.title}</h1>
-          <p className="mx-auto mt-5 max-w-3xl text-lg leading-relaxed text-text-muted">{item.excerpt}</p>
+          <h1 className="m-0 font-display text-[clamp(2.5rem,4.3vw,4.5rem)] font-medium leading-[0.98] tracking-[-0.04em] text-text-heading">{item.title}</h1>
+          <p className="mx-auto mt-5 max-w-3xl text-[0.98rem] leading-relaxed text-text-muted">{item.excerpt}</p>
           <div className="my-5 flex flex-wrap justify-center gap-4 text-xs font-semibold text-text-muted">
             <time dateTime={item.publishedAt}>
               {new Intl.DateTimeFormat("en-IN", { dateStyle: "long" }).format(
@@ -185,7 +185,7 @@ export default async function BlogPostPage({
         {item.relatedArticles.length || item.relatedPackages.length ? (
           <section className="mt-16 border-t border-border-subtle pt-10">
             <p className="mb-2 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-hover">Continue exploring</p>
-            <h2 className="m-0 font-display text-4xl text-text-heading">Related reading and tours</h2>
+            <h2 className="m-0 font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] text-text-heading">Related reading and tours</h2>
             <div className="mt-8 grid grid-cols-3 gap-5 max-[820px]:grid-cols-1">
               {item.relatedArticles.map((related) => (
                 <article className="rounded-xl border border-border-subtle bg-white p-5 shadow-card" key={related.id}>

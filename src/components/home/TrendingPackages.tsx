@@ -5,7 +5,7 @@ import { PackageCard } from "@/components/packages/PackageCard";
 export function TrendingPackages({ packages }: { packages: PackageCardData[] }) {
   if (!packages.length) return null;
   return (
-    <section className="bg-bg-muted py-24 max-[820px]:py-[4.5rem]">
+    <section className="defer-render bg-bg-muted py-24 max-[820px]:py-[4.5rem]">
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
         <SectionHeader
           eyebrow="Curated for this season"

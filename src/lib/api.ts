@@ -34,8 +34,9 @@ export class ApiRequestError extends Error {
 async function apiFetch(path: string) {
   try {
     return await fetch(serverEnv.INTERNAL_API_BASE_URL + path, {
-      cache: "no-store",
       headers: { accept: "application/json" },
+      next: { revalidate: 300 },
+      signal: AbortSignal.timeout(10_000),
     });
   } catch {
     throw new ApiRequestError(

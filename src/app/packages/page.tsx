@@ -134,10 +134,10 @@ export default async function PackagesPage({
   return (
     <div>
       <header className="relative flex min-h-[32rem] items-center overflow-hidden bg-[url('/images/travel/ladakh-monastery.webp')] bg-cover bg-center text-white">
-        <span className="absolute inset-0 bg-gradient-to-r from-primary-ink/95 via-primary-ink/70 to-primary-ink/25" aria-hidden="true" />
+        <span className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,35,36,.50)_0%,rgba(2,35,36,.28)_48%,rgba(2,35,36,.05)_76%,transparent_100%)] max-[700px]:bg-[linear-gradient(90deg,rgba(2,35,36,.64),rgba(2,35,36,.24))]" aria-hidden="true" />
         <div className="relative z-1 mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10">
         <p className="mb-4 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-light">Curated journeys</p>
-        <h1 className="m-0 max-w-4xl font-display text-[clamp(3.25rem,7vw,6.5rem)] font-semibold leading-[0.96] tracking-[-0.045em] text-white">Find the journey that feels like yours.</h1>
+        <h1 className="m-0 max-w-4xl text-balance font-display text-[clamp(2.85rem,4.3vw,4.5rem)] font-medium leading-[0.98] tracking-[-0.045em] text-white [text-shadow:0_3px_16px_rgb(0_0_0_/_0.45)] max-[620px]:text-[clamp(2.5rem,11vw,3.5rem)]">Find the journey that feels like yours.</h1>
         <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/80">
           Search the live BR catalogue by destination, pace and travel style.
           Availability is confirmed personally after your enquiry.

@@ -1,13 +1,11 @@
-"use client";
-
 import Link from "next/link";
-import { ArrowUpRight, Check, Heart, MapPin, Share2 } from "lucide-react";
-import { useState } from "react";
+import { ArrowUpRight, Check, MapPin } from "lucide-react";
 import type { PackageCard as PackageCardData } from "@/lib/contracts";
 import { formatMoney, priceBasisLabel } from "@/lib/presentation";
-import { EnquiryModal } from "@/components/common/EnquiryModal";
 import { PublicImage } from "@/components/common/PublicImage";
 import { animationClasses } from "@/lib/animations";
+import { PackageCardActions } from "@/components/packages/PackageCardActions";
+import { PackageEnquiryButton } from "@/components/packages/PackageEnquiryButton";
 
 export function PackageCard({
   item,
@@ -16,22 +14,9 @@ export function PackageCard({
   item: PackageCardData;
   featured?: boolean;
 }) {
-  const [saved, setSaved] = useState(false);
-  const [copied, setCopied] = useState(false);
   const price = item.startingPrice
     ? formatMoney(item.startingPrice.amount, item.startingPrice.currency)
     : "On request";
-
-  async function share() {
-    const url = `${window.location.origin}/packages/${item.slug}`;
-    if (navigator.share) {
-      await navigator.share({ title: item.title, text: item.summary, url });
-      return;
-    }
-    await navigator.clipboard.writeText(url);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1800);
-  }
 
   return (
     <article
@@ -67,58 +52,31 @@ export function PackageCard({
           )}
         </Link>
         <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary-ink/45 via-transparent to-transparent" />
-        <div className="absolute left-3 top-3 z-2 flex max-w-[calc(100%-6.5rem)] flex-wrap gap-2">
-          <span className="rounded-full bg-white/90 px-3 py-1.5 text-[0.65rem] font-extrabold uppercase text-primary shadow-sm backdrop-blur-md">
+        <div className="absolute left-3 top-3 z-2 flex max-w-[calc(100%-4rem)] flex-wrap gap-2">
+          <span className="rounded-full bg-white/90 px-3 py-1.5 text-[0.7rem] font-extrabold uppercase text-primary shadow-sm backdrop-blur-md">
             {item.nights}N / {item.days}D
           </span>
           {item.categories[0] ? (
-            <span className="rounded-full bg-secondary px-3 py-1.5 text-[0.65rem] font-extrabold uppercase text-white shadow-sm">
+            <span className="rounded-full bg-secondary-hover px-3 py-1.5 text-[0.7rem] font-extrabold uppercase text-white shadow-sm">
               {item.categories[0].name}
             </span>
           ) : null}
         </div>
-        <div className="absolute right-3 top-3 z-2 flex gap-2">
-          <button
-            className={`flex size-10 items-center justify-center rounded-full border-0 bg-white/90 shadow-sm backdrop-blur-md transition hover:scale-105 ${saved ? "text-accent" : "text-primary"}`}
-            type="button"
-            aria-label={
-              saved ? "Remove from saved journeys" : "Save this journey"
-            }
-            aria-pressed={saved}
-            onClick={() => setSaved((value) => !value)}
-          >
-            <Heart
-              aria-hidden="true"
-              size={18}
-              fill={saved ? "currentColor" : "none"}
-            />
-          </button>
-          <button
-            className="flex size-10 items-center justify-center rounded-full border-0 bg-white/90 text-primary shadow-sm backdrop-blur-md transition hover:scale-105"
-            type="button"
-            aria-label={copied ? "Journey link copied" : "Share this journey"}
-            onClick={() => void share()}
-          >
-            {copied ? (
-              <Check aria-hidden="true" size={18} />
-            ) : (
-              <Share2 aria-hidden="true" size={18} />
-            )}
-          </button>
-          <span className="sr-only" role="status" aria-live="polite">
-            {copied ? "Journey link copied to clipboard." : ""}
-          </span>
-        </div>
+        <PackageCardActions
+          packageSlug={item.slug}
+          packageSummary={item.summary}
+          packageTitle={item.title}
+        />
       </div>
 
       <div className="p-5">
-        <p className="mb-2 flex items-center gap-1.5 text-[0.68rem] font-extrabold uppercase tracking-wider text-secondary-hover">
+        <p className="mb-2 flex items-center gap-1.5 text-[0.72rem] font-extrabold uppercase tracking-wider text-secondary-hover">
           <MapPin aria-hidden="true" size={15} />
           {item.destinations
             .map((destination) => destination.name)
             .join(" · ") || "Curated journey"}
         </p>
-        <h3 className="m-0 font-display text-2xl font-semibold leading-tight text-text-heading">
+        <h3 className="m-0 font-display text-[1.45rem] font-semibold leading-tight text-text-heading">
           <Link
             className="no-underline transition-colors hover:text-primary"
             href={`/packages/${item.slug}`}
@@ -127,18 +85,18 @@ export function PackageCard({
           </Link>
         </h3>
         {item.isDemo ? (
-          <span className="mt-3 inline-flex rounded-full bg-accent-soft px-3 py-1 text-[0.62rem] font-extrabold uppercase text-secondary-hover">
+          <span className="mt-3 inline-flex rounded-full bg-accent-soft px-3 py-1 text-[0.7rem] font-extrabold uppercase text-secondary-hover">
             Demo content
           </span>
         ) : null}
-        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-text-muted">
+        <p className="mt-3 line-clamp-3 text-[0.925rem] leading-relaxed text-text-muted">
           {item.summary}
         </p>
         {item.highlights.length ? (
           <ul className="my-4 flex list-none flex-wrap gap-2 p-0">
             {item.highlights.slice(0, 3).map((highlight) => (
               <li
-                className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1 text-[0.65rem] font-bold text-primary"
+                className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-2.5 py-1 text-[0.7rem] font-bold text-primary"
                 key={highlight}
               >
                 <Check aria-hidden="true" size={12} strokeWidth={3} />
@@ -150,27 +108,26 @@ export function PackageCard({
         <div className="mt-5 border-t border-border-subtle pt-4">
           <div className="mb-4 flex items-end justify-between gap-4">
             <div className="grid">
-              <span className="text-[0.62rem] font-bold uppercase tracking-wider text-text-muted">
+              <span className="text-[0.7rem] font-bold uppercase tracking-wider text-text-muted">
                 Starting from
               </span>
               <strong className="font-display text-2xl leading-tight text-primary">
                 {price}
               </strong>
               {item.startingPrice ? (
-                <small className="text-[0.65rem] text-text-muted">
+                <small className="text-[0.72rem] text-text-muted">
                   {priceBasisLabel(item.startingPrice.basis)}
                 </small>
               ) : null}
             </div>
-            <small className="max-w-28 text-right text-[0.6rem] leading-relaxed text-text-muted">
+            <small className="max-w-28 text-right text-[0.7rem] leading-relaxed text-text-muted">
               Taxes and GST itemised in the confirmed quote
             </small>
           </div>
           <div className="grid grid-cols-2 gap-2 max-[420px]:grid-cols-1">
-            <EnquiryModal
+            <PackageEnquiryButton
               packageSlug={item.slug}
               packageTitle={item.title}
-              label="Enquire now"
             />
             <Link
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-primary/25 bg-primary-soft px-4 py-3 text-sm font-extrabold text-primary no-underline transition hover:border-primary hover:bg-white"

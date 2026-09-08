@@ -1,167 +1,113 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight, MapPin } from "lucide-react";
 import { ImageLightbox } from "@/components/common/ImageLightbox";
 import { PaginationControls } from "@/components/common/PaginationControls";
-import {
-  ApiRequestError,
-  getDestinations,
-  getGalleryAlbum,
-  getGalleryAlbums,
-  getPackages,
-} from "@/lib/api";
+import { GalleryCta } from "@/components/gallery/GalleryCta";
+import { GalleryDiscoveryBar } from "@/components/gallery/GalleryDiscoveryBar";
+import { GalleryHero } from "@/components/gallery/GalleryHero";
+import { ApiRequestError, getDestinations, getGalleryAlbum, getGalleryAlbums, getPackages } from "@/lib/api";
+import { completeGalleryAlbum } from "@/lib/galleryEditorialMedia";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 export const metadata: Metadata = {
-  title: "Gallery",
-  description:
-    "Browse published, rights-reviewed BR gallery albums with accessible captions and keyboard lightboxes.",
+  title: "Travel Gallery",
+  description: "Explore published BR Tours travel collections, destination photographs and visual stories from across India.",
   alternates: { canonical: "/gallery" },
 };
 
-export default async function GalleryPage({
-  searchParams,
-}: {
-  searchParams: Promise<{
-    destination?: string;
-    package?: string;
-    page?: string;
-  }>;
-}) {
+export default async function GalleryPage({ searchParams }: { searchParams: Promise<{ destination?: string; package?: string; page?: string; view?: string }> }) {
   const query = await searchParams;
   const page = Math.max(1, Number(query.page) || 1);
-  const [albumsResult, destinationsResult, packagesResult] =
-    await Promise.allSettled([
-      getGalleryAlbums({
-        destination: query.destination,
-        package: query.package,
-        page,
-        pageSize: 6,
-      }),
-      getDestinations(),
-      getPackages({ pageSize: 48 }),
-    ]);
+  const [albumsResult, destinationsResult, packagesResult] = await Promise.allSettled([
+    getGalleryAlbums({ destination: query.destination, package: query.package, page, pageSize: 6 }),
+    getDestinations(),
+    getPackages({ pageSize: 48 }),
+  ]);
+
   if (albumsResult.status === "rejected") {
     const error = albumsResult.reason;
     return (
-      <div className="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
+      <main className="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
         <div className="rounded-xl border border-danger/30 bg-danger-bg p-8 shadow-card sm:p-12">
           <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-danger">Gallery unavailable</p>
-          <h1 className="font-display text-4xl font-semibold text-text-heading sm:text-5xl">Albums cannot be loaded right now</h1>
-          <p className="mt-4 text-text-muted">
-            {error instanceof ApiRequestError
-              ? error.message
-              : "The live gallery response was not usable."}
-          </p>
-          <Link className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white no-underline" href="/gallery">
-            Try again
-          </Link>
+          <h1 className="font-display text-4xl font-semibold text-text-heading sm:text-5xl">The visual journal cannot be loaded right now.</h1>
+          <p className="mt-4 text-text-muted">{error instanceof ApiRequestError ? error.message : "The live gallery response was not usable."}</p>
+          <Link className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white no-underline" href="/gallery">Try again</Link>
         </div>
-      </div>
+      </main>
     );
   }
+
   const listing = albumsResult.value;
-  const albums = await Promise.all(
-    listing.data.map((album) =>
-      getGalleryAlbum(album.slug)
-        .then((result) => result.data)
-        .catch(() => ({ ...album, images: [] })),
-    ),
-  );
-  const destinations =
-    destinationsResult.status === "fulfilled"
-      ? destinationsResult.value.data
-      : [];
-  const packages =
-    packagesResult.status === "fulfilled" ? packagesResult.value.data : [];
+  const albums = await Promise.all(listing.data.map((album) => getGalleryAlbum(album.slug).then((result) => completeGalleryAlbum(result.data)).catch(() => ({ ...album, images: [] }))));
+  const destinations = destinationsResult.status === "fulfilled" ? destinationsResult.value.data : [];
+  const packages = packagesResult.status === "fulfilled" ? packagesResult.value.data : [];
+  const selectedPackage = packages.find((item) => item.slug === query.package);
+  const allImages = albums.flatMap((album) => album.images);
+  const wallView = query.view === "wall";
   const hrefFor = (nextPage: number) => {
     const params = new URLSearchParams();
     if (query.destination) params.set("destination", query.destination);
     if (query.package) params.set("package", query.package);
+    if (wallView) params.set("view", "wall");
     if (nextPage > 1) params.set("page", String(nextPage));
     return `/gallery${params.size ? `?${params}` : ""}`;
   };
+
   return (
-    <div className="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
-      <header className="max-w-4xl">
-        <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-hover">Visual journal</p>
-        <h1 className="m-0 font-display text-[clamp(3rem,7vw,6rem)] font-semibold leading-[0.98] text-text-heading">Published journeys, responsibly shown.</h1>
-        <p className="mt-5 max-w-2xl text-lg leading-relaxed text-text-muted">
-          Only public media from database-backed albums appears here. Private
-          documents are never gallery content.
-        </p>
-      </header>
-      <form className="my-10 grid grid-cols-[auto_1fr_auto_1fr_auto_auto] items-center gap-3 rounded-xl border border-border-subtle bg-white p-5 shadow-card max-[820px]:grid-cols-1 [&_label]:text-xs [&_label]:font-extrabold [&_label]:text-text-heading [&_select]:w-full [&_select]:rounded-md [&_select]:border [&_select]:border-border-subtle [&_select]:bg-bg-base [&_select]:px-3 [&_select]:py-2.5" action="/gallery">
-        <label htmlFor="gallery-destination">Destination</label>
-        <select
-          id="gallery-destination"
-          name="destination"
-          defaultValue={query.destination}
-        >
-          <option value="">All destinations</option>
-          {destinations.map((item) => (
-            <option key={item.id} value={item.slug}>
-              {item.name}
-            </option>
-          ))}
-        </select>
-        <label htmlFor="gallery-package">Related package</label>
-        <select
-          id="gallery-package"
-          name="package"
-          defaultValue={query.package}
-        >
-          <option value="">All packages</option>
-          {packages.map((item) => (
-            <option key={item.id} value={item.slug}>
-              {item.title}
-            </option>
-          ))}
-        </select>
-        <button className="rounded-full border-0 bg-primary px-5 py-3 text-sm font-extrabold text-white" type="submit">
-          Apply filters
-        </button>
-        {query.destination || query.package ? (
-          <Link className="text-xs font-extrabold text-primary" href="/gallery">Clear</Link>
-        ) : null}
-      </form>
-      <p className="mb-8 text-sm font-bold text-text-muted">
-        {listing.meta.total} {listing.meta.total === 1 ? "album" : "albums"}
-      </p>
-      {albums.length ? (
-        <div className="grid gap-16">
-          {albums.map((album) => (
-            <section className="border-t border-border-subtle pt-10" key={album.id}>
-              <div className="mb-6 flex items-start justify-between gap-5">
-                <div>
-                  <p className="mb-2 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-hover">
-                    {album.destination?.name ?? "Gallery album"}
-                  </p>
-                  <h2 className="m-0 font-display text-4xl font-semibold text-text-heading">{album.title}</h2>
-                  {album.description ? <p className="mt-3 max-w-2xl text-text-muted">{album.description}</p> : null}
-                </div>
-                {album.isDemo ? (
-                  <span className="rounded-full bg-accent-soft px-3 py-1.5 text-[0.65rem] font-extrabold uppercase text-secondary-hover">Demo album</span>
-                ) : null}
-              </div>
-              <ImageLightbox images={album.images} label={album.title} />
-            </section>
-          ))}
+    <main>
+      <GalleryHero albumCount={listing.meta.total} imageCount={allImages.length} />
+      <GalleryDiscoveryBar destinations={destinations} packages={packages} query={query} />
+
+      <div className="mx-auto grid w-full max-w-7xl gap-14 px-5 py-14 sm:px-8 lg:px-10">
+        <div className="flex items-center justify-between gap-4">
+          <p className="m-0 text-sm font-bold text-text-muted"><strong className="text-text-heading">{listing.meta.total}</strong> {listing.meta.total === 1 ? "collection" : "collections"}</p>
+          <p className="m-0 text-[0.72rem] font-extrabold uppercase tracking-[0.12em] text-secondary-hover">{wallView ? "Fluid photo wall" : "Curated photo essays"}</p>
         </div>
-      ) : (
-        <div className="rounded-xl border border-border-subtle bg-white p-8 shadow-card">
-          <h2 className="font-display text-3xl text-text-heading">No published albums match</h2>
-          <p className="mt-3 text-text-muted">
-            Try clearing filters. Empty albums do not substitute unlicensed
-            images.
-          </p>
-        </div>
-      )}
-      <PaginationControls
-        page={listing.meta.page}
-        pageSize={listing.meta.pageSize}
-        total={listing.meta.total}
-        hrefForPage={hrefFor}
-      />
-    </div>
+
+        {albums.length ? (
+          wallView ? (
+            <ImageLightbox images={allImages} label="BR Tours visual journal" variant="masonry" planHref="/contact-us?subject=custom-trip#contact-form" />
+          ) : (
+            <div className="grid gap-20">
+              {albums.map((album, albumIndex) => {
+                const destination = album.destination?.name;
+                const destinationHref = album.destination ? `/packages?destination=${encodeURIComponent(album.destination.slug)}` : "/packages";
+                const planHref = `/contact-us?subject=${encodeURIComponent(destination ? `Trip inspired by ${destination}` : `Trip inspired by ${album.title}`)}#contact-form`;
+                return (
+                  <section className="defer-render border-t border-border-subtle pt-10 first:border-t-0 first:pt-0" key={album.id} aria-labelledby={`album-${album.id}`}>
+                    <div className="mb-6 flex items-start justify-between gap-5 max-[620px]:flex-col">
+                      <div>
+                        <p className="mb-2 inline-flex items-center gap-1.5 text-[0.7rem] font-extrabold uppercase tracking-[0.16em] text-secondary-hover"><MapPin aria-hidden="true" size={14} /> {destination ?? "BR visual journal"}</p>
+                        <h2 className="m-0 font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] tracking-[-0.025em] text-text-heading" id={`album-${album.id}`}>{album.title}</h2>
+                        {album.description ? <p className="mb-0 mt-4 max-w-2xl text-[0.98rem] leading-relaxed text-text-muted">{album.description}</p> : null}
+                      </div>
+                      <span className="shrink-0 rounded-full bg-bg-muted px-3 py-1.5 text-[0.68rem] font-extrabold text-primary">{album.images.length} {album.images.length === 1 ? "photograph" : "photographs"}</span>
+                    </div>
+                    <ImageLightbox images={album.images} label={album.title} location={destination} planHref={planHref} packageHref={selectedPackage ? `/packages/${selectedPackage.slug}` : undefined} priorityImages={albumIndex === 0} />
+                    <div className="mt-4 flex items-center justify-between gap-4 rounded-lg border border-border-subtle bg-white px-5 py-3 shadow-card max-[620px]:items-start max-[620px]:flex-col">
+                      <p className="m-0 text-[0.8rem] text-text-muted">Inspired by this collection? Explore journeys that can bring the destination into your itinerary.</p>
+                      <Link className="inline-flex shrink-0 items-center gap-1.5 text-[0.78rem] font-extrabold text-primary no-underline" href={selectedPackage ? `/packages/${selectedPackage.slug}` : destinationHref}>{selectedPackage ? selectedPackage.title : `Explore ${destination ?? "journeys"}`} <ArrowRight aria-hidden="true" size={15} /></Link>
+                    </div>
+                    {albumIndex === 0 ? <span className="sr-only">The first two images are prioritized for faster display.</span> : null}
+                  </section>
+                );
+              })}
+            </div>
+          )
+        ) : (
+          <div className="rounded-xl border border-border-subtle bg-white p-8 text-center shadow-card sm:p-12">
+            <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.16em] text-secondary-hover">No matching collection</p>
+            <h2 className="m-0 font-display text-3xl font-semibold text-text-heading">Try a wider view of India.</h2>
+            <p className="mx-auto mt-3 max-w-xl text-text-muted">Clear the current filters to return to every published album.</p>
+            <Link className="mt-6 inline-flex min-h-11 items-center rounded-full bg-primary px-5 py-2.5 text-sm font-extrabold text-white no-underline" href="/gallery">Clear all filters</Link>
+          </div>
+        )}
+
+        <PaginationControls page={listing.meta.page} pageSize={listing.meta.pageSize} total={listing.meta.total} hrefForPage={hrefFor} />
+        <GalleryCta />
+      </div>
+    </main>
   );
 }

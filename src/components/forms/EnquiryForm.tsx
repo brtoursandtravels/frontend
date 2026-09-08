@@ -17,6 +17,7 @@ const enquirySchema = z.object({
       "Enter a valid phone number.",
     ),
   subject: z.string().trim().max(200),
+  tripStyle: z.string().trim().max(80),
   message: z
     .string()
     .trim()
@@ -49,6 +50,8 @@ export function EnquiryForm({
   whatsappHref,
   defaultAdultCount,
   defaultChildCount,
+  defaultSubject,
+  defaultMessage,
 }: {
   packageSlug?: string;
   packageTitle?: string;
@@ -57,6 +60,8 @@ export function EnquiryForm({
   whatsappHref?: string | null;
   defaultAdultCount?: number;
   defaultChildCount?: number;
+  defaultSubject?: string;
+  defaultMessage?: string;
 }) {
   const [intent, setIntent] = useState<
     "CONTACT" | "PACKAGE_ENQUIRY" | "BOOKING_REQUEST"
@@ -82,6 +87,7 @@ export function EnquiryForm({
       email: textValue("email"),
       phone: textValue("phone"),
       subject: textValue("subject"),
+      tripStyle: textValue("tripStyle"),
       message: textValue("message"),
       preferredStartDate: textValue("preferredStartDate"),
       adultCount: textValue("adultCount"),
@@ -113,7 +119,9 @@ export function EnquiryForm({
       email: value.email,
       ...(value.phone ? { phone: value.phone } : {}),
       ...(value.subject ? { subject: value.subject } : {}),
-      message: value.message,
+      message: value.tripStyle
+        ? `${value.message}\n\nPreferred travel style: ${value.tripStyle}`
+        : value.message,
       ...(packageSlug ? { packageSlug } : {}),
       ...(value.departureId ? { departureId: value.departureId } : {}),
       ...(value.preferredStartDate
@@ -182,13 +190,10 @@ export function EnquiryForm({
         tabIndex={-1}
         role="status"
       >
-        <p className="mb-2 text-xs font-extrabold uppercase tracking-wider text-success">Request received</p>
-        <h2 className="font-display text-3xl text-text-heading">Keep this reference: {receipt.reference}</h2>
-        <p>{receipt.message}</p>
-        <p>
-          An email notification is queued for staff review; this message does
-          not claim delivery or booking confirmation.
-        </p>
+        <p className="mb-2 text-xs font-extrabold uppercase tracking-wider text-success">Your trip brief is with us</p>
+        <h2 className="font-display text-3xl text-text-heading">Thank you. Let&apos;s make it memorable.</h2>
+        <p className="mt-3 text-text-muted">Your reference is <strong className="text-text-heading">{receipt.reference}</strong>. Keep it handy if you contact us about this request.</p>
+        <p className="text-text-muted">{receipt.message} We aim to respond within 4 business hours.</p>
         {whatsappHref ? (
           <a
             className="mt-3 inline-flex items-center gap-2 rounded-full bg-success px-5 py-3 text-sm font-extrabold text-white no-underline"
@@ -259,6 +264,17 @@ export function EnquiryForm({
           <strong>Package:</strong> {packageTitle}
         </p>
       ) : null}
+      <fieldset className="grid gap-3">
+        <legend className="text-xs font-bold text-text-heading">What style feels most like you? <span className="font-normal text-text-muted">Optional</span></legend>
+        <div className="flex flex-wrap gap-2">
+          {["Couples / honeymoon", "Family", "Adventure", "Luxury heritage", "Slow travel"].map((style) => (
+            <label className="cursor-pointer" key={style}>
+              <input className="peer sr-only" type="radio" name="tripStyle" value={style} />
+              <span className="inline-flex min-h-10 items-center rounded-full border border-border-subtle bg-white px-4 py-2 text-xs font-bold text-text-body transition hover:border-secondary/50 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-focus-visible:ring-3 peer-focus-visible:ring-primary/20">{style}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
       <div className="grid grid-cols-2 gap-4 max-[620px]:grid-cols-1">
         <label className={labelClass}>
           Name
@@ -319,46 +335,36 @@ export function EnquiryForm({
             </select>
           </label>
         ) : null}
-        {packageSlug ? (
-          <>
-            <label className={labelClass}>
-              Adults <span className="font-normal text-text-muted">Optional</span>
-              <input
-                className={fieldClass}
-                name="adultCount"
-                type="number"
-                min="1"
-                max="50"
-                defaultValue={defaultAdultCount}
-              />
-            </label>
-            <label className={labelClass}>
-              Children <span className="font-normal text-text-muted">Optional</span>
-              <input
-                className={fieldClass}
-                name="childCount"
-                type="number"
-                min="0"
-                max="50"
-                defaultValue={defaultChildCount}
-              />
-            </label>
-            <label className={`${labelClass} col-span-2 max-[620px]:col-span-1`}>
-              Approximate budget <span className="font-normal text-text-muted">Optional</span>
-              <input className={fieldClass} name="budget" type="number" min="0" inputMode="decimal" />
-            </label>
-          </>
-        ) : (
+        {!packageSlug ? (
           <label className={`${labelClass} col-span-2 max-[620px]:col-span-1`}>
             Subject <span className="font-normal text-text-muted">Optional</span>
-            <input className={fieldClass} name="subject" />
+            <input className={fieldClass} name="subject" defaultValue={defaultSubject} />
           </label>
-        )}
+        ) : null}
+        <label className={labelClass}>
+          Adults <span className="font-normal text-text-muted">Optional</span>
+          <input className={fieldClass} name="adultCount" type="number" min="1" max="50" defaultValue={defaultAdultCount} />
+        </label>
+        <label className={labelClass}>
+          Children <span className="font-normal text-text-muted">Optional</span>
+          <input className={fieldClass} name="childCount" type="number" min="0" max="50" defaultValue={defaultChildCount} />
+        </label>
+        <label className={`${labelClass} col-span-2 max-[620px]:col-span-1`}>
+          Approximate total budget <span className="font-normal text-text-muted">Optional</span>
+          <select className={fieldClass} name="budget" defaultValue="">
+            <option value="">Flexible / discuss with the team</option>
+            <option value="50000">Around ₹50,000</option>
+            <option value="100000">₹1,00,000 – ₹2,50,000</option>
+            <option value="250000">₹2,50,000 – ₹5,00,000</option>
+            <option value="500000">₹5,00,000+</option>
+          </select>
+        </label>
         <label className={`${labelClass} col-span-2 max-[620px]:col-span-1`}>
           Message
           <textarea
             className={`${fieldClass} min-h-32 resize-y`}
             name="message"
+            defaultValue={defaultMessage}
             rows={compact ? 4 : 6}
             aria-invalid={Boolean(errors.message)}
             aria-describedby={errors.message ? "message-error" : undefined}
@@ -396,6 +402,7 @@ export function EnquiryForm({
             ? "Request booking review"
             : "Send enquiry"}
       </button>
+      <p className="m-0 text-center text-[0.75rem] font-semibold text-text-muted">Complimentary planning · No booking obligation · Private contact details</p>
     </form>
   );
 }

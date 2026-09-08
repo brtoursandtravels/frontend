@@ -5,6 +5,7 @@ import { FaqAccordion } from "@/components/home/FaqAccordion";
 import { FeaturedDestinations } from "@/components/home/FeaturedDestinations";
 import { GalleryPreview } from "@/components/home/GalleryPreview";
 import { HeroSection } from "@/components/home/HeroSection";
+import { CustomiseTripSection } from "@/components/home/CustomiseTripSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { TravelJournalPreview } from "@/components/home/TravelJournalPreview";
 import { TrendingPackages } from "@/components/home/TrendingPackages";
@@ -19,7 +20,7 @@ import {
   getTestimonials,
 } from "@/lib/api";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
@@ -76,16 +77,17 @@ export default async function HomePage() {
       />
       <FeaturedDestinations destinations={destinations?.data ?? []} />
       <TrendingPackages packages={packages?.data ?? []} />
+      <CustomiseTripSection />
       <WhyChooseUs />
       <TestimonialsSection testimonials={testimonials?.data ?? []} />
       <GalleryPreview albums={gallery?.data ?? []} />
       <TravelJournalPreview posts={blog?.data ?? []} />
       <FaqAccordion faqs={faqs?.data ?? []} />
-      <section className="mx-auto w-full max-w-7xl px-5 py-24 sm:px-8 lg:px-10 max-[820px]:py-[4.5rem]">
+      <section className="defer-render mx-auto w-full max-w-7xl px-5 py-24 sm:px-8 lg:px-10 max-[820px]:py-[4.5rem]">
         <div className="flex items-center justify-between gap-10 rounded-xl bg-[radial-gradient(circle_at_top_right,color-mix(in_srgb,var(--color-accent)_22%,transparent),transparent_24rem)] bg-primary p-[clamp(1.6rem,5vw,4rem)] text-white shadow-dropdown max-[820px]:flex-col max-[820px]:items-start">
           <div>
-            <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-light">Your journey, personally considered</p>
-            <h2 className="m-0 font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] text-white">Have a place in mind—or just a feeling?</h2>
+            <p className="mb-3 text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-secondary-light">Your journey, personally considered</p>
+            <h2 className="m-0 max-w-2xl font-display text-[clamp(1.65rem,2.25vw,2.25rem)] font-semibold leading-[1.12] text-white">Have a place in mind or just a feeling?</h2>
             <p className="mt-4 max-w-2xl text-white/75">Share what matters. We will help turn the first idea into a clear, considered plan.</p>
           </div>
           <div className="flex shrink-0 flex-wrap gap-3 max-[620px]:grid max-[620px]:w-full">

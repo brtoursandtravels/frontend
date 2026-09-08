@@ -9,7 +9,7 @@
   --color-primary-ink: color-mix(in srgb, var(--color-primary) 42%, black);
   --color-primary-footer: color-mix(in srgb, var(--color-primary) 52%, black);
   --color-secondary: #d97706;
-  --color-secondary-hover: color-mix(in srgb, var(--color-secondary) 82%, black);
+  --color-secondary-hover: color-mix(in srgb, var(--color-secondary) 72%, black);
   --color-secondary-light: color-mix(in srgb, var(--color-secondary) 62%, white);
   --color-secondary-muted: color-mix(in srgb, var(--color-secondary) 72%, white);
   --color-accent: #f97316;
@@ -32,7 +32,7 @@
 
   --color-text-heading: #121d1f;
   --color-text-body: #374151;
-  --color-text-muted: #6b7280;
+  --color-text-muted: #5f6673;
   --color-text-inverted: #ffffff;
 
   --color-success: #15803d;
@@ -77,6 +77,8 @@
   --animate-shimmer: shimmer 2.8s linear infinite;
   --animate-nav-reveal: nav-reveal 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-showcase-reveal: showcase-reveal 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-hero-fade: hero-fade 900ms ease-out both;
+  --animate-customise-glow: customise-glow 4.5s ease-in-out infinite;
 }
 
 :root {
@@ -84,6 +86,11 @@
   --hero-particle-gold: #d97706;
   --hero-particle-teal: #85c8bf;
   --hero-particle-starlight: #ffffff;
+}
+
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 50rem;
 }
 
 @layer base {
@@ -221,5 +228,75 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    transform: scale(1.035);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.015);
+  }
+}
+
+@keyframes customise-glow {
+  0%,
+  100% {
+    box-shadow: 0 0.65rem 1.5rem color-mix(in srgb, var(--color-secondary) 16%, transparent);
+  }
+  50% {
+    box-shadow: 0 0.9rem 2rem color-mix(in srgb, var(--color-accent) 28%, transparent);
+  }
+}
+
+.customise-parallax-bg {
+  animation: customise-mountain-breathe 18s ease-in-out infinite alternate;
+  transform: scale(1.055) translate3d(0, -0.5rem, 0);
+  transform-origin: 50% 55%;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+@keyframes customise-mountain-breathe {
+  0% {
+    transform: scale(1.055) translate3d(-0.35rem, -0.5rem, 0);
+  }
+  50% {
+    transform: scale(1.075) translate3d(0.25rem, 0.15rem, 0);
+  }
+  100% {
+    transform: scale(1.095) translate3d(0.5rem, 0.65rem, 0);
+  }
+}
+
+.gallery-hero-image {
+  animation: gallery-hero-pan 22s ease-in-out infinite alternate;
+  transform: scale(1.06) translate3d(-0.6rem, 0, 0);
+  will-change: transform;
+}
+
+@keyframes gallery-hero-pan {
+  from {
+    transform: scale(1.06) translate3d(-0.6rem, 0, 0);
+  }
+  to {
+    transform: scale(1.09) translate3d(0.75rem, -0.25rem, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .customise-parallax-bg {
+    animation: none;
+    transform: scale(1.03);
+    will-change: auto;
+  }
+
+  .gallery-hero-image {
+    animation: none;
+    transform: scale(1.03);
+    will-change: auto;
   }
 }

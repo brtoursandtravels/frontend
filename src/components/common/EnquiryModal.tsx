@@ -12,6 +12,8 @@ export function EnquiryModal({
   whatsappHref,
   defaultAdultCount,
   defaultChildCount,
+  initiallyOpen = false,
+  defaultMessage,
 }: {
   packageSlug?: string;
   packageTitle?: string;
@@ -20,8 +22,10 @@ export function EnquiryModal({
   whatsappHref?: string | null;
   defaultAdultCount?: number;
   defaultChildCount?: number;
+  initiallyOpen?: boolean;
+  defaultMessage?: string;
 }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(initiallyOpen);
   const closeRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLElement>(null);
@@ -86,6 +90,7 @@ export function EnquiryModal({
               whatsappHref={whatsappHref}
               defaultAdultCount={defaultAdultCount}
               defaultChildCount={defaultChildCount}
+              defaultMessage={defaultMessage}
             />
           </section>
         </div>

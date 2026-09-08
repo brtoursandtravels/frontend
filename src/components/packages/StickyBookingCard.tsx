@@ -9,6 +9,8 @@ import {
   Plus,
   ShieldCheck,
   Users,
+  Utensils,
+  CarFront,
 } from "lucide-react";
 import type { PackageDetail } from "@/lib/contracts";
 import { formatMoney, priceBasisLabel } from "@/lib/presentation";
@@ -93,13 +95,16 @@ export function StickyBookingCard({
   item,
   departures,
   whatsappHref,
+  pilgrimageMode = false,
 }: {
   item: PackageDetail;
   departures: Array<{ id: string; label: string }>;
   whatsappHref?: string | null;
+  pilgrimageMode?: boolean;
 }) {
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
+  const [journeyType, setJourneyType] = useState<"GROUP" | "PRIVATE">("PRIVATE");
   const travellers = adults + children;
   const canEstimate =
     item.startingPrice?.basis === "PER_PERSON" && travellers > 0;
@@ -136,6 +141,18 @@ export function StickyBookingCard({
         </small>
       </div>
 
+      {pilgrimageMode ? (
+        <fieldset className="mt-5 grid grid-cols-2 gap-2 rounded-lg border border-border-subtle bg-bg-muted p-3">
+          <legend className="px-1 text-xs font-extrabold text-text-heading">Preferred yatra format</legend>
+          <label className={`cursor-pointer rounded-md border p-3 text-xs font-bold transition ${journeyType === "GROUP" ? "border-primary bg-primary text-white" : "border-border-subtle bg-white text-text-body"}`}>
+            <input className="sr-only" type="radio" name="journeyType" checked={journeyType === "GROUP"} onChange={() => setJourneyType("GROUP")} />Fixed group
+          </label>
+          <label className={`cursor-pointer rounded-md border p-3 text-xs font-bold transition ${journeyType === "PRIVATE" ? "border-primary bg-primary text-white" : "border-border-subtle bg-white text-text-body"}`}>
+            <input className="sr-only" type="radio" name="journeyType" checked={journeyType === "PRIVATE"} onChange={() => setJourneyType("PRIVATE")} />Private family
+          </label>
+        </fieldset>
+      ) : null}
+
       <fieldset className="my-5 grid grid-cols-2 gap-3 rounded-lg border border-border-subtle bg-bg-muted p-4 max-[420px]:grid-cols-1">
         <legend className="px-1 text-xs font-extrabold text-text-heading">
           <Users
@@ -166,6 +183,12 @@ export function StickyBookingCard({
       </fieldset>
 
       <div className="my-5 grid gap-3 text-xs text-text-body [&_span]:flex [&_span]:items-center [&_span]:gap-2 [&_svg]:text-accent">
+        {pilgrimageMode ? (
+          <>
+            <span><Utensils aria-hidden="true" size={16} /> Satvik meal preferences can be planned</span>
+            <span><CarFront aria-hidden="true" size={16} /> Mountain-route driver planning</span>
+          </>
+        ) : null}
         <span>
           <Clock3 aria-hidden="true" size={16} /> Response reviewed by staff
         </span>
@@ -187,6 +210,7 @@ export function StickyBookingCard({
           whatsappHref={whatsappHref}
           defaultAdultCount={adults}
           defaultChildCount={children}
+          defaultMessage={pilgrimageMode ? `I would like to discuss the ${journeyType === "PRIVATE" ? "private family" : "fixed group"} format for this Char Dham Yatra.` : undefined}
         />
         {whatsappHref ? (
           <a

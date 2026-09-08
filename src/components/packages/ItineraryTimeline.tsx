@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, MapPin, Route } from "lucide-react";
+import { BedDouble, CarFront, ChevronDown, Footprints, Images, MapPin, Plane, Route, Utensils } from "lucide-react";
 import { useState } from "react";
 import type { PackageDetail } from "@/lib/contracts";
 import { PublicImage } from "@/components/common/PublicImage";
@@ -8,168 +8,149 @@ import { PublicImage } from "@/components/common/PublicImage";
 export function ItineraryTimeline({
   itinerary,
   media = [],
+  yatraMode = false,
 }: {
   itinerary: PackageDetail["itinerary"];
   media?: PackageDetail["media"];
+  yatraMode?: boolean;
 }) {
-  const [activeDay, setActiveDay] = useState(
-    itinerary[0]?.dayNumber ?? 0,
+  const [openDays, setOpenDays] = useState<Set<number>>(
+    () => new Set(itinerary[0] ? [itinerary[0].dayNumber] : []),
   );
-  const activeIndex = Math.max(
-    0,
-    itinerary.findIndex((day) => day.dayNumber === activeDay),
-  );
-  const day = itinerary[activeIndex];
-  const preview = media.length ? media[activeIndex % media.length] : null;
+  const allOpen = itinerary.length > 0 && openDays.size === itinerary.length;
 
-  if (!day) {
+  if (!itinerary.length) {
     return <p>The day-by-day plan is still being prepared.</p>;
   }
 
-  function selectDay(index: number) {
-    const selected = itinerary[index];
-    if (selected) setActiveDay(selected.dayNumber);
+  function toggleDay(dayNumber: number) {
+    setOpenDays((current) => {
+      const next = new Set(current);
+      if (next.has(dayNumber)) next.delete(dayNumber);
+      else next.add(dayNumber);
+      return next;
+    });
   }
 
-  function onTabKeyDown(
-    event: React.KeyboardEvent<HTMLButtonElement>,
-    index: number,
-  ) {
-    let next = index;
-    if (event.key === "ArrowRight") next = (index + 1) % itinerary.length;
-    else if (event.key === "ArrowLeft")
-      next = (index - 1 + itinerary.length) % itinerary.length;
-    else if (event.key === "Home") next = 0;
-    else if (event.key === "End") next = itinerary.length - 1;
-    else return;
-    event.preventDefault();
-    selectDay(next);
-    const tabs = event.currentTarget.parentElement?.querySelectorAll("button");
-    (tabs?.[next] as HTMLButtonElement | undefined)?.focus();
+  function jumpToDay(dayNumber: number) {
+    setOpenDays((current) => new Set(current).add(dayNumber));
+    window.requestAnimationFrame(() => {
+      document.getElementById(`itinerary-day-${dayNumber}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
+
+  function imageForDay(day: PackageDetail["itinerary"][number], index: number) {
+    if (!media.length) return null;
+    if (!yatraMode) return media[index % media.length] ?? null;
+    const searchText = `${day.title} ${day.description}`;
+    const imageKey = /helicopter|helipad|phata/i.test(searchText)
+      ? "helicopter"
+      : /kedarnath/i.test(searchText)
+        ? "kedarnath"
+        : /badrinath/i.test(searchText)
+          ? "badrinath"
+          : /gangotri/i.test(searchText)
+            ? "gangotri"
+            : /yamunotri/i.test(searchText)
+              ? "yamunotri"
+              : "road";
+    return media.find((item) => item.id.includes(imageKey)) ?? media[index % media.length] ?? null;
   }
 
   return (
     <div>
-      <div className="mb-5 flex items-center justify-between gap-4">
+      <div className="mb-5 flex items-end justify-between gap-4 max-[720px]:items-stretch max-[720px]:flex-col">
         <p className="m-0 flex items-center gap-2 text-sm text-text-muted">
           <Route aria-hidden="true" className="text-secondary" size={18} />
           {itinerary.length} thoughtfully paced days
         </p>
-        <span className="text-xs font-bold text-primary">
-          Day {activeIndex + 1} of {itinerary.length}
-        </span>
+        <div className="flex items-end gap-2 max-[520px]:items-stretch max-[520px]:flex-col">
+          <label className="grid min-w-52 gap-1 text-[0.62rem] font-extrabold uppercase tracking-wider text-secondary-hover">
+            Jump to a day
+            <select
+              className="rounded-full border border-border-subtle bg-white px-4 py-2.5 text-xs font-bold normal-case tracking-normal text-text-heading outline-none focus:border-primary focus:ring-3 focus:ring-primary/10"
+              defaultValue=""
+              onChange={(event) => {
+                if (event.target.value) jumpToDay(Number(event.target.value));
+              }}
+            >
+              <option value="" disabled>Select day</option>
+              {itinerary.map((day) => <option value={day.dayNumber} key={day.dayNumber}>Day {day.dayNumber}: {day.title}</option>)}
+            </select>
+          </label>
+          <button
+            className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-border-subtle bg-white px-4 py-2 text-xs font-extrabold text-primary transition hover:border-primary"
+            type="button"
+            onClick={() => setOpenDays(allOpen ? new Set() : new Set(itinerary.map((day) => day.dayNumber)))}
+          >
+            <Images aria-hidden="true" size={15} /> {allOpen ? "Collapse all" : "Expand all"}
+          </button>
+        </div>
       </div>
 
-      <div
-        className="mb-4 flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        role="tablist"
-        aria-label="Choose an itinerary day"
-      >
-        {itinerary.map((item, index) => {
-          const selected = index === activeIndex;
+      <div className="grid gap-2">
+        {itinerary.map((day, index) => {
+          const expanded = openDays.has(day.dayNumber);
+          const preview = imageForDay(day, index);
+          const isKedarnathDay = yatraMode && (day.dayNumber === 5 || day.dayNumber === 6 || /kedarnath/i.test(`${day.title} ${day.description}`));
           return (
-            <button
-              className={`grid min-w-[9.5rem] gap-0.5 rounded-lg border px-4 py-3 text-left transition ${
-                selected
-                  ? "border-primary bg-primary text-white shadow-glow-teal"
-                  : "border-border-subtle bg-bg-muted text-text-body hover:border-primary/35 hover:bg-primary-soft"
-              }`}
-              type="button"
-              role="tab"
-              id={`itinerary-tab-${item.dayNumber}`}
-              aria-controls={`itinerary-panel-${item.dayNumber}`}
-              aria-selected={selected}
-              tabIndex={selected ? 0 : -1}
-              onClick={() => setActiveDay(item.dayNumber)}
-              onKeyDown={(event) => onTabKeyDown(event, index)}
-              key={item.dayNumber}
-            >
-              <span
-                className={`text-[0.62rem] font-extrabold uppercase tracking-wider ${selected ? "text-secondary-light" : "text-secondary-hover"}`}
-              >
-                Day {String(item.dayNumber).padStart(2, "0")}
-              </span>
-              <strong className="truncate text-sm">{item.title}</strong>
-            </button>
+            <article className={`scroll-mt-28 overflow-hidden rounded-lg border transition ${expanded ? "border-secondary/35 bg-bg-muted shadow-sm" : "border-border-subtle bg-white hover:border-primary/25"}`} id={`itinerary-day-${day.dayNumber}`} key={day.dayNumber}>
+              <h3 className="m-0">
+                <button
+                  className="grid min-h-14 w-full grid-cols-[auto_1fr_auto] items-center gap-3 border-0 bg-transparent px-4 py-3 text-left"
+                  type="button"
+                  aria-expanded={expanded}
+                  aria-controls={`itinerary-content-${day.dayNumber}`}
+                  onClick={() => toggleDay(day.dayNumber)}
+                >
+                  <span className={`rounded-md px-3 py-1.5 text-[0.68rem] font-extrabold uppercase ${expanded ? "bg-primary text-white" : "bg-primary-soft text-primary"}`}>Day {day.dayNumber}</span>
+                  <span className="font-display text-[0.95rem] font-semibold text-text-heading">{day.title}</span>
+                  <ChevronDown aria-hidden="true" className={`text-secondary transition-transform ${expanded ? "rotate-180" : ""}`} size={18} />
+                </button>
+              </h3>
+
+              {expanded ? (
+                <div className="border-t border-border-subtle" id={`itinerary-content-${day.dayNumber}`}>
+                  <div className={`grid ${preview ? "grid-cols-[1fr_15rem]" : "grid-cols-1"} max-[720px]:grid-cols-1`}>
+                    <div className="p-5">
+                      <p className="m-0 text-sm leading-7 text-text-muted">{day.description}</p>
+                      {yatraMode ? (
+                        <div className="mt-4 flex flex-wrap gap-2 text-[0.66rem] font-bold text-primary">
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-2"><BedDouble aria-hidden="true" size={14} /> Halt confirmed in final plan</span>
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-2"><Utensils aria-hidden="true" size={14} /> Meals shown in inclusions</span>
+                          <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-2"><CarFront aria-hidden="true" size={14} /> Timings reviewed</span>
+                        </div>
+                      ) : (
+                        <span className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-3 py-2 text-[0.68rem] font-bold text-primary"><MapPin aria-hidden="true" size={15} /> Planned route and experiences</span>
+                      )}
+                    </div>
+                    {preview ? (
+                      <div className="relative min-h-44 overflow-hidden max-[720px]:order-first">
+                        <PublicImage alt={preview.altText} className="object-cover" sizes="(max-width: 720px) 100vw, 240px" src={preview.url} />
+                      </div>
+                    ) : null}
+                  </div>
+
+                  {isKedarnathDay ? (
+                    <div className="grid grid-cols-2 gap-3 border-t border-border-subtle p-4 max-[620px]:grid-cols-1">
+                      <div className="rounded-lg bg-white p-4">
+                        <Footprints aria-hidden="true" className="mb-2 text-secondary-hover" size={21} />
+                        <strong className="block text-sm text-text-heading">Trek, pony or palki</strong>
+                        <p className="mb-0 mt-1 text-xs leading-relaxed text-text-muted">Requires realistic time and fitness planning. Local services depend on operations and availability.</p>
+                      </div>
+                      <div className="rounded-lg bg-accent-soft p-4">
+                        <Plane aria-hidden="true" className="mb-2 text-secondary-hover" size={21} />
+                        <strong className="block text-sm text-text-heading">Helicopter shuttle</strong>
+                        <p className="mb-0 mt-1 text-xs leading-relaxed text-text-muted">Subject to weather, operator schedules, passenger rules and availability.</p>
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
+            </article>
           );
         })}
       </div>
-
-      <article
-        className="grid min-h-[22rem] grid-cols-[0.9fr_1.1fr] overflow-hidden rounded-xl border border-border-subtle bg-bg-muted motion-safe:animate-showcase-reveal max-[720px]:grid-cols-1"
-        role="tabpanel"
-        id={`itinerary-panel-${day.dayNumber}`}
-        aria-labelledby={`itinerary-tab-${day.dayNumber}`}
-        key={day.dayNumber}
-      >
-        <div className="relative min-h-[22rem] overflow-hidden max-[720px]:min-h-56">
-          {preview ? (
-            <>
-              <PublicImage
-                alt={preview.altText}
-                className="object-cover"
-                sizes="(max-width: 720px) 100vw, 38vw"
-                src={preview.url}
-              />
-              <span className="absolute inset-0 bg-gradient-to-t from-primary-ink/70 via-transparent to-transparent" />
-              {preview.caption ? (
-                <span className="absolute inset-x-0 bottom-0 p-4 text-xs text-white/75">
-                  {preview.caption}
-                </span>
-              ) : null}
-            </>
-          ) : (
-            <div className="absolute inset-0 grid place-items-center bg-[radial-gradient(circle_at_top_right,var(--color-primary-light),var(--color-primary-ink))] p-8 text-center text-white">
-              <div className="grid place-items-center gap-3">
-                <MapPin aria-hidden="true" size={34} />
-                <span className="text-sm font-bold">
-                  Route photography will be confirmed with your itinerary.
-                </span>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <div className="flex flex-col justify-center p-[clamp(1.4rem,4vw,2.5rem)]">
-          <p className="mb-2 text-[0.65rem] font-extrabold uppercase tracking-[0.16em] text-secondary-hover">
-            Day {String(day.dayNumber).padStart(2, "0")}
-          </p>
-          <h3 className="m-0 font-display text-[clamp(1.85rem,3vw,2.75rem)] font-semibold leading-[1.12] text-text-heading">
-            {day.title}
-          </h3>
-          <p className="my-5 text-sm leading-7 text-text-muted">
-            {day.description}
-          </p>
-          <span className="inline-flex w-fit items-center gap-2 rounded-full bg-primary-soft px-3 py-2 text-[0.68rem] font-bold text-primary">
-            <MapPin aria-hidden="true" size={15} /> Planned sightseeing and
-            experiences
-          </span>
-          <div className="mt-7 flex items-center justify-between gap-3 border-t border-border-subtle pt-4">
-            <button
-              className="inline-flex min-h-10 items-center gap-2 rounded-full border border-primary/20 bg-white px-4 py-2 text-xs font-extrabold text-primary disabled:opacity-40"
-              type="button"
-              disabled={activeIndex === 0}
-              onClick={() => selectDay(activeIndex - 1)}
-            >
-              <ArrowLeft aria-hidden="true" size={15} /> Previous
-            </button>
-            <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-border-subtle">
-              <span
-                className="block h-full rounded-full bg-gradient-to-r from-secondary to-accent transition-[width]"
-                style={{ width: `${((activeIndex + 1) / itinerary.length) * 100}%` }}
-              />
-            </span>
-            <button
-              className="inline-flex min-h-10 items-center gap-2 rounded-full border border-primary/20 bg-white px-4 py-2 text-xs font-extrabold text-primary disabled:opacity-40"
-              type="button"
-              disabled={activeIndex === itinerary.length - 1}
-              onClick={() => selectDay(activeIndex + 1)}
-            >
-              Next <ArrowRight aria-hidden="true" size={15} />
-            </button>
-          </div>
-        </div>
-      </article>
     </div>
   );
 }

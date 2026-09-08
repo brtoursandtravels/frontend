@@ -46,9 +46,13 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
     .sort((left, right) => left.sortOrder - right.sortOrder);
   const phone = settingText(site, ["contact.phone", "business.phone", "phone"]);
   const email = settingText(site, ["contact.email", "business.email", "email"]);
-  const whatsappHref = whatsappLink(
-    settingText(site, ["contact.whatsapp", "business.whatsapp", "whatsapp"]),
-  );
+  const whatsapp = settingText(site, [
+    "contact.whatsapp",
+    "business.whatsapp",
+    "whatsapp",
+  ]);
+  const whatsappHref = whatsappLink(whatsapp);
+  const whatsappDisplay = whatsapp ?? "+91 00000 00000";
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 24);
@@ -130,7 +134,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
   return (
     <>
       <div className="relative z-80 border-b border-secondary/20 bg-[#051b1c] text-white/75 max-[760px]:hidden">
-        <div className="relative mx-auto flex min-h-9 w-full max-w-7xl items-center gap-5 px-5 text-[0.68rem] font-bold sm:px-8 lg:px-10">
+        <div className="relative mx-auto flex min-h-9 w-full max-w-7xl items-center gap-5 px-5 text-[0.72rem] font-bold sm:px-8 lg:px-10">
           <div className="flex items-center gap-5 [&_a]:inline-flex [&_a]:items-center [&_a]:gap-1.5 [&_a]:no-underline [&_a]:transition-colors [&_a:hover]:text-secondary-light">
             {phone ? (
               <a href={`tel:${phone}`}>
@@ -156,10 +160,16 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
               rel="noreferrer"
               target="_blank"
             >
-              <MessageCircle aria-hidden="true" size={13} /> WhatsApp chat
+              <MessageCircle aria-hidden="true" size={13} /> WhatsApp: {whatsappDisplay}
             </a>
           ) : (
-            <span className="ml-auto text-white/55">Personal trip planning</span>
+            <Link
+              className="ml-auto inline-flex items-center gap-1.5 font-extrabold text-secondary-light no-underline transition-colors hover:text-white"
+              href="/contact-us"
+              aria-label="WhatsApp number placeholder; open contact page"
+            >
+              <MessageCircle aria-hidden="true" size={13} /> WhatsApp: {whatsappDisplay}
+            </Link>
           )}
         </div>
       </div>
@@ -187,7 +197,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
         </div>
 
         <nav
-          className="relative z-10 ml-auto rounded-full border border-white/10 bg-black/15 p-1.5 shadow-inner backdrop-blur-md max-[1180px]:hidden"
+          className="relative z-10 ml-auto rounded-full bg-transparent p-1.5 max-[1180px]:hidden"
           aria-label="Primary navigation"
         >
           <ul
@@ -196,7 +206,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
           >
             <li
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 left-0 -z-10 rounded-full bg-white/14 opacity-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.09),0_8px_24px_rgba(0,0,0,0.18)] transition-[width,transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+              className="pointer-events-none absolute inset-y-0 left-0 -z-10 rounded-full bg-white/12 opacity-0 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)] transition-[width,transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
               data-testid="active-nav-pill"
               ref={activePillRef}
             />
@@ -334,7 +344,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
               </span>
             </Link>
 
-            {phone || email ? (
+            {phone || email || whatsappDisplay ? (
               <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs text-white/68 [&_a]:flex [&_a]:items-center [&_a]:gap-2 [&_a]:no-underline [&_a]:transition-colors [&_a:hover]:text-secondary-light">
                 {phone ? (
                   <a href={`tel:${phone}`}>
@@ -346,6 +356,15 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
                     <Mail aria-hidden="true" size={15} /> {email}
                   </a>
                 ) : null}
+                {whatsappHref ? (
+                  <a href={whatsappHref} rel="noreferrer" target="_blank">
+                    <MessageCircle aria-hidden="true" size={15} /> {whatsappDisplay}
+                  </a>
+                ) : (
+                  <Link href="/contact-us" onClick={() => setOpen(false)}>
+                    <MessageCircle aria-hidden="true" size={15} /> {whatsappDisplay}
+                  </Link>
+                )}
               </div>
             ) : null}
           </div>
@@ -365,7 +384,7 @@ function DesktopNavLink({
   active: boolean;
   children: React.ReactNode;
 }) {
-  const className = `group relative flex items-center gap-1.5 overflow-hidden rounded-full px-2.5 py-2.5 text-[0.61rem] font-extrabold uppercase tracking-[0.045em] no-underline transition-all duration-300 ${
+  const className = `group relative flex items-center gap-1.5 overflow-hidden rounded-full px-2.5 py-2.5 text-[0.68rem] font-extrabold uppercase tracking-[0.04em] no-underline transition-all duration-300 ${
     active
       ? "text-white"
       : "text-white/72 hover:-translate-y-0.5 hover:bg-white/8 hover:text-white"
