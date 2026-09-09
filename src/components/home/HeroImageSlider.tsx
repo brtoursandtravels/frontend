@@ -1,11 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { Pause, Play } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const slides = [
-  {
+   {
     src: "/images/hero-slider/udaipur-lake-pichola.webp",
     label: "Lake Pichola, Udaipur",
     position: "object-[62%_center]",
@@ -30,36 +29,71 @@ const slides = [
     label: "Varanasi ghats",
     position: "object-[64%_center]",
   },
- 
   {
     src: "/images/hero-slider/ladakh-pangong.webp",
     label: "Pangong Tso, Ladakh",
     position: "object-[58%_center]",
   },
+  {
+    src: "/images/hero-slider/documentary-meghalaya.webp",
+    label: "Living root bridge, Meghalaya",
+    position: "object-center",
+  },
+  {
+    src: "/images/hero-slider/documentary-rishikesh-rafting.webp",
+    label: "Himalayan river rafting, Rishikesh",
+    position: "object-center",
+  },
+  {
+    src: "/images/hero-slider/documentary-ladakh-trek.webp",
+    label: "High-altitude trek, Ladakh",
+    position: "object-center",
+  },
+  {
+    src: "/images/hero-slider/documentary-kedarnath-dawn.webp",
+    label: "Kedarnath Temple at dawn",
+    position: "object-center",
+  },
+  {
+    src: "/images/hero-slider/documentary-varanasi-aarti.webp",
+    label: "Ganga Aarti, Varanasi",
+    position: "object-center",
+  },
+  {
+    src: "/images/hero-slider/documentary-golden-temple.webp",
+    label: "Golden Temple at twilight, Amritsar",
+    position: "object-center",
+  },
+  {
+    src: "/images/hero-slider/paragliding-tandem-pov.webp",
+    label: "Tandem paragliding in the Himalayas",
+    position: "object-[68%_center]",
+  },
 ] as const;
 
 const SLIDE_DURATION = 3000;
-const FADE_DURATION = 1000;
 
 export function HeroImageSlider() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [previousIndex, setPreviousIndex] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
-  const fadeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const decodedSlides = useRef(new Set<number>([0]));
 
-  const showSlide = useCallback(
-    (nextIndex: number) => {
-      if (activeIndex === nextIndex) return;
-      setPreviousIndex(activeIndex);
-      setActiveIndex(nextIndex);
-      if (fadeTimer.current) clearTimeout(fadeTimer.current);
-      fadeTimer.current = setTimeout(
-        () => setPreviousIndex(null),
-        FADE_DURATION,
-      );
-    },
-    [activeIndex],
-  );
+  const decodeSlide = useCallback(async (index: number) => {
+    if (decodedSlides.current.has(index)) return;
+
+    const image = new window.Image();
+    const loaded = new Promise<void>((resolve) => {
+      image.onload = () => resolve();
+      image.onerror = () => resolve();
+    });
+    image.src = slides[index].src;
+    try {
+      await image.decode();
+    } catch {
+      await loaded;
+    }
+    decodedSlides.current.add(index);
+  }, []);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -79,51 +113,44 @@ export function HeroImageSlider() {
   useEffect(() => {
     if (paused) return;
     const nextIndex = (activeIndex + 1) % slides.length;
-    const preloadTimer = window.setTimeout(() => {
-      const nextImage = new window.Image();
-      nextImage.src = slides[nextIndex].src;
-    }, SLIDE_DURATION - 2000);
-    const slideTimer = window.setTimeout(() => {
-      showSlide(nextIndex);
+    let cancelled = false;
+    void decodeSlide(nextIndex);
+    const slideTimer = window.setTimeout(async () => {
+      await decodeSlide(nextIndex);
+      if (!cancelled) setActiveIndex(nextIndex);
     }, SLIDE_DURATION);
     return () => {
-      window.clearTimeout(preloadTimer);
+      cancelled = true;
       window.clearTimeout(slideTimer);
     };
-  }, [activeIndex, paused, showSlide]);
-
-  useEffect(
-    () => () => {
-      if (fadeTimer.current) clearTimeout(fadeTimer.current);
-    },
-    [],
-  );
-
-  const activeSlide = slides[activeIndex];
-  const previousSlide = previousIndex === null ? null : slides[previousIndex];
+  }, [activeIndex, decodeSlide, paused]);
 
   return (
     <>
       <div className="absolute inset-0" aria-hidden="true">
-        {previousSlide ? (
+        {slides.map((slide, index) => (
           <Image
             alt=""
-            className={`scale-[1.015] object-cover ${previousSlide.position}`}
+            className={`object-cover motion-reduce:transition-none ${slide.position}`}
             fill
-            key={`previous-${previousSlide.src}`}
+            key={slide.src}
+            preload={index === 0}
             sizes="100vw"
-            src={previousSlide.src}
+            src={slide.src}
+            style={{
+              backfaceVisibility: "hidden",
+              opacity: index === activeIndex ? 1 : 0,
+              transform:
+                index === activeIndex
+                  ? "translateZ(0) scale(1.025)"
+                  : "translateZ(0) scale(1.015)",
+              transition:
+                "opacity 1400ms cubic-bezier(0.45, 0, 0.2, 1), transform 4200ms cubic-bezier(0.2, 0.65, 0.3, 1)",
+              willChange: "opacity, transform",
+            }}
+            unoptimized
           />
-        ) : null}
-        <Image
-          alt=""
-          className={`${previousSlide ? "animate-hero-fade motion-reduce:animate-none" : "scale-[1.015]"} object-cover ${activeSlide.position}`}
-          fill
-          key={activeSlide.src}
-          preload={activeIndex === 0}
-          sizes="100vw"
-          src={activeSlide.src}
-        />
+        ))}
       </div>
 
       {/* <div
