@@ -1,6 +1,7 @@
 import type { z } from "zod";
 import type { categorySchema, destinationSchema } from "@/lib/contracts";
 import type { PackageFilters } from "@/lib/api";
+import { BrandedSelect } from "@/components/common/BrandedSelect";
 
 type Destination = z.infer<typeof destinationSchema>;
 type Category = z.infer<typeof categorySchema>;
@@ -27,31 +28,27 @@ export function PackageFiltersForm({
         placeholder="Title, idea or city"
       />
       <label htmlFor={`${idPrefix}-destination`}>Destination</label>
-      <select
+      <BrandedSelect
+        className="w-full"
         id={`${idPrefix}-destination`}
         name="destination"
         defaultValue={filters.destination}
-      >
-        <option value="">All destinations</option>
-        {destinations.map((item) => (
-          <option key={item.id} value={item.slug}>
-            {item.name}
-          </option>
-        ))}
-      </select>
+        options={[
+          { value: "", label: "All destinations" },
+          ...destinations.map((item) => ({ value: item.slug, label: item.name })),
+        ]}
+      />
       <label htmlFor={`${idPrefix}-category`}>Trip style</label>
-      <select
+      <BrandedSelect
+        className="w-full"
         id={`${idPrefix}-category`}
         name="category"
         defaultValue={filters.category}
-      >
-        <option value="">All trip styles</option>
-        {categories.map((item) => (
-          <option key={item.id} value={item.slug}>
-            {item.name}
-          </option>
-        ))}
-      </select>
+        options={[
+          { value: "", label: "All trip styles" },
+          ...categories.map((item) => ({ value: item.slug, label: item.name })),
+        ]}
+      />
       <label htmlFor={`${idPrefix}-city`}>Starting city</label>
       <input
         id={`${idPrefix}-city`}
@@ -113,17 +110,19 @@ export function PackageFiltersForm({
         defaultValue={filters.month}
       />
       <label htmlFor={`${idPrefix}-sort`}>Sort by</label>
-      <select
+      <BrandedSelect
+        className="w-full"
         id={`${idPrefix}-sort`}
         name="sort"
         defaultValue={filters.sort ?? "featured"}
-      >
-        <option value="featured">Featured</option>
-        <option value="newest">Newest</option>
-        <option value="price-asc">Price: low to high</option>
-        <option value="price-desc">Price: high to low</option>
-        <option value="duration">Shortest duration</option>
-      </select>
+        options={[
+          { value: "featured", label: "Featured" },
+          { value: "newest", label: "Newest" },
+          { value: "price-asc", label: "Price: low to high" },
+          { value: "price-desc", label: "Price: high to low" },
+          { value: "duration", label: "Shortest duration" },
+        ]}
+      />
       <button className="mt-2 w-full rounded-full border-0 bg-primary px-5 py-3 text-sm font-extrabold text-white transition hover:bg-primary-hover" type="submit">
         Apply filters
       </button>

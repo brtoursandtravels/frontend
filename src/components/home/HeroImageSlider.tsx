@@ -4,12 +4,12 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const slides = [
-   {
+  {
     src: "/images/hero-slider/udaipur-lake-pichola.webp",
     label: "Lake Pichola, Udaipur",
     position: "object-[62%_center]",
   },
-   {
+  {
     src: "/images/hero-slider/jaisalmer-dunes.webp",
     label: "Thar Desert, Jaisalmer",
     position: "object-[62%_center]",
@@ -19,11 +19,11 @@ const slides = [
     label: "Kerala backwaters",
     position: "object-[62%_center]",
   },
-   {
-    src: "/images/hero-slider/meghalaya-root-bridge.webp",
-    label: "Living root bridge, Meghalaya",
-    position: "object-[64%_center]",
-  },
+  //  {
+  //   src: "/images/hero-slider/meghalaya-root-bridge.webp",
+  //   label: "Living root bridge, Meghalaya",
+  //   position: "object-[64%_center]",
+  // },
   {
     src: "/images/hero-slider/varanasi-ghats.webp",
     label: "Varanasi ghats",
@@ -34,11 +34,11 @@ const slides = [
     label: "Pangong Tso, Ladakh",
     position: "object-[58%_center]",
   },
-  {
-    src: "/images/hero-slider/documentary-meghalaya.webp",
-    label: "Living root bridge, Meghalaya",
-    position: "object-center",
-  },
+  // {
+  //   src: "/images/hero-slider/documentary-meghalaya.webp",
+  //   label: "Living root bridge, Meghalaya",
+  //   position: "object-center",
+  // },
   {
     src: "/images/hero-slider/documentary-rishikesh-rafting.webp",
     label: "Himalayan river rafting, Rishikesh",

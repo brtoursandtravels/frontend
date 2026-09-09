@@ -4,6 +4,7 @@ import { BedDouble, CarFront, ChevronDown, Footprints, Images, MapPin, Plane, Ro
 import { useState } from "react";
 import type { PackageDetail } from "@/lib/contracts";
 import { PublicImage } from "@/components/common/PublicImage";
+import { BrandedSelect } from "@/components/common/BrandedSelect";
 
 export function ItineraryTimeline({
   itinerary,
@@ -65,19 +66,21 @@ export function ItineraryTimeline({
           {itinerary.length} thoughtfully paced days
         </p>
         <div className="flex items-end gap-2 max-[520px]:items-stretch max-[520px]:flex-col">
-          <label className="grid min-w-52 gap-1 text-[0.62rem] font-extrabold uppercase tracking-wider text-secondary-hover">
-            Jump to a day
-            <select
-              className="rounded-full border border-border-subtle bg-white px-4 py-2.5 text-xs font-bold normal-case tracking-normal text-text-heading outline-none focus:border-primary focus:ring-3 focus:ring-primary/10"
+          <div className="grid min-w-52 gap-1 text-[0.62rem] font-extrabold uppercase tracking-wider text-secondary-hover">
+            <label htmlFor="itinerary-day-select">Jump to a day</label>
+            <BrandedSelect
               defaultValue=""
-              onChange={(event) => {
-                if (event.target.value) jumpToDay(Number(event.target.value));
+              id="itinerary-day-select"
+              onValueChange={(value) => {
+                if (value) jumpToDay(Number(value));
               }}
-            >
-              <option value="" disabled>Select day</option>
-              {itinerary.map((day) => <option value={day.dayNumber} key={day.dayNumber}>Day {day.dayNumber}: {day.title}</option>)}
-            </select>
-          </label>
+              options={[
+                { value: "", label: "Select day", disabled: true },
+                ...itinerary.map((day) => ({ value: String(day.dayNumber), label: `Day ${day.dayNumber}: ${day.title}` })),
+              ]}
+              pill
+            />
+          </div>
           <button
             className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-border-subtle bg-white px-4 py-2 text-xs font-extrabold text-primary transition hover:border-primary"
             type="button"

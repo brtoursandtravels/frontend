@@ -5,6 +5,7 @@ import { MessageCircle } from "lucide-react";
 import { useRef, useState } from "react";
 import { z } from "zod";
 import { apiErrorSchema, inquiryReceiptSchema } from "@/lib/contracts";
+import { BrandedSelect } from "@/components/common/BrandedSelect";
 
 const enquirySchema = z.object({
   name: z.string().trim().min(2, "Enter your name.").max(120),
@@ -41,6 +42,15 @@ type FieldErrors = Partial<Record<keyof z.infer<typeof enquirySchema>, string>>;
 const fieldClass =
   "mt-1.5 w-full rounded-md border border-border-subtle bg-white px-3 py-2.5 text-sm text-text-heading outline-none transition focus:border-primary focus:ring-3 focus:ring-primary/10 aria-invalid:border-danger";
 const labelClass = "grid content-start text-xs font-bold text-text-heading";
+
+function RequiredMark() {
+  return (
+    <>
+      <span className="ml-0.5 text-danger" aria-hidden="true">*</span>
+      <span className="sr-only"> (required)</span>
+    </>
+  );
+}
 
 export function EnquiryForm({
   packageSlug,
@@ -265,7 +275,7 @@ export function EnquiryForm({
         </p>
       ) : null}
       <fieldset className="grid gap-3">
-        <legend className="text-xs font-bold text-text-heading">What style feels most like you? <span className="font-normal text-text-muted">Optional</span></legend>
+        <legend className="text-xs font-bold text-text-heading">What style feels most like you?</legend>
         <div className="flex flex-wrap gap-2">
           {["Couples / honeymoon", "Family", "Adventure", "Luxury heritage", "Slow travel"].map((style) => (
             <label className="cursor-pointer" key={style}>
@@ -277,30 +287,32 @@ export function EnquiryForm({
       </fieldset>
       <div className="grid grid-cols-2 gap-4 max-[620px]:grid-cols-1">
         <label className={labelClass}>
-          Name
+          <span>Name<RequiredMark /></span>
           <input
             className={fieldClass}
             name="name"
             autoComplete="name"
+            required
             aria-invalid={Boolean(errors.name)}
             aria-describedby={errors.name ? "name-error" : undefined}
           />
           {errorFor("name")}
         </label>
         <label className={labelClass}>
-          Email
+          <span>Email<RequiredMark /></span>
           <input
             className={fieldClass}
             name="email"
             type="email"
             autoComplete="email"
+            required
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? "email-error" : undefined}
           />
           {errorFor("email")}
         </label>
         <label className={labelClass}>
-          Phone <span className="font-normal text-text-muted">Optional</span>
+          Phone
           <input
             className={fieldClass}
             name="phone"
@@ -312,7 +324,7 @@ export function EnquiryForm({
           {errorFor("phone")}
         </label>
         <label className={labelClass}>
-          Preferred date <span className="font-normal text-text-muted">Optional</span>
+          Preferred date
           <input
             className={fieldClass}
             name="preferredStartDate"
@@ -322,48 +334,54 @@ export function EnquiryForm({
           {errorFor("preferredStartDate")}
         </label>
         {departures.length ? (
-          <label className={`${labelClass} col-span-2 max-[620px]:col-span-1`}>
-            Available departure to discuss{" "}
-            <span className="font-normal text-text-muted">Optional</span>
-            <select className={fieldClass} name="departureId">
-              <option value="">No specific departure</option>
-              {departures.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div className={`${labelClass} col-span-2 max-[620px]:col-span-1`}>
+            <label htmlFor="enquiry-departure">Available departure to discuss</label>
+            <BrandedSelect
+              className="mt-1.5"
+              id="enquiry-departure"
+              name="departureId"
+              options={[
+                { value: "", label: "No specific departure" },
+                ...departures.map((item) => ({ value: item.id, label: item.label })),
+              ]}
+            />
+          </div>
         ) : null}
         {!packageSlug ? (
           <label className={`${labelClass} col-span-2 max-[620px]:col-span-1`}>
-            Subject <span className="font-normal text-text-muted">Optional</span>
+            Subject
             <input className={fieldClass} name="subject" defaultValue={defaultSubject} />
           </label>
         ) : null}
         <label className={labelClass}>
-          Adults <span className="font-normal text-text-muted">Optional</span>
+          Adults
           <input className={fieldClass} name="adultCount" type="number" min="1" max="50" defaultValue={defaultAdultCount} />
         </label>
         <label className={labelClass}>
-          Children <span className="font-normal text-text-muted">Optional</span>
+          Children
           <input className={fieldClass} name="childCount" type="number" min="0" max="50" defaultValue={defaultChildCount} />
         </label>
+        <div className={`${labelClass} col-span-2 max-[620px]:col-span-1`}>
+          <label htmlFor="enquiry-budget">Approximate total budget</label>
+          <BrandedSelect
+            className="mt-1.5"
+            id="enquiry-budget"
+            name="budget"
+            options={[
+              { value: "", label: "Flexible / discuss with the team" },
+              { value: "50000", label: "Around ₹50,000" },
+              { value: "100000", label: "₹1,00,000 – ₹2,50,000" },
+              { value: "250000", label: "₹2,50,000 – ₹5,00,000" },
+              { value: "500000", label: "₹5,00,000+" },
+            ]}
+          />
+        </div>
         <label className={`${labelClass} col-span-2 max-[620px]:col-span-1`}>
-          Approximate total budget <span className="font-normal text-text-muted">Optional</span>
-          <select className={fieldClass} name="budget" defaultValue="">
-            <option value="">Flexible / discuss with the team</option>
-            <option value="50000">Around ₹50,000</option>
-            <option value="100000">₹1,00,000 – ₹2,50,000</option>
-            <option value="250000">₹2,50,000 – ₹5,00,000</option>
-            <option value="500000">₹5,00,000+</option>
-          </select>
-        </label>
-        <label className={`${labelClass} col-span-2 max-[620px]:col-span-1`}>
-          Message
+          <span>Message<RequiredMark /></span>
           <textarea
             className={`${fieldClass} min-h-32 resize-y`}
             name="message"
+            required
             defaultValue={defaultMessage}
             rows={compact ? 4 : 6}
             aria-invalid={Boolean(errors.message)}
@@ -382,11 +400,12 @@ export function EnquiryForm({
           className="mt-1 size-4 shrink-0 accent-primary"
           name="privacyAccepted"
           type="checkbox"
+          required
           aria-invalid={Boolean(errors.privacyAccepted)}
         />{" "}
         <span>
           I agree that BR may use these details to respond to this request. Read
-          the <Link href="/privacy">privacy notice</Link>.
+          the <Link href="/privacy">privacy notice</Link>.<RequiredMark />
         </span>
       </label>
       {errorFor("privacyAccepted")}

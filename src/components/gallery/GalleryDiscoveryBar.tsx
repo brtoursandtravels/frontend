@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Grid2X2, Images, SlidersHorizontal } from "lucide-react";
 import type { Destination, PackageCard } from "@/lib/contracts";
+import { BrandedSelect } from "@/components/common/BrandedSelect";
 
 type GalleryQuery = { destination?: string; package?: string; view?: string };
 
@@ -35,10 +36,17 @@ export function GalleryDiscoveryBar({ destinations, packages, query }: { destina
           {query.destination ? <input type="hidden" name="destination" value={query.destination} /> : null}
           {wall ? <input type="hidden" name="view" value="wall" /> : null}
           <label className="sr-only" htmlFor="gallery-package"><SlidersHorizontal aria-hidden="true" /> Filter by related package</label>
-          <select className="min-h-10 min-w-0 flex-1 rounded-full border border-border-subtle bg-white px-4 text-[0.78rem] font-bold text-text-body" id="gallery-package" name="package" defaultValue={query.package ?? ""}>
-            <option value="">View photos from any package</option>
-            {packages.map((item) => <option key={item.id} value={item.slug}>{item.title}</option>)}
-          </select>
+          <BrandedSelect
+            className="min-w-0 flex-1"
+            defaultValue={query.package ?? ""}
+            id="gallery-package"
+            name="package"
+            options={[
+              { value: "", label: "View photos from any package" },
+              ...packages.map((item) => ({ value: item.slug, label: item.title })),
+            ]}
+            pill
+          />
           <button className="min-h-10 rounded-full border-0 bg-secondary px-5 text-[0.75rem] font-extrabold text-white transition hover:bg-secondary-hover" type="submit">Apply</button>
           {query.destination || query.package ? <Link className="text-[0.72rem] font-extrabold text-primary max-[620px]:col-span-2" href={wall ? "/gallery?view=wall" : "/gallery"}>Clear filters</Link> : null}
         </form>
