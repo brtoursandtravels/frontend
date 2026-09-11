@@ -166,7 +166,6 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
             <Link
               className="ml-auto inline-flex items-center gap-1.5 font-extrabold text-secondary-light no-underline transition-colors hover:text-white"
               href="/contact-us"
-              prefetch={false}
               aria-label="WhatsApp number placeholder; open contact page"
             >
               <MessageCircle aria-hidden="true" size={13} /> WhatsApp: {whatsappDisplay}
@@ -229,7 +228,6 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
         <Link
           className="group relative z-10 isolate inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-gradient-to-r from-secondary to-accent px-5 py-3 text-xs font-extrabold text-white no-underline shadow-accent-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-accent-md max-[1180px]:hidden"
           href="/contact-us"
-          prefetch={false}
         >
           <span
             aria-hidden="true"
@@ -335,7 +333,6 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
             <Link
               className="group flex items-center justify-between rounded-[1.2rem] bg-gradient-to-r from-secondary to-accent px-5 py-4 font-extrabold text-white no-underline shadow-accent-md transition-transform duration-300 hover:-translate-y-1"
               href="/contact-us"
-              prefetch={false}
               onClick={() => setOpen(false)}
             >
               <span>
@@ -364,7 +361,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
                     <MessageCircle aria-hidden="true" size={15} /> {whatsappDisplay}
                   </a>
                 ) : (
-                  <Link href="/contact-us" prefetch={false} onClick={() => setOpen(false)}>
+                  <Link href="/contact-us" onClick={() => setOpen(false)}>
                     <MessageCircle aria-hidden="true" size={15} /> {whatsappDisplay}
                   </Link>
                 )}
@@ -403,7 +400,7 @@ function DesktopNavLink({
   );
 
   return href.startsWith("/") ? (
-    <Link className={className} href={href} prefetch={false} aria-current={active ? "page" : undefined}>
+    <Link className={className} href={href} aria-current={active ? "page" : undefined}>
       {content}
     </Link>
   ) : (
@@ -449,7 +446,6 @@ function MobileNavLink({
     <Link
       className={className}
       href={href}
-      prefetch={false}
       aria-current={active ? "page" : undefined}
       onClick={onNavigate}
     >

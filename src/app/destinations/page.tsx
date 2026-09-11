@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight, MapPin, Sparkles } from "lucide-react";
 import { ApiRequestError, getDestinations, getPackages } from "@/lib/api";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Destinations",
   description:

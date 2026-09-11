@@ -10,7 +10,7 @@ import { TeamShowcase } from "@/components/about/TeamShowcase";
 import { TrustStandards } from "@/components/about/TrustStandards";
 import { getContentPage } from "@/lib/api";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getContentPage("about-us").catch(() => null);

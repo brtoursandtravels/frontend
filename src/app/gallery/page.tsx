@@ -9,7 +9,7 @@ import { GalleryHero } from "@/components/gallery/GalleryHero";
 import { ApiRequestError, getDestinations, getGalleryAlbums, getPackages } from "@/lib/api";
 import { completeGalleryAlbum } from "@/lib/galleryEditorialMedia";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Travel Gallery",
   description: "Explore published BR Tours travel collections, destination photographs and visual stories from across India.",

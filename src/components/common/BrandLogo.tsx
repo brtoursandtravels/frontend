@@ -14,7 +14,6 @@ export function BrandLogo({
     <Link
       className="inline-flex shrink-0 items-center transition-transform duration-200 hover:scale-[1.025]"
       href="/"
-      prefetch={false}
       aria-label="BR Tours and Travels home"
       onClick={onNavigate}
     >

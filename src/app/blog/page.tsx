@@ -9,7 +9,7 @@ import { JournalHighlights } from "@/components/blog/JournalHighlights";
 import { PaginationControls } from "@/components/common/PaginationControls";
 import { ApiRequestError, getBlog, getBlogCategories } from "@/lib/api";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Travel Journal",
   description: "Read BR travel stories, seasonal timing advice and practical destination guides for thoughtful journeys across India.",

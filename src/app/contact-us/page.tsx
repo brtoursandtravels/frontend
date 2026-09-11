@@ -8,7 +8,7 @@ import { EnquiryForm } from "@/components/forms/EnquiryForm";
 import { getPackage, getSite } from "@/lib/api";
 import { mapEmbedLink, settingText, whatsappLink } from "@/lib/presentation";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Plan your journey",
   description: "Speak with BR Tours and Travels about a considered, tailor-made journey across India and beyond.",

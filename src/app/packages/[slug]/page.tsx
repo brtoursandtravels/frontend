@@ -15,6 +15,7 @@ import {
   getFaqs,
   getPackage,
   getPackageWithRedirect,
+  getPackages,
   getSite,
 } from "@/lib/api";
 import {
@@ -27,7 +28,23 @@ import {
 import { serverEnv } from "@/lib/env";
 import { charDhamEditorialMedia } from "@/lib/packageEditorialMedia";
 
-export const revalidate = 300;
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const first = await getPackages({ page: 1, pageSize: 48 }).catch(() => null);
+  if (!first) return [];
+
+  const pageCount = Math.ceil(first.meta.total / first.meta.pageSize);
+  const remaining = await Promise.all(
+    Array.from({ length: Math.max(0, pageCount - 1) }, (_, index) =>
+      getPackages({ page: index + 2, pageSize: 48 }).catch(() => null),
+    ),
+  );
+
+  return [first, ...remaining]
+    .filter((page): page is NonNullable<typeof page> => Boolean(page))
+    .flatMap((page) => page.data.map((item) => ({ slug: item.slug })));
+}
 
 export async function generateMetadata({
   params,

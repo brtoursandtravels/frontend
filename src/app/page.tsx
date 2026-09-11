@@ -21,7 +21,7 @@ import {
   getTestimonials,
 } from "@/lib/api";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };

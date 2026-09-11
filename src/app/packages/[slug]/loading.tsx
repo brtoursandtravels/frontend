@@ -1,5 +1,5 @@
 import { DetailPageSkeleton } from "@/components/common/PageSkeletons";
 
-export default function Loading() {
-  return <DetailPageSkeleton label="Loading package details" />;
+export default function PackageLoading() {
+  return <DetailPageSkeleton label="Loading journey details" />;
 }

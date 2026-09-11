@@ -35,7 +35,7 @@ async function apiFetch(path: string) {
   try {
     return await fetch(serverEnv.INTERNAL_API_BASE_URL + path, {
       headers: { accept: "application/json" },
-      next: { revalidate: 300 },
+      next: { revalidate: 3600 },
       // The API runs as a separate serverless deployment. A cold function and
       // database connection can legitimately take longer than ten seconds.
       signal: AbortSignal.timeout(25_000),
