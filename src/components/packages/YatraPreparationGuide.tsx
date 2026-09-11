@@ -19,7 +19,7 @@ export function YatraPreparationGuide() {
               <strong className="text-[0.95rem] text-text-heading">{title}</strong>
               <ChevronDown aria-hidden="true" className="text-secondary transition group-open:rotate-180" size={18} />
             </summary>
-            <p className="mb-5 ml-[3.25rem] mt-0 max-w-2xl text-[0.86rem] leading-relaxed text-text-muted">{text}</p>
+            <p className="mb-5 ml-13 mt-0 max-w-2xl text-[0.86rem] leading-relaxed text-text-muted">{text}</p>
           </details>
         ))}
       </div>

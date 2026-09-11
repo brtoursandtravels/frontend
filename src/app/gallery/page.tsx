@@ -6,7 +6,7 @@ import { PaginationControls } from "@/components/common/PaginationControls";
 import { GalleryCta } from "@/components/gallery/GalleryCta";
 import { GalleryDiscoveryBar } from "@/components/gallery/GalleryDiscoveryBar";
 import { GalleryHero } from "@/components/gallery/GalleryHero";
-import { ApiRequestError, getDestinations, getGalleryAlbum, getGalleryAlbums, getPackages } from "@/lib/api";
+import { ApiRequestError, getDestinations, getGalleryAlbums, getPackages } from "@/lib/api";
 import { completeGalleryAlbum } from "@/lib/galleryEditorialMedia";
 
 export const revalidate = 300;
@@ -20,7 +20,7 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
   const query = await searchParams;
   const page = Math.max(1, Number(query.page) || 1);
   const [albumsResult, destinationsResult, packagesResult] = await Promise.allSettled([
-    getGalleryAlbums({ destination: query.destination, package: query.package, page, pageSize: 6 }),
+    getGalleryAlbums({ destination: query.destination, package: query.package, page, pageSize: 6, includeImages: true }),
     getDestinations(),
     getPackages({ pageSize: 48 }),
   ]);
@@ -40,7 +40,12 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
   }
 
   const listing = albumsResult.value;
-  const albums = await Promise.all(listing.data.map((album) => getGalleryAlbum(album.slug).then((result) => completeGalleryAlbum(result.data)).catch(() => ({ ...album, images: [] }))));
+  const albums = listing.data.map((album) =>
+    completeGalleryAlbum({
+      ...album,
+      images: album.images ?? (album.cover ? [album.cover] : []),
+    }),
+  );
   const destinations = destinationsResult.status === "fulfilled" ? destinationsResult.value.data : [];
   const packages = packagesResult.status === "fulfilled" ? packagesResult.value.data : [];
   const selectedPackage = packages.find((item) => item.slug === query.package);
@@ -71,7 +76,7 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
             <ImageLightbox images={allImages} label="BR Tours visual journal" variant="masonry" planHref="/contact-us?subject=custom-trip#contact-form" />
           ) : (
             <div className="grid gap-20">
-              {albums.map((album, albumIndex) => {
+              {albums.map((album) => {
                 const destination = album.destination?.name;
                 const destinationHref = album.destination ? `/packages?destination=${encodeURIComponent(album.destination.slug)}` : "/packages";
                 const planHref = `/contact-us?subject=${encodeURIComponent(destination ? `Trip inspired by ${destination}` : `Trip inspired by ${album.title}`)}#contact-form`;
@@ -85,12 +90,11 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
                       </div>
                       <span className="shrink-0 rounded-full bg-bg-muted px-3 py-1.5 text-[0.68rem] font-extrabold text-primary">{album.images.length} {album.images.length === 1 ? "photograph" : "photographs"}</span>
                     </div>
-                    <ImageLightbox images={album.images} label={album.title} location={destination} planHref={planHref} packageHref={selectedPackage ? `/packages/${selectedPackage.slug}` : undefined} priorityImages={albumIndex === 0} />
+                    <ImageLightbox images={album.images} label={album.title} location={destination} planHref={planHref} packageHref={selectedPackage ? `/packages/${selectedPackage.slug}` : undefined} />
                     <div className="mt-4 flex items-center justify-between gap-4 rounded-lg border border-border-subtle bg-white px-5 py-3 shadow-card max-[620px]:items-start max-[620px]:flex-col">
                       <p className="m-0 text-[0.8rem] text-text-muted">Inspired by this collection? Explore journeys that can bring the destination into your itinerary.</p>
                       <Link className="inline-flex shrink-0 items-center gap-1.5 text-[0.78rem] font-extrabold text-primary no-underline" href={selectedPackage ? `/packages/${selectedPackage.slug}` : destinationHref}>{selectedPackage ? selectedPackage.title : `Explore ${destination ?? "journeys"}`} <ArrowRight aria-hidden="true" size={15} /></Link>
                     </div>
-                    {albumIndex === 0 ? <span className="sr-only">The first two images are prioritized for faster display.</span> : null}
                   </section>
                 );
               })}

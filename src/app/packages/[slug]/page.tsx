@@ -27,7 +27,7 @@ import {
 import { serverEnv } from "@/lib/env";
 import { charDhamEditorialMedia } from "@/lib/packageEditorialMedia";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export async function generateMetadata({
   params,

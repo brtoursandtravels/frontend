@@ -4,7 +4,7 @@ import { Camera, Sparkles } from "lucide-react";
 export function GalleryHero({ albumCount, imageCount }: { albumCount: number; imageCount: number }) {
   return (
     <section className="relative isolate min-h-[34rem] overflow-hidden bg-primary-ink text-white" aria-labelledby="gallery-title">
-      <Image alt="Morning light over the ancient ghats beside the Ganges" className="gallery-hero-image -z-2 object-cover object-center" fill priority sizes="100vw" src="/images/hero-slider/varanasi-ghats.webp" />
+      <Image alt="Morning light over the ancient ghats beside the Ganges" className="gallery-hero-image -z-2 object-cover object-center" fetchPriority="high" fill loading="eager" sizes="100vw" src="/images/hero-slider/varanasi-ghats.webp" />
       <div className="absolute inset-0 -z-1 bg-[linear-gradient(90deg,rgba(2,28,29,.48)_0%,rgba(2,28,29,.26)_48%,rgba(2,28,29,.06)_76%,transparent_100%)] max-[700px]:bg-[linear-gradient(90deg,rgba(2,28,29,.58),rgba(2,28,29,.16))]" />
       <div className="mx-auto flex min-h-[34rem] w-full max-w-7xl flex-col justify-center px-5 py-16 sm:px-8 lg:px-10">
         <p className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[0.7rem] font-extrabold uppercase tracking-[0.16em] text-secondary-light backdrop-blur-sm"><Sparkles aria-hidden="true" size={14} /> Lens &amp; landscape · visual journal</p>

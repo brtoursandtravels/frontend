@@ -114,7 +114,7 @@ export function ImageLightbox({
               onClick={(event) => openImage(index, event.currentTarget)}
               aria-label={`Open image ${index + 1} of ${images.length}: ${image.altText}`}
             >
-              <PublicImage className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.045]" alt={image.altText} priority={priorityImages && index < 2 && variant === "album"} sizes={variant === "masonry" ? "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw" : index === 0 ? "(max-width: 700px) 100vw, 60vw" : "(max-width: 700px) 50vw, 30vw"} src={image.url} />
+              <PublicImage className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.045]" alt={image.altText} priority={priorityImages && index === 0 && variant === "album"} sizes={variant === "masonry" ? "(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw" : index === 0 ? "(max-width: 700px) 100vw, 60vw" : "(max-width: 700px) 50vw, 30vw"} src={image.url} />
               <span className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/5 to-transparent opacity-80 transition-opacity group-hover:opacity-100" aria-hidden="true" />
               <span className="absolute right-3 top-3 grid size-9 place-items-center rounded-full border border-white/25 bg-black/30 text-white opacity-0 backdrop-blur-sm transition group-hover:opacity-100"><Expand aria-hidden="true" size={16} /></span>
               <span className="absolute inset-x-0 bottom-0 grid gap-1 p-4 text-white">

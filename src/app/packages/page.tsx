@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { PaginationControls } from "@/components/common/PaginationControls";
 import { PackageActiveFilters } from "@/components/packages/PackageActiveFilters";
@@ -12,7 +13,7 @@ import {
   type PackageFilters,
 } from "@/lib/api";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Tour packages",
   description:
@@ -133,7 +134,16 @@ export default async function PackagesPage({
 
   return (
     <div>
-      <header className="relative flex min-h-[32rem] items-center overflow-hidden bg-[url('/images/travel/ladakh-monastery.webp')] bg-cover bg-center text-white">
+      <header className="relative isolate flex min-h-[32rem] items-center overflow-hidden bg-primary-ink text-white">
+        <Image
+          alt="A Himalayan monastery overlooking the Ladakh mountains"
+          className="-z-2 object-cover object-center"
+          fetchPriority="high"
+          fill
+          loading="eager"
+          sizes="100vw"
+          src="/images/travel/ladakh-monastery.webp"
+        />
         <span className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,35,36,.50)_0%,rgba(2,35,36,.28)_48%,rgba(2,35,36,.05)_76%,transparent_100%)] max-[700px]:bg-[linear-gradient(90deg,rgba(2,35,36,.64),rgba(2,35,36,.24))]" aria-hidden="true" />
         <div className="relative z-1 mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10">
         <p className="mb-4 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-light">Curated journeys</p>

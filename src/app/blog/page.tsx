@@ -7,7 +7,7 @@ import { BlogNewsletterBanner } from "@/components/blog/BlogNewsletterBanner";
 import { FeaturedArticleHero } from "@/components/blog/FeaturedArticleHero";
 import { JournalHighlights } from "@/components/blog/JournalHighlights";
 import { PaginationControls } from "@/components/common/PaginationControls";
-import { ApiRequestError, getBlog, getBlogCategories, getBlogPost } from "@/lib/api";
+import { ApiRequestError, getBlog, getBlogCategories } from "@/lib/api";
 
 export const revalidate = 300;
 export const metadata: Metadata = {
@@ -40,8 +40,6 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
 
   const posts = postsResult.value;
   const categories = categoriesResult.status === "fulfilled" ? categoriesResult.value.data : [];
-  const articleDetails = await Promise.all(posts.data.map((post) => getBlogPost(post.slug).then((result) => result.data).catch(() => null)));
-  const relatedTours = new Map(articleDetails.filter(Boolean).map((detail) => [detail!.slug, detail!.relatedPackages[0]]));
   const isUnfilteredFirstPage = page === 1 && !query.q && !query.category;
   const featured = isUnfilteredFirstPage ? posts.data[0] : undefined;
   const remaining = featured ? posts.data.slice(1) : posts.data;
@@ -58,7 +56,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
       <BlogHero articleCount={posts.meta.total} />
       <BlogDiscoveryBar categories={categories} activeCategory={query.category} query={query.q} />
       <div className="mx-auto grid w-full max-w-7xl gap-16 px-5 py-16 sm:px-8 lg:px-10 max-[700px]:gap-12 max-[700px]:py-12">
-        {featured ? <FeaturedArticleHero item={featured} relatedTour={relatedTours.get(featured.slug)} /> : null}
+        {featured ? <FeaturedArticleHero item={featured} relatedTour={featured.relatedTour ?? undefined} /> : null}
         {isUnfilteredFirstPage ? <JournalHighlights posts={remaining} /> : null}
 
         <section aria-labelledby="article-grid-title">
@@ -66,7 +64,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
             <div><p className="mb-3 text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-secondary-hover">{query.q || query.category ? "Filtered journal" : "More from the journal"}</p><h2 className="m-0 font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] tracking-[-0.025em] text-text-heading" id="article-grid-title">{query.q || query.category ? "Search results." : "Practical field guides."}</h2></div>
             <p className="m-0 text-sm font-bold text-text-muted">{posts.meta.total} {posts.meta.total === 1 ? "article" : "articles"}</p>
           </div>
-          {remaining.length ? <div className="grid grid-cols-3 gap-6 max-[960px]:grid-cols-2 max-[620px]:grid-cols-1">{remaining.map((item) => <BlogCard item={item} relatedTour={relatedTours.get(item.slug)} key={item.id} />)}</div> : <div className="rounded-xl border border-border-subtle bg-white p-8 text-center shadow-card"><p className="mb-3 text-xs font-extrabold uppercase tracking-[0.16em] text-secondary-hover">No matching dispatch</p><h3 className="m-0 font-display text-3xl font-semibold text-text-heading">Try a broader travel question.</h3><p className="mx-auto mt-3 max-w-xl text-text-muted">Clear the current filters to return to every published field guide.</p><Link className="mt-6 inline-flex min-h-11 items-center rounded-full bg-primary px-5 py-2.5 text-sm font-extrabold text-white no-underline" href="/blog">Clear all filters</Link></div>}
+          {remaining.length ? <div className="grid grid-cols-3 gap-6 max-[960px]:grid-cols-2 max-[620px]:grid-cols-1">{remaining.map((item) => <BlogCard item={item} relatedTour={item.relatedTour ?? undefined} key={item.id} />)}</div> : <div className="rounded-xl border border-border-subtle bg-white p-8 text-center shadow-card"><p className="mb-3 text-xs font-extrabold uppercase tracking-[0.16em] text-secondary-hover">No matching dispatch</p><h3 className="m-0 font-display text-3xl font-semibold text-text-heading">Try a broader travel question.</h3><p className="mx-auto mt-3 max-w-xl text-text-muted">Clear the current filters to return to every published field guide.</p><Link className="mt-6 inline-flex min-h-11 items-center rounded-full bg-primary px-5 py-2.5 text-sm font-extrabold text-white no-underline" href="/blog">Clear all filters</Link></div>}
         </section>
 
         <BlogNewsletterBanner />

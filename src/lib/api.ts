@@ -36,7 +36,9 @@ async function apiFetch(path: string) {
     return await fetch(serverEnv.INTERNAL_API_BASE_URL + path, {
       headers: { accept: "application/json" },
       next: { revalidate: 300 },
-      signal: AbortSignal.timeout(10_000),
+      // The API runs as a separate serverless deployment. A cold function and
+      // database connection can legitimately take longer than ten seconds.
+      signal: AbortSignal.timeout(25_000),
     });
   } catch {
     throw new ApiRequestError(
@@ -66,7 +68,7 @@ async function parsed<T>(path: string, schema: ZodType<T>): Promise<T> {
   return schema.parse(await response.json());
 }
 
-function queryString(values: Record<string, string | number | undefined>) {
+function queryString(values: Record<string, string | number | boolean | undefined>) {
   const query = new URLSearchParams();
   Object.entries(values).forEach(([key, value]) => {
     if (value !== undefined && value !== "") query.set(key, String(value));
@@ -141,6 +143,7 @@ export function getGalleryAlbums(
     package?: string;
     page?: number;
     pageSize?: number;
+    includeImages?: boolean;
   } = {},
 ) {
   return parsed(

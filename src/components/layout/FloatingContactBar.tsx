@@ -24,6 +24,7 @@ export function FloatingContactBar({ site }: { site?: SiteData | null }) {
       <Link
         className="fixed bottom-5 left-5 z-60 flex items-center gap-2 rounded-full border border-white/25 bg-primary px-4 py-2.5 text-xs font-extrabold text-white no-underline shadow-dropdown transition-transform hover:-translate-y-0.5 max-[620px]:bottom-[4.9rem] max-[620px]:left-3"
         href="/contact-us"
+        prefetch={false}
         aria-label="Plan a trip with BR Tours"
       >
         <Sparkles aria-hidden="true" size={20} />

@@ -17,7 +17,7 @@ const questions = [
 
 export function ContactFaq() {
   return (
-    <section className="mx-auto w-full max-w-5xl px-5 py-20 sm:px-8" aria-labelledby="contact-faq-title">
+    <section className="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8" aria-labelledby="contact-faq-title">
       <div className="grid grid-cols-[0.55fr_1.45fr] gap-12 max-[820px]:grid-cols-1 max-[820px]:gap-7">
         <header>
           <p className="mb-3 text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-secondary-hover">Before you plan</p>

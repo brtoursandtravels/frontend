@@ -29,7 +29,6 @@ export function PackageCard({
             <PublicImage
               alt={item.cover.altText}
               className={`object-cover ${animationClasses.imageZoom}`}
-              priority={featured}
               sizes="(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 33vw"
               src={item.cover.url}
             />

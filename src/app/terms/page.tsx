@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ContentPage, ContentUnavailable } from "@/components/common/ContentPage";
 import { ApiRequestError, getContentPage } from "@/lib/api";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Terms",
   alternates: { canonical: "/terms" },

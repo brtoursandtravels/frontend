@@ -175,6 +175,7 @@ export const galleryAlbumCardSchema = z.object({
   description: z.string().nullable(),
   destination: z.object({ slug: z.string(), name: z.string() }).nullable(),
   cover: publicMediaSchema.nullable(),
+  images: z.array(publicMediaSchema).optional(),
   isDemo: z.boolean(),
 });
 export const galleryAlbumSchema = galleryAlbumCardSchema
@@ -206,6 +207,10 @@ export const blogCardSchema = z.object({
   publishedAt: z.string(),
   readingMinutes: z.number(),
   author: z.object({ name: z.string() }).nullable(),
+  relatedTour: z
+    .object({ slug: z.string(), title: z.string(), days: z.number() })
+    .nullable()
+    .optional(),
   isDemo: z.boolean(),
 });
 export const blogListResponseSchema = z.object({

@@ -6,7 +6,7 @@ import { ShareActions } from "@/components/common/ShareActions";
 import { ApiRequestError, getBlogPost } from "@/lib/api";
 import { serverEnv } from "@/lib/env";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 function prepareHeadings(html: string) {
   const headings: Array<{ id: string; text: string; level: number }> = [];

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import "@fontsource/lato/latin-400.css";
 import "@fontsource/lato/latin-700.css";
-import "@fontsource/roboto/latin-400.css";
-import "@fontsource/roboto/latin-700.css";
 import { FloatingContactBar } from "@/components/layout/FloatingContactBar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -18,10 +16,6 @@ export const metadata: Metadata = {
   },
   description:
     "Discover bespoke journeys across India and beyond, thoughtfully shaped by BR Tours and Travels.",
-  icons: {
-    icon: "/br-mark.png",
-    apple: "/br-mark.png",
-  },
   openGraph: {
     type: "website",
     siteName: "BR Tours and Travels",

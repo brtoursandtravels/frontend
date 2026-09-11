@@ -14,6 +14,7 @@ export function BrandLogo({
     <Link
       className="inline-flex shrink-0 items-center transition-transform duration-200 hover:scale-[1.025]"
       href="/"
+      prefetch={false}
       aria-label="BR Tours and Travels home"
       onClick={onNavigate}
     >
@@ -23,7 +24,6 @@ export function BrandLogo({
         alt=""
         width={555}
         height={502}
-        priority={!compact}
       />
       <span
         className={`ml-2 whitespace-nowrap font-heading text-[0.72rem] font-black uppercase leading-none tracking-[0.035em] sm:text-[0.82rem] ${inverse ? "text-white" : "text-primary"}`}

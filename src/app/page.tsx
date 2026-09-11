@@ -7,6 +7,7 @@ import { GalleryPreview } from "@/components/home/GalleryPreview";
 import { HeroSection } from "@/components/home/HeroSection";
 import { CustomiseTripSection } from "@/components/home/CustomiseTripSection";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
+import { TravelServices } from "@/components/home/TravelServices";
 import { TravelJournalPreview } from "@/components/home/TravelJournalPreview";
 import { TrendingPackages } from "@/components/home/TrendingPackages";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
@@ -76,6 +77,7 @@ export default async function HomePage() {
         title={heroTitle}
       />
       <FeaturedDestinations destinations={destinations?.data ?? []} />
+      <TravelServices />
       <TrendingPackages packages={packages?.data ?? []} />
       <CustomiseTripSection />
       <WhyChooseUs />

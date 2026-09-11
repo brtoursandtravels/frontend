@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight, MapPin, Sparkles } from "lucide-react";
 import { ApiRequestError, getDestinations, getPackages } from "@/lib/api";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 export const metadata: Metadata = {
   title: "Destinations",
   description:

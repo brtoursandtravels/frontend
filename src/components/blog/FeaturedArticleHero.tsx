@@ -9,7 +9,7 @@ export function FeaturedArticleHero({ item, relatedTour }: { item: BlogCard; rel
   return (
     <article className="group grid min-h-[31rem] grid-cols-[1.2fr_.8fr] overflow-hidden rounded-xl bg-primary-ink text-white shadow-dropdown max-[850px]:grid-cols-1" aria-labelledby={`featured-${item.id}`}>
       <div className="relative min-h-[25rem] overflow-hidden bg-primary">
-        {item.cover ? <PublicImage alt={item.cover.altText} className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]" priority sizes="(max-width: 850px) 100vw, 60vw" src={item.cover.url} /> : <span className="absolute inset-0 grid place-items-center font-display text-6xl text-white/50">BR</span>}
+        {item.cover ? <PublicImage alt={item.cover.altText} className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]" sizes="(max-width: 850px) 100vw, 60vw" src={item.cover.url} /> : <span className="absolute inset-0 grid place-items-center font-display text-6xl text-white/50">BR</span>}
         <span className="absolute inset-0 bg-gradient-to-t from-primary-ink/50 to-transparent" aria-hidden="true" />
       </div>
       <div className="flex flex-col justify-center p-[clamp(1.6rem,4vw,3.5rem)]">

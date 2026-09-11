@@ -4,7 +4,7 @@ import { BookOpen, Sparkles } from "lucide-react";
 export function BlogHero({ articleCount }: { articleCount: number }) {
   return (
     <section className="relative isolate min-h-[34rem] overflow-hidden border-b border-secondary/15 bg-primary-ink text-white" aria-labelledby="journal-title">
-      <Image alt="A historic monastery overlooking the Spiti river and Himalayan high passes" className="-z-2 object-cover object-center max-[700px]:object-[63%_center]" fill priority sizes="100vw" src="/images/blog/journal-hero-v1.webp" />
+      <Image alt="A historic monastery overlooking the Spiti river and Himalayan high passes" className="-z-2 object-cover object-center max-[700px]:object-[63%_center]" fetchPriority="high" fill loading="eager" sizes="100vw" src="/images/blog/journal-hero-v1.webp" />
       <div className="absolute inset-0 -z-1 bg-[linear-gradient(90deg,rgba(2,25,27,.48)_0%,rgba(2,25,27,.28)_44%,rgba(2,25,27,.08)_72%,transparent_100%)] max-[700px]:bg-[linear-gradient(90deg,rgba(2,25,27,.6),rgba(2,25,27,.2))]" aria-hidden="true" />
       <div className="mx-auto flex min-h-[34rem] w-full max-w-7xl items-center px-5 py-16 sm:px-8 lg:px-10">
         <div className="max-w-4xl">

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getBlog, getPackages } from "@/lib/api";
 import { serverEnv } from "@/lib/env";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const origin = serverEnv.NEXT_PUBLIC_SITE_URL;
