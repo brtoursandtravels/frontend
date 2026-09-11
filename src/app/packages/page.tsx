@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { PaginationControls } from "@/components/common/PaginationControls";
 import { PackageActiveFilters } from "@/components/packages/PackageActiveFilters";
-import { PackageCard } from "@/components/packages/PackageCard";
 import { PackageFilterSidebar } from "@/components/packages/PackageFilterSidebar";
+import { InfinitePackageGrid } from "@/components/packages/InfinitePackageGrid";
 import {
   ApiRequestError,
   getCategories,
@@ -49,7 +48,7 @@ export default async function PackagesPage({
       (
         ["featured", "newest", "price-asc", "price-desc", "duration"] as const
       ).find((item) => item === text(query.sort)) ?? "featured",
-    page: Math.max(1, number(query.page) ?? 1),
+    page: 1,
     pageSize: 6,
   };
   const [destinationsResult, categoriesResult, catalogueResult] =
@@ -101,6 +100,12 @@ export default async function PackagesPage({
     );
     return `/packages${params.size ? `?${params}` : ""}`;
   };
+  const infiniteQuery = new URLSearchParams();
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value !== undefined && key !== "page") {
+      infiniteQuery.set(key, String(value));
+    }
+  });
   const labels: Record<string, string> = {
     q: `Search: ${filters.q ?? ""}`,
     destination:
@@ -186,11 +191,12 @@ export default async function PackagesPage({
           </div>
           <PackageActiveFilters filters={activeFilters} />
           {result.data.length ? (
-            <div className="grid grid-cols-2 gap-6 max-[620px]:grid-cols-1">
-              {result.data.map((item, index) => (
-                <PackageCard featured={index === 0} item={item} key={item.id} />
-              ))}
-            </div>
+            <InfinitePackageGrid
+              initialItems={result.data}
+              initialMeta={result.meta}
+              key={infiniteQuery.toString()}
+              query={infiniteQuery.toString()}
+            />
           ) : (
             <div className="rounded-xl border border-border-subtle bg-white p-8 shadow-card">
               <h2 className="font-display text-3xl text-text-heading">No matching packages</h2>
@@ -201,12 +207,6 @@ export default async function PackagesPage({
               <Link href="/packages">Clear filters</Link>
             </div>
           )}
-          <PaginationControls
-            page={result.meta.page}
-            pageSize={result.meta.pageSize}
-            total={result.meta.total}
-            hrefForPage={(page) => queryFor({ page })}
-          />
         </section>
       </div>
       </div>
