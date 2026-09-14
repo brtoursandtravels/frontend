@@ -12,6 +12,42 @@ type Testimonial = {
   isDemo: boolean;
 };
 
+const sampleTestimonials: Testimonial[] = [
+  {
+    id: "sample-kashmir",
+    publicName: "Aarav & Meera",
+    location: "Mumbai",
+    tripName: "Kashmir Valley Retreat",
+    quote:
+      "The itinerary felt relaxed without missing the places we cared about. The hotel choices suited our family, and every detail was explained clearly before the trip.",
+    rating: 5,
+    sortOrder: 0,
+    isDemo: true,
+  },
+  {
+    id: "sample-chardham",
+    publicName: "Sunita P.",
+    location: "Pune",
+    tripName: "Complete Char Dham Yatra",
+    quote:
+      "The journey was planned at a comfortable pace for my parents. The team stayed in touch throughout and handled a weather-related route change calmly.",
+    rating: 5,
+    sortOrder: 1,
+    isDemo: true,
+  },
+  {
+    id: "sample-rajasthan",
+    publicName: "Rohan K.",
+    location: "Bengaluru",
+    tripName: "Rajasthan Heritage Journey",
+    quote:
+      "We wanted history, local food and enough free time to explore. The final plan balanced all three, and the stays matched exactly what we had requested.",
+    rating: 5,
+    sortOrder: 2,
+    isDemo: true,
+  },
+];
+
 function initials(name: string) {
   return name
     .split(/\s+/)
@@ -26,9 +62,9 @@ export function TestimonialsSection({
 }: {
   testimonials: Testimonial[];
 }) {
-  const visibleTestimonials = testimonials.slice(0, 6);
-
-  if (!visibleTestimonials.length) return null;
+  const visibleTestimonials = (
+    testimonials.length ? testimonials : sampleTestimonials
+  ).slice(0, 6);
 
   return (
     <section className="defer-render relative overflow-hidden bg-bg-muted py-24 max-[820px]:py-[4.5rem]">
