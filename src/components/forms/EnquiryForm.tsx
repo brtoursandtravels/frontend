@@ -59,7 +59,7 @@ const enquirySchema = z.object({
 type Receipt = z.infer<typeof inquiryReceiptSchema>["data"];
 type FieldErrors = Partial<Record<keyof z.infer<typeof enquirySchema>, string>>;
 const fieldClass =
-  "mt-1.5 w-full rounded-md border border-border-subtle bg-white px-3 py-2.5 text-sm text-text-heading outline-none transition focus:border-primary focus:ring-3 focus:ring-primary/10 aria-invalid:border-danger";
+  "enquiry-field mt-1.5 w-full rounded-md border border-border-subtle bg-white px-3 py-2.5 text-sm text-text-heading outline-none transition focus:border-primary focus:ring-3 focus:ring-primary/10 aria-invalid:border-danger";
 const labelClass = "grid content-start text-xs font-bold text-text-heading";
 
 function RequiredMark() {

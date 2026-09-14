@@ -17,17 +17,17 @@ function galleryHref(query: GalleryQuery, changes: GalleryQuery) {
 export function GalleryDiscoveryBar({ destinations, packages, query }: { destinations: Destination[]; packages: PackageCard[]; query: GalleryQuery }) {
   const wall = query.view === "wall";
   return (
-    <section className="sticky top-[5rem] z-30 border-y border-border-subtle bg-bg-base/92 py-3 shadow-card backdrop-blur-xl" aria-label="Gallery discovery filters">
+    <section className="sticky top-[5rem] z-30 border-y border-border-subtle bg-bg-base/92 py-3 shadow-card backdrop-blur-xl max-[620px]:static" aria-label="Gallery discovery filters">
       <div className="mx-auto grid min-w-0 w-full max-w-7xl gap-3 px-5 sm:px-8 lg:px-10">
-        <div className="flex min-w-0 items-center justify-between gap-4 max-[800px]:items-start">
-          <nav className="flex min-w-0 flex-1 gap-2 overflow-x-auto pb-1" aria-label="Filter by destination">
-            <Link className={`shrink-0 rounded-full border px-4 py-2 text-[0.75rem] font-extrabold no-underline transition ${!query.destination ? "border-primary bg-primary text-white" : "border-border-subtle bg-white text-primary hover:border-primary/40"}`} href={galleryHref(query, { destination: undefined })}>All collections</Link>
+        <div className="flex min-w-0 items-center justify-between gap-4 max-[800px]:items-start max-[620px]:flex-col">
+          <nav className="flex min-w-0 flex-1 gap-2 overflow-x-auto pb-1 max-[620px]:w-full max-[620px]:flex-none max-[620px]:flex-wrap max-[620px]:overflow-x-visible" aria-label="Filter by destination">
+            <Link className={`shrink-0 rounded-full border px-4 py-2 text-[0.75rem] font-extrabold no-underline transition max-[420px]:px-3 ${!query.destination ? "border-primary bg-primary text-white" : "border-border-subtle bg-white text-primary hover:border-primary/40"}`} href={galleryHref(query, { destination: undefined })}>All collections</Link>
             {destinations.slice(0, 8).map((destination) => {
               const active = query.destination === destination.slug;
-              return <Link className={`shrink-0 rounded-full border px-4 py-2 text-[0.75rem] font-extrabold no-underline transition ${active ? "border-primary bg-primary text-white" : "border-border-subtle bg-white text-primary hover:border-primary/40"}`} href={galleryHref(query, { destination: destination.slug })} key={destination.id}>{destination.name}</Link>;
+              return <Link className={`shrink-0 rounded-full border px-4 py-2 text-[0.75rem] font-extrabold no-underline transition max-[420px]:px-3 ${active ? "border-primary bg-primary text-white" : "border-border-subtle bg-white text-primary hover:border-primary/40"}`} href={galleryHref(query, { destination: destination.slug })} key={destination.id}>{destination.name}</Link>;
             })}
           </nav>
-          <div className="flex shrink-0 rounded-full border border-border-subtle bg-white p-1" aria-label="Gallery view">
+          <div className="flex shrink-0 rounded-full border border-border-subtle bg-white p-1 max-[620px]:self-start" aria-label="Gallery view">
             <Link aria-label="Curated album view" aria-current={!wall ? "page" : undefined} className={`grid min-h-9 grid-cols-[auto_1fr] items-center gap-1.5 rounded-full px-3 text-[0.72rem] font-extrabold no-underline ${!wall ? "bg-primary text-white" : "text-primary"}`} href={galleryHref(query, { view: undefined })}><Images aria-hidden="true" size={15} /><span className="max-[620px]:hidden">Albums</span></Link>
             <Link aria-label="Masonry photo wall" aria-current={wall ? "page" : undefined} className={`grid min-h-9 grid-cols-[auto_1fr] items-center gap-1.5 rounded-full px-3 text-[0.72rem] font-extrabold no-underline ${wall ? "bg-primary text-white" : "text-primary"}`} href={galleryHref(query, { view: "wall" })}><Grid2X2 aria-hidden="true" size={15} /><span className="max-[620px]:hidden">Photo wall</span></Link>
           </div>

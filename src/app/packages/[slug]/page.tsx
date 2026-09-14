@@ -286,13 +286,13 @@ export default async function PackageDetailPage({
           </section>
         ) : null}
         {item.relatedPackages.length ? (
-          <section className="mt-12 rounded-xl border border-border-subtle bg-white p-6 shadow-card">
-            <div className="mb-6 flex items-end justify-between gap-5">
+          <section className="@container mt-12 rounded-xl border border-border-subtle bg-white p-6 shadow-card max-[420px]:p-4">
+            <div className="mb-6 flex items-end justify-between gap-5 @max-[24rem]:flex-col @max-[24rem]:items-start @max-[24rem]:gap-3">
               <div>
                 <p className="mb-2 text-xs font-extrabold uppercase tracking-wider text-secondary-hover">Keep exploring</p>
                 <h2 className="m-0 font-display text-3xl text-text-heading">Related packages</h2>
               </div>
-              <Link href="/packages">All packages →</Link>
+              <Link className="inline-flex whitespace-nowrap text-sm font-bold" href="/packages">All packages →</Link>
             </div>
             <div className="grid grid-cols-3 gap-6 max-[1100px]:grid-cols-2 max-[620px]:grid-cols-1">
               {item.relatedPackages.map((related) => (

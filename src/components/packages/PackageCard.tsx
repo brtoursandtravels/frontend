@@ -19,7 +19,7 @@ export function PackageCard({
 
   return (
     <article
-      className={`group relative isolate flex h-full flex-col overflow-hidden rounded-xl border bg-bg-surface shadow-card hover:border-secondary/45 ${animationClasses.cardLift} ${
+      className={`@container group relative isolate flex h-full flex-col overflow-hidden rounded-xl border bg-bg-surface shadow-card hover:border-secondary/45 ${animationClasses.cardLift} ${
         featured ? "border-secondary/40" : "border-border-subtle"
       }`}
     >
@@ -55,16 +55,16 @@ export function PackageCard({
         </h3>
         {item.isDemo ? <span className="mt-2 inline-flex self-start rounded-full bg-accent-soft px-2.5 py-1 text-[0.62rem] font-extrabold uppercase text-secondary-hover">Demo content</span> : null}
 
-        <div className="mt-auto flex items-end justify-between gap-4 border-t border-border-subtle pt-4">
-          <div className="grid">
+        <div className="mt-auto flex items-end justify-between gap-4 border-t border-border-subtle pt-4 @max-[16rem]:flex-col @max-[16rem]:items-stretch @max-[16rem]:gap-3">
+          <div className="grid min-w-0">
             <span className="text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-text-muted">From</span>
-            <span className="flex items-baseline gap-1.5">
-              <strong className="font-display text-[1.25rem] leading-tight text-primary">{price}</strong>
-              {item.startingPrice ? <small className="text-[0.62rem] font-bold text-text-muted">+ GST</small> : null}
+            <span className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
+              <strong className="whitespace-nowrap font-display text-[1.25rem] leading-tight text-primary">{price}</strong>
+              {item.startingPrice ? <small className="whitespace-nowrap text-[0.62rem] font-bold text-text-muted">+ GST</small> : null}
             </span>
             {item.startingPrice ? <small className="text-[0.65rem] text-text-muted">{priceBasisLabel(item.startingPrice.basis)}</small> : null}
           </div>
-          <Link className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-primary/20 bg-bg-muted px-5 py-2 text-xs font-extrabold text-primary no-underline transition hover:border-primary hover:bg-primary hover:text-white" href={`/packages/${item.slug}`}>
+          <Link className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-primary/20 bg-bg-muted px-5 py-2 text-xs font-extrabold text-primary no-underline transition hover:border-primary hover:bg-primary hover:text-white @max-[16rem]:w-full" href={`/packages/${item.slug}`}>
             Details <ArrowUpRight aria-hidden="true" size={15} />
           </Link>
         </div>

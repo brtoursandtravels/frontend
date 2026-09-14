@@ -172,6 +172,15 @@
   transition: background-color 9999s ease-out 0s;
 }
 
+.enquiry-field:-webkit-autofill,
+.enquiry-field:-webkit-autofill:hover,
+.enquiry-field:-webkit-autofill:focus {
+  caret-color: var(--color-text-heading);
+  -webkit-text-fill-color: var(--color-text-heading);
+  -webkit-box-shadow: 0 0 0 1000px var(--color-bg-surface) inset;
+  transition: background-color 9999s ease-out 0s;
+}
+
 @utility glass-card {
   border: 1px solid rgb(255 255 255 / 0.6);
   background: rgb(255 255 255 / 0.82);
