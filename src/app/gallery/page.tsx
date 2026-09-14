@@ -91,7 +91,7 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
                       <span className="shrink-0 rounded-full bg-bg-muted px-3 py-1.5 text-[0.68rem] font-extrabold text-primary">{album.images.length} {album.images.length === 1 ? "photograph" : "photographs"}</span>
                     </div>
                     <ImageLightbox images={album.images} label={album.title} location={destination} planHref={planHref} packageHref={selectedPackage ? `/packages/${selectedPackage.slug}` : undefined} />
-                    <div className="mt-4 flex items-center justify-between gap-4 rounded-lg border border-border-subtle bg-white px-5 py-3 shadow-card max-[620px]:items-start max-[620px]:flex-col">
+                    <div className="mt-4 flex items-center justify-between gap-4 overflow-hidden rounded-lg bg-white px-5 py-3 shadow-[inset_0_0_0_1px_var(--color-border-subtle)] max-[620px]:items-start max-[620px]:flex-col">
                       <p className="m-0 text-[0.8rem] text-text-muted">Inspired by this collection? Explore journeys that can bring the destination into your itinerary.</p>
                       <Link className="inline-flex shrink-0 items-center gap-1.5 text-[0.78rem] font-extrabold text-primary no-underline" href={selectedPackage ? `/packages/${selectedPackage.slug}` : destinationHref}>{selectedPackage ? selectedPackage.title : `Explore ${destination ?? "journeys"}`} <ArrowRight aria-hidden="true" size={15} /></Link>
                     </div>
