@@ -263,8 +263,12 @@ export const testimonialResponseSchema = z.object({
     z.object({
       id: z.string(),
       publicName: z.string(),
+      location: z.string().nullable(),
+      tripName: z.string().nullable(),
       quote: z.string(),
+      rating: z.number().int().min(1).max(5),
       sortOrder: z.number(),
+      isDemo: z.boolean(),
     }),
   ),
 });
