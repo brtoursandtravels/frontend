@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { Check } from "lucide-react";
 import { BreadcrumbNav } from "@/components/common/BreadcrumbNav";
 import { InclusionsExclusions } from "@/components/packages/InclusionsExclusions";
 import { ItineraryTimeline } from "@/components/packages/ItineraryTimeline";
@@ -170,10 +171,13 @@ export default async function PackageDetailPage({
             {item.highlights.length ? (
               <section className="mb-6 rounded-xl border border-border-subtle bg-white p-6 shadow-card">
                 <p className="mb-2 text-xs font-extrabold uppercase tracking-wider text-secondary-hover">What stands out</p>
-                <h2 className="mt-0 font-display text-3xl text-text-heading">Highlights</h2>
-                <ul className="grid list-none gap-3 p-0">
+                <h2 className="mb-5 mt-0 font-display text-3xl leading-tight text-text-heading">Highlights</h2>
+                <ul className="m-0 grid list-none gap-3 p-0">
                   {item.highlights.map((highlight) => (
-                    <li className="before:mr-2 before:text-success before:content-['✓']" key={highlight}>{highlight}</li>
+                    <li className="grid grid-cols-[1.25rem_minmax(0,1fr)] items-start gap-2.5 leading-6" key={highlight}>
+                      <Check aria-hidden="true" className="mt-1 text-success" size={17} />
+                      <span>{highlight}</span>
+                    </li>
                   ))}
                 </ul>
               </section>

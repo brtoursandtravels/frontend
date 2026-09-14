@@ -59,14 +59,14 @@ export function ItineraryTimeline({
   }
 
   return (
-    <div>
-      <div className="mb-5 flex items-end justify-between gap-4 max-[720px]:items-stretch max-[720px]:flex-col">
+    <div className="@container">
+      <div className="mb-5 flex items-end justify-between gap-4 @max-[34rem]:items-stretch @max-[34rem]:flex-col">
         <p className="m-0 flex items-center gap-2 text-sm text-text-muted">
           <Route aria-hidden="true" className="text-secondary" size={18} />
           {itinerary.length} thoughtfully paced days
         </p>
-        <div className="flex items-end gap-2 max-[520px]:items-stretch max-[520px]:flex-col">
-          <div className="grid min-w-52 gap-1 text-[0.62rem] font-extrabold uppercase tracking-wider text-secondary-hover">
+        <div className="flex items-end gap-2 @max-[34rem]:w-full @max-[22rem]:items-stretch @max-[22rem]:flex-col">
+          <div className="grid min-w-52 gap-1 text-[0.62rem] font-extrabold uppercase tracking-wider text-secondary-hover @max-[34rem]:min-w-0 @max-[34rem]:flex-1">
             <label htmlFor="itinerary-day-select">Jump to a day</label>
             <BrandedSelect
               defaultValue=""
@@ -82,7 +82,7 @@ export function ItineraryTimeline({
             />
           </div>
           <button
-            className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-border-subtle bg-white px-4 py-2 text-xs font-extrabold text-primary transition hover:border-primary"
+            className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-border-subtle bg-white px-4 py-2 text-xs font-extrabold text-primary transition hover:border-primary"
             type="button"
             onClick={() => setOpenDays(allOpen ? new Set() : new Set(itinerary.map((day) => day.dayNumber)))}
           >
@@ -114,7 +114,7 @@ export function ItineraryTimeline({
 
               {expanded ? (
                 <div className="border-t border-border-subtle" id={`itinerary-content-${day.dayNumber}`}>
-                  <div className={`grid ${preview ? "grid-cols-[1fr_15rem]" : "grid-cols-1"} max-[720px]:grid-cols-1`}>
+                  <div className={`grid ${preview ? "grid-cols-[1fr_15rem]" : "grid-cols-1"} @max-[34rem]:grid-cols-1`}>
                     <div className="p-5">
                       <p className="m-0 text-sm leading-7 text-text-muted">{day.description}</p>
                       {yatraMode ? (
@@ -128,7 +128,7 @@ export function ItineraryTimeline({
                       )}
                     </div>
                     {preview ? (
-                      <div className="relative min-h-44 overflow-hidden max-[720px]:order-first">
+                      <div className="relative min-h-44 overflow-hidden @max-[34rem]:order-first">
                         <PublicImage alt={preview.altText} className="object-cover" sizes="(max-width: 720px) 100vw, 240px" src={preview.url} />
                       </div>
                     ) : null}

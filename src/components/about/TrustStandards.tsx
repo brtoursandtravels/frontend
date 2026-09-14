@@ -9,7 +9,7 @@ const standards = [
 export function TrustStandards() {
   return (
     <section aria-labelledby="standards-title">
-      <div className="max-w-3xl">
+      <div>
         <p className="mb-3 text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-secondary-hover">Confidence by design</p>
         <h2 className="m-0 font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] tracking-[-0.025em] text-text-heading" id="standards-title">Trust is built into the process.</h2>
         <p className="mt-4 text-[0.95rem] leading-7 text-text-muted">Clear decisions matter more than borrowed badges. These are the practical standards travellers should expect when planning with BR.</p>

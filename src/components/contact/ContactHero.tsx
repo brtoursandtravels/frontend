@@ -17,7 +17,7 @@ export function ContactHero() {
         aria-hidden="true"
       />
       <div className="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
-        <div className="max-w-3xl">
+        <div className="max-w-4xl">
           <p className="mb-3 inline-flex items-center gap-2 text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-secondary-light">
             <Sparkles aria-hidden="true" size={16} /> Bespoke trip planning · Concierge desk
           </p>

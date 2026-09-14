@@ -162,6 +162,16 @@
   }
 }
 
+.footer-newsletter-input:-webkit-autofill,
+.footer-newsletter-input:-webkit-autofill:hover,
+.footer-newsletter-input:-webkit-autofill:focus {
+  caret-color: white;
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0 1000px
+    color-mix(in srgb, var(--color-primary-footer) 90%, white) inset;
+  transition: background-color 9999s ease-out 0s;
+}
+
 @utility glass-card {
   border: 1px solid rgb(255 255 255 / 0.6);
   background: rgb(255 255 255 / 0.82);

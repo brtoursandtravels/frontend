@@ -27,8 +27,26 @@ const defaultNavigation = [
   { id: "contact-us", parentId: null, href: "/contact-us", label: "Contact Us", sortOrder: 5 },
 ];
 
+function normalizeNavigationPath(value: string | null | undefined) {
+  const rawPath = value?.trim();
+
+  // On a production hard-load Next can briefly expose the root route as an
+  // empty pathname. Treat it as `/` so the Home state is correct in the
+  // server render as well as after client-side navigation.
+  if (!rawPath) return "/";
+
+  try {
+    const path = new URL(rawPath, "https://navigation.local").pathname;
+    return path.replace(/\/+$/, "") || "/";
+  } catch {
+    const path = rawPath.split(/[?#]/, 1)[0];
+    return path.replace(/\/+$/, "") || "/";
+  }
+}
+
 export function SiteHeader({ site }: { site?: SiteData | null }) {
   const pathname = usePathname();
+  const currentPath = normalizeNavigationPath(pathname);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -100,9 +118,14 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
   }, [open]);
 
   const isActive = (href: string) => {
-    if (href === "/packages") return pathname.startsWith("/packages");
-    if (href === "/blog") return pathname.startsWith("/blog");
-    return pathname === href;
+    const navigationPath = normalizeNavigationPath(href);
+
+    if (navigationPath === "/") return currentPath === "/";
+
+    return (
+      currentPath === navigationPath ||
+      currentPath.startsWith(`${navigationPath}/`)
+    );
   };
 
   useEffect(() => {
@@ -129,7 +152,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
       cancelAnimationFrame(frame);
       resizeObserver.disconnect();
     };
-  }, [pathname, roots.length]);
+  }, [currentPath, roots.length]);
 
   return (
     <>

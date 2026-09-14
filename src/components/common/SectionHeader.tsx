@@ -21,12 +21,12 @@ export function SectionHeader({
         align === "center" ? "items-center text-center max-[820px]:items-center" : ""
       }`}
     >
-      <div className={`max-w-3xl ${align === "center" ? "mx-auto" : ""}`}>
+      <div className={`${align === "center" ? "mx-auto" : ""}`}>
         <p className={`mb-3 flex items-center gap-2 text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-secondary-hover ${align === "center" ? "justify-center" : ""}`}>
           {eyebrow}
         </p>
         <h2 className="m-0 font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] tracking-[-0.025em] text-text-heading">{title}</h2>
-        {description ? <p className={`mt-4 max-w-2xl text-[0.98rem] leading-relaxed text-text-muted ${align === "center" ? "mx-auto" : ""}`}>{description}</p> : null}
+        {description ? <p className={`mt-4 text-[0.98rem] leading-relaxed text-text-muted ${align === "center" ? "mx-auto" : ""}`}>{description}</p> : null}
       </div>
       {href ? (
         <Link className="shrink-0 border-b border-secondary pb-1 text-[0.72rem] font-extrabold uppercase tracking-wider text-primary no-underline transition-all hover:gap-3 hover:text-secondary" href={href}>
