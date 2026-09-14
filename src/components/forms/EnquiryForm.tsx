@@ -7,6 +7,25 @@ import { z } from "zod";
 import { apiErrorSchema, inquiryReceiptSchema } from "@/lib/contracts";
 import { BrandedSelect } from "@/components/common/BrandedSelect";
 
+function optionalTravellerCount(label: string, minimum: number) {
+  return z
+    .string()
+    .trim()
+    .refine(
+      (value) =>
+        value === "" ||
+        (/^\d+$/.test(value) &&
+          Number(value) >= minimum &&
+          Number(value) <= 50),
+      `${label} must be a whole number from ${minimum} to 50.`,
+    );
+}
+
+const travellerCountSchemas = {
+  adultCount: optionalTravellerCount("Adults", 1),
+  childCount: optionalTravellerCount("Children", 0),
+};
+
 const enquirySchema = z.object({
   name: z.string().trim().min(2, "Enter your name.").max(120),
   email: z.string().trim().email("Enter a valid email address.").max(254),
@@ -28,8 +47,8 @@ const enquirySchema = z.object({
     )
     .max(5000),
   preferredStartDate: z.string(),
-  adultCount: z.string(),
-  childCount: z.string(),
+  adultCount: travellerCountSchemas.adultCount,
+  childCount: travellerCountSchemas.childCount,
   budget: z.string(),
   departureId: z.string(),
   privacyAccepted: z
@@ -82,6 +101,25 @@ export function EnquiryForm({
   const [receipt, setReceipt] = useState<Receipt | null>(null);
   const receiptRef = useRef<HTMLDivElement>(null);
   const idempotencyKey = useRef("");
+
+  function validateTravellerCount(
+    field: keyof typeof travellerCountSchemas,
+    value: string,
+  ) {
+    const result = travellerCountSchemas[field].safeParse(value);
+    const message = result.success
+      ? undefined
+      : result.error.issues[0]?.message;
+
+    setErrors((current) => {
+      if (current[field] === message) return current;
+
+      const next = { ...current };
+      if (message) next[field] = message;
+      else delete next[field];
+      return next;
+    });
+  }
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -355,11 +393,51 @@ export function EnquiryForm({
         ) : null}
         <label className={labelClass}>
           Adults
-          <input className={fieldClass} name="adultCount" type="number" min="1" max="50" defaultValue={defaultAdultCount} />
+          <input
+            className={fieldClass}
+            name="adultCount"
+            type="number"
+            inputMode="numeric"
+            min="1"
+            max="50"
+            step="1"
+            defaultValue={defaultAdultCount}
+            aria-invalid={Boolean(errors.adultCount)}
+            aria-describedby={errors.adultCount ? "adultCount-error" : undefined}
+            onBlur={(event) =>
+              validateTravellerCount("adultCount", event.currentTarget.value)
+            }
+            onChange={(event) => {
+              if (errors.adultCount) {
+                validateTravellerCount("adultCount", event.currentTarget.value);
+              }
+            }}
+          />
+          {errorFor("adultCount")}
         </label>
         <label className={labelClass}>
           Children
-          <input className={fieldClass} name="childCount" type="number" min="0" max="50" defaultValue={defaultChildCount} />
+          <input
+            className={fieldClass}
+            name="childCount"
+            type="number"
+            inputMode="numeric"
+            min="0"
+            max="50"
+            step="1"
+            defaultValue={defaultChildCount}
+            aria-invalid={Boolean(errors.childCount)}
+            aria-describedby={errors.childCount ? "childCount-error" : undefined}
+            onBlur={(event) =>
+              validateTravellerCount("childCount", event.currentTarget.value)
+            }
+            onChange={(event) => {
+              if (errors.childCount) {
+                validateTravellerCount("childCount", event.currentTarget.value);
+              }
+            }}
+          />
+          {errorFor("childCount")}
         </label>
         <div className={`${labelClass} col-span-2 max-[620px]:col-span-1`}>
           <label htmlFor="enquiry-budget">Approximate total budget</label>
