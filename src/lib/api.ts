@@ -31,11 +31,11 @@ export class ApiRequestError extends Error {
   }
 }
 
-async function apiFetch(path: string) {
+async function apiFetch(path: string, revalidate = 3600) {
   try {
     return await fetch(serverEnv.INTERNAL_API_BASE_URL + path, {
       headers: { accept: "application/json" },
-      next: { revalidate: 3600 },
+      next: { revalidate },
       // The API runs as a separate serverless deployment. A cold function and
       // database connection can legitimately take longer than ten seconds.
       signal: AbortSignal.timeout(25_000),
@@ -63,8 +63,12 @@ async function assertResponse(response: Response) {
   );
 }
 
-async function parsed<T>(path: string, schema: ZodType<T>): Promise<T> {
-  const response = await assertResponse(await apiFetch(path));
+async function parsed<T>(
+  path: string,
+  schema: ZodType<T>,
+  revalidate?: number,
+): Promise<T> {
+  const response = await assertResponse(await apiFetch(path, revalidate));
   return schema.parse(await response.json());
 }
 
@@ -186,5 +190,5 @@ export function getFaqs(packageSlug?: string) {
 }
 
 export function getTestimonials() {
-  return parsed("/testimonials", testimonialResponseSchema);
+  return parsed("/testimonials", testimonialResponseSchema, 300);
 }
