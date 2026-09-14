@@ -176,7 +176,7 @@ export default async function BlogPostPage({
             </aside>
           ) : null}
           <div
-            className="min-w-0 text-base leading-8 text-text-body [&_a]:font-semibold [&_a]:text-primary [&_blockquote]:my-8 [&_blockquote]:border-l-4 [&_blockquote]:border-secondary [&_blockquote]:bg-bg-muted [&_blockquote]:p-5 [&_h2]:scroll-mt-28 [&_h2]:mt-12 [&_h2]:font-display [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:text-text-heading [&_h3]:scroll-mt-28 [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-text-heading [&_li]:my-2 [&_ol]:my-5 [&_p]:my-5 [&_ul]:my-5 [&_img]:my-8 [&_img]:rounded-xl"
+            className="min-w-0 text-base leading-8 text-text-body [&_a]:font-semibold [&_a]:text-primary [&_a]:[overflow-wrap:anywhere] [&_blockquote]:my-8 [&_blockquote]:border-l-4 [&_blockquote]:border-secondary [&_blockquote]:bg-bg-muted [&_blockquote]:p-5 [&_h2]:scroll-mt-28 [&_h2]:mt-12 [&_h2]:font-display [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:text-text-heading [&_h3]:scroll-mt-28 [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-text-heading [&_iframe]:max-w-full [&_img]:my-8 [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-xl [&_li]:my-2 [&_ol]:my-5 [&_p]:my-5 [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto [&_ul]:my-5 [&_video]:h-auto [&_video]:max-w-full"
             dangerouslySetInnerHTML={{ __html: prepared.html }}
           />
         </div>

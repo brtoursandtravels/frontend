@@ -22,7 +22,7 @@ export function FloatingContactBar({ site }: { site?: SiteData | null }) {
   return (
     <aside aria-label="Quick contact options">
       <Link
-        className="fixed bottom-5 left-5 z-60 flex items-center gap-2 rounded-full border border-white/25 bg-primary px-4 py-2.5 text-xs font-extrabold text-white no-underline shadow-dropdown transition-transform hover:-translate-y-0.5 max-[620px]:bottom-[4.9rem] max-[620px]:left-3"
+        className="fixed bottom-5 left-5 z-60 flex items-center gap-2 rounded-full border border-white/25 bg-primary px-4 py-2.5 text-xs font-extrabold text-white no-underline shadow-dropdown transition-transform hover:-translate-y-0.5 max-[620px]:bottom-[calc(0.75rem+env(safe-area-inset-bottom))] max-[620px]:left-3"
         href="/contact-us"
         prefetch={false}
         aria-label="Plan a trip with BR Tours"
@@ -32,7 +32,7 @@ export function FloatingContactBar({ site }: { site?: SiteData | null }) {
       </Link>
 
       <a
-        className="fixed bottom-5 right-5 z-60 flex size-12 items-center justify-center rounded-full border border-white/30 bg-[#25d366] text-white shadow-dropdown transition-transform hover:-translate-y-0.5 hover:bg-[#20bd5a] motion-safe:animate-contact-pulse motion-reduce:animate-none max-[620px]:bottom-[4.9rem] max-[620px]:right-3"
+        className="fixed bottom-5 right-5 z-60 flex size-12 items-center justify-center rounded-full border border-white/30 bg-[#25d366] text-white shadow-dropdown transition-transform hover:-translate-y-0.5 hover:bg-[#20bd5a] motion-safe:animate-contact-pulse motion-reduce:animate-none max-[620px]:bottom-[calc(0.75rem+env(safe-area-inset-bottom))] max-[620px]:right-3"
         href={whatsappHref ?? "/contact-us"}
         rel={whatsappHref ? "noreferrer" : undefined}
         target={whatsappHref ? "_blank" : undefined}

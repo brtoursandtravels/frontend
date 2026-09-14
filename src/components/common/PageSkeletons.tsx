@@ -84,7 +84,7 @@ export function DetailPageSkeleton({ label = "Loading journey details" }: { labe
       <div className="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
         <Skeleton className="mb-6 h-4 w-72 max-w-full" />
         <Skeleton className="h-72 w-full rounded-xl max-[620px]:h-56" />
-        <div className="mt-8 grid grid-cols-[1fr_24rem] items-start gap-12 max-[820px]:grid-cols-1">
+        <div className="mt-8 grid grid-cols-[minmax(0,1fr)_24rem] items-start gap-12 max-[960px]:grid-cols-1">
           <div>
             <Skeleton className="mb-4 h-3 w-28" />
             <Skeleton className="mb-6 h-14 w-[78%] max-[620px]:h-11 max-[620px]:w-full" />

@@ -260,6 +260,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
           />
         </button>
       </div>
+      </header>
 
       <div
         className={`fixed inset-0 z-90 overflow-hidden ${open ? "visible pointer-events-auto" : "invisible pointer-events-none"}`}
@@ -271,7 +272,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
         role="dialog"
       >
         <button
-          className={`absolute inset-0 w-full border-0 bg-primary-ink/70 backdrop-blur-sm transition-opacity duration-500 ${open ? "opacity-100" : "opacity-0"}`}
+          className={`absolute inset-0 w-full border-0 bg-primary-ink/70 backdrop-blur-sm transition-opacity duration-500 motion-reduce:transition-none ${open ? "opacity-100" : "opacity-0"}`}
           type="button"
           aria-label="Close navigation"
           tabIndex={open ? 0 : -1}
@@ -280,18 +281,18 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
 
         <div
           ref={drawerRef}
-          className={`relative ml-auto flex h-[100dvh] w-[min(94vw,31rem)] flex-col overflow-y-auto rounded-l-[2.25rem] border-l border-white/15 bg-primary-ink px-5 pb-7 pt-5 text-white shadow-dropdown transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] sm:px-7 ${open ? "translate-x-0" : "translate-x-full"}`}
+          className={`relative ml-auto flex h-[100dvh] w-[min(94vw,31rem)] max-w-full min-w-0 origin-right touch-pan-y flex-col overflow-x-hidden overflow-y-auto overscroll-contain rounded-l-[2.25rem] border-l border-white/15 bg-primary-ink px-5 pb-7 pt-5 text-white shadow-dropdown transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none sm:px-7 ${open ? "translate-x-0 scale-100 opacity-100" : "translate-x-[105%] scale-[0.985] opacity-0"}`}
         >
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-28 -top-28 size-80 rounded-full border-[3rem] border-secondary/12"
-          />
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -left-24 bottom-20 size-64 rounded-full bg-accent/10 blur-3xl"
-          />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-l-[2.25rem]">
+            <span
+              className={`absolute -right-28 -top-28 size-80 rounded-full border-[3rem] border-secondary/12 transition-[transform,opacity] duration-700 ease-out motion-reduce:transition-none ${open ? "rotate-0 scale-100 opacity-100 delay-150" : "rotate-12 scale-75 opacity-0 delay-0"}`}
+            />
+            <span
+              className={`absolute -left-24 bottom-20 size-64 rounded-full bg-accent/10 blur-3xl transition-[transform,opacity] duration-700 ease-out motion-reduce:transition-none ${open ? "translate-x-0 scale-100 opacity-100 delay-200" : "-translate-x-10 scale-75 opacity-0 delay-0"}`}
+            />
+          </div>
 
-          <div className="relative z-10 flex items-center justify-between border-b border-white/12 pb-5">
+          <div className={`relative z-10 flex min-w-0 items-center justify-between border-b border-white/12 pb-5 transition-[transform,opacity] duration-500 ease-out motion-reduce:transition-none ${open ? "translate-y-0 opacity-100 delay-150" : "-translate-y-3 opacity-0 delay-0"}`}>
             <BrandLogo compact inverse onNavigate={() => setOpen(false)} />
             <button
               className="flex size-11 items-center justify-center rounded-full border border-white/20 bg-white/8 text-white transition duration-300 hover:rotate-90 hover:bg-white/15"
@@ -303,7 +304,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
             </button>
           </div>
 
-          <div className="relative z-10 mt-7 flex items-center gap-2 text-[0.65rem] font-extrabold uppercase tracking-[0.22em] text-secondary-light">
+          <div className={`relative z-10 mt-7 flex min-w-0 items-center gap-2 text-[0.65rem] font-extrabold uppercase tracking-[0.22em] text-secondary-light transition-[transform,opacity] duration-500 ease-out motion-reduce:transition-none ${open ? "translate-y-0 opacity-100 delay-200" : "translate-y-3 opacity-0 delay-0"}`}>
             <Compass aria-hidden="true" size={15} />
             Choose your direction
           </div>
@@ -312,7 +313,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
             <ul className="m-0 grid list-none gap-2 p-0">
               {roots.map((item, index) => (
                 <li
-                  className={`transition-all duration-500 ${open ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}
+                  className={`min-w-0 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${open ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}
                   key={item.id}
                   style={{ transitionDelay: open ? `${120 + index * 55}ms` : "0ms" }}
                 >
@@ -329,15 +330,15 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
             </ul>
           </nav>
 
-          <div className="relative z-10 mt-auto">
+          <div className={`relative z-10 mt-auto min-w-0 transition-[transform,opacity] duration-500 ease-out motion-reduce:transition-none ${open ? "translate-y-0 opacity-100 delay-[480ms]" : "translate-y-5 opacity-0 delay-0"}`}>
             <Link
               className="group flex items-center justify-between rounded-[1.2rem] bg-gradient-to-r from-secondary to-accent px-5 py-4 font-extrabold text-white no-underline shadow-accent-md transition-transform duration-300 hover:-translate-y-1"
               href="/contact-us"
               onClick={() => setOpen(false)}
             >
-              <span>
-                <span className="block text-[0.62rem] uppercase tracking-[0.18em] text-white/70">Your next chapter</span>
-                <span className="mt-0.5 block">Start planning</span>
+              <span className="min-w-0">
+                <span className="block break-words text-[0.62rem] uppercase tracking-[0.18em] text-white/70">Your next chapter</span>
+                <span className="mt-0.5 block break-words">Start planning</span>
               </span>
               <span className="flex size-10 items-center justify-center rounded-full bg-white/16 transition-transform duration-300 group-hover:rotate-45">
                 <ArrowUpRight aria-hidden="true" size={19} />
@@ -345,7 +346,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
             </Link>
 
             {phone || email || whatsappDisplay ? (
-              <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs text-white/68 [&_a]:flex [&_a]:items-center [&_a]:gap-2 [&_a]:no-underline [&_a]:transition-colors [&_a:hover]:text-secondary-light">
+              <div className="mt-5 flex min-w-0 flex-wrap gap-x-5 gap-y-2 text-xs text-white/68 [&_a]:flex [&_a]:min-w-0 [&_a]:max-w-full [&_a]:items-center [&_a]:gap-2 [&_a]:break-all [&_a]:no-underline [&_a]:transition-colors [&_a:hover]:text-secondary-light [&_svg]:shrink-0">
                 {phone ? (
                   <a href={`tel:${phone}`}>
                     <Phone aria-hidden="true" size={15} /> {phone}
@@ -370,7 +371,6 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
           </div>
         </div>
       </div>
-      </header>
     </>
   );
 }
@@ -423,7 +423,7 @@ function MobileNavLink({
   children: React.ReactNode;
   onNavigate: () => void;
 }) {
-  const className = `group grid grid-cols-[2.1rem_1fr_2.5rem] items-center gap-3 rounded-[1.15rem] border px-3 py-3.5 no-underline transition-all duration-300 ${
+  const className = `group grid min-w-0 grid-cols-[2.1rem_minmax(0,1fr)_2.5rem] items-center gap-3 rounded-[1.15rem] border px-3 py-3.5 no-underline transition-all duration-300 ${
     active
       ? "border-secondary/40 bg-white/12 text-secondary-light"
       : "border-white/8 bg-white/[0.035] text-white hover:border-white/20 hover:bg-white/8"
@@ -433,7 +433,7 @@ function MobileNavLink({
       <span className={`text-[0.62rem] font-extrabold tracking-[0.12em] ${active ? "text-secondary-light" : "text-white/38"}`}>
         {String(index + 1).padStart(2, "0")}
       </span>
-      <span className="font-display text-[clamp(1.35rem,6vw,1.8rem)] font-medium leading-none">
+      <span className="min-w-0 break-words font-display text-[clamp(1.35rem,6vw,1.8rem)] font-medium leading-none">
         {children}
       </span>
       <span className={`flex size-9 items-center justify-center rounded-full transition-all duration-300 ${active ? "rotate-[-45deg] bg-secondary text-white" : "bg-white/8 text-white/55 group-hover:translate-x-0.5 group-hover:bg-white/15 group-hover:text-white"}`}>

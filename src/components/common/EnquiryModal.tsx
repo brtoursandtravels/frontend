@@ -77,9 +77,9 @@ export function EnquiryModal({
       </button>
       {open && typeof document !== "undefined" ? createPortal(
         <div className="fixed inset-0 z-100 grid place-items-center overflow-y-auto bg-primary-ink/65 p-5 backdrop-blur-sm max-[620px]:p-0" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}>
-          <section ref={dialogRef} className="my-auto max-h-[94vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-white p-[clamp(1.4rem,4vw,2.5rem)] shadow-dropdown max-[620px]:min-h-screen max-[620px]:max-h-screen max-[620px]:rounded-none" role="dialog" aria-modal="true" aria-labelledby="enquiry-modal-title">
-            <header className="flex items-start justify-between gap-5 border-b border-border-subtle pb-5">
-              <div><p className="mb-2 text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-secondary-hover">Start planning</p><h2 className="m-0 font-display text-4xl leading-tight text-text-heading" id="enquiry-modal-title">Tell us about your journey.</h2></div>
+          <section ref={dialogRef} className="my-auto max-h-[94vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-white p-[clamp(1.4rem,4vw,2.5rem)] shadow-dropdown max-[620px]:h-[100dvh] max-[620px]:min-h-0 max-[620px]:max-h-none max-[620px]:rounded-none" role="dialog" aria-modal="true" aria-labelledby="enquiry-modal-title">
+            <header className="flex items-start justify-between gap-5 border-b border-border-subtle pb-5 max-[420px]:gap-3">
+              <div className="min-w-0"><p className="mb-2 text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-secondary-hover">Start planning</p><h2 className="m-0 font-display text-3xl leading-tight text-text-heading sm:text-4xl" id="enquiry-modal-title">Tell us about your journey.</h2></div>
               <button className="flex size-11 shrink-0 items-center justify-center rounded-full border-0 bg-bg-muted text-primary" type="button" ref={closeRef} onClick={close} aria-label="Close enquiry form"><X aria-hidden="true" /></button>
             </header>
             <p className="my-4 text-sm text-text-muted">Your request is saved for staff review. It is not treated as a confirmed booking.</p>

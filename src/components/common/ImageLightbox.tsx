@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, Copy, Expand, Images, MapPin, Maximize2, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { z } from "zod";
 import type { publicMediaSchema } from "@/lib/contracts";
 import { PublicImage } from "@/components/common/PublicImage";
@@ -127,9 +128,9 @@ export function ImageLightbox({
         })}
       </div>
 
-      {active !== null ? (
-        <div className="fixed inset-0 z-100 grid place-items-center bg-[#020a0b]/95 p-3 backdrop-blur-md" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}>
-          <div className="relative grid max-h-[97vh] w-full max-w-7xl grid-rows-[auto_minmax(0,1fr)_auto_auto] gap-3" role="dialog" aria-modal="true" aria-label={`${label} image ${active + 1} of ${images.length}`} ref={dialogRef}>
+      {active !== null && typeof document !== "undefined" ? createPortal(
+        <div className="fixed inset-0 z-100 grid place-items-center overflow-hidden bg-[#020a0b]/95 p-3 backdrop-blur-md" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) close(); }}>
+          <div className="relative grid min-w-0 max-h-[97vh] w-full max-w-7xl grid-rows-[auto_minmax(0,1fr)_auto_auto] gap-3 max-[700px]:h-[calc(100dvh-1.5rem)] max-[700px]:max-h-none [&>*]:min-w-0" role="dialog" aria-modal="true" aria-label={`${label} image ${active + 1} of ${images.length}`} ref={dialogRef}>
             <div className="flex items-center justify-between gap-3 text-white">
               <p className="m-0 min-w-0 truncate text-[0.78rem] font-bold text-white/65">{label} · {active + 1} of {images.length}</p>
               <div className="flex gap-2">
@@ -138,7 +139,7 @@ export function ImageLightbox({
                 <button className="grid size-10 place-items-center rounded-full border border-white/25 bg-white/10 text-white" type="button" onClick={close} aria-label="Close gallery"><X aria-hidden="true" size={18} /></button>
               </div>
             </div>
-            <div className="relative min-h-[55vh] overflow-hidden rounded-lg bg-black" ref={theaterRef} style={{ touchAction: "pinch-zoom pan-y" }} onDoubleClick={() => setZoomed((value) => !value)} onTouchStart={(event) => { if (event.touches.length === 1) touchStartX.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={(event) => { const start = touchStartX.current; const end = event.changedTouches[0]?.clientX; touchStartX.current = null; if (start === null || end === undefined || Math.abs(end - start) < 45) return; move(end - start > 0 ? -1 : 1); }}>
+            <div className="relative min-h-[55vh] overflow-hidden rounded-lg bg-black max-[700px]:min-h-0" ref={theaterRef} style={{ touchAction: "pinch-zoom pan-y" }} onDoubleClick={() => setZoomed((value) => !value)} onTouchStart={(event) => { if (event.touches.length === 1) touchStartX.current = event.touches[0]?.clientX ?? null; }} onTouchEnd={(event) => { const start = touchStartX.current; const end = event.changedTouches[0]?.clientX; touchStartX.current = null; if (start === null || end === undefined || Math.abs(end - start) < 45) return; move(end - start > 0 ? -1 : 1); }}>
               <PublicImage className={`object-contain transition-transform duration-300 ${zoomed ? "scale-150 cursor-zoom-out" : "cursor-zoom-in"}`} alt={images[active]!.altText} sizes="100vw" src={images[active]!.url} />
               {images.length > 1 ? <><button className="absolute left-3 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-black/40 text-white backdrop-blur-sm" type="button" onClick={() => move(-1)} aria-label="Previous image"><ChevronLeft aria-hidden="true" size={23} /></button><button className="absolute right-3 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-black/40 text-white backdrop-blur-sm" type="button" onClick={() => move(1)} aria-label="Next image"><ChevronRight aria-hidden="true" size={23} /></button></> : null}
             </div>
@@ -148,7 +149,8 @@ export function ImageLightbox({
             </div>
             {images.length > 1 ? <div className="flex gap-2 overflow-x-auto pb-1" aria-label="Choose an image">{images.map((image, index) => <button aria-label={`Show image ${index + 1}`} aria-pressed={active === index} className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-md border-2 bg-primary p-0 ${active === index ? "border-secondary" : "border-transparent opacity-55 hover:opacity-100"}`} key={image.id} type="button" onClick={() => { setZoomed(false); setActive(index); }}><PublicImage alt="" className="object-cover" sizes="80px" src={image.url} /></button>)}</div> : null}
           </div>
-        </div>
+        </div>,
+        document.body,
       ) : null}
     </>
   );

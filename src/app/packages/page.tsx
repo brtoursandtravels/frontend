@@ -169,7 +169,7 @@ export default async function PackagesPage({
           idPrefix="mobile"
         />
       </details>
-      <div className="grid grid-cols-[18rem_1fr] items-start gap-8 max-[820px]:grid-cols-1">
+      <div className="grid grid-cols-[18rem_minmax(0,1fr)] items-start gap-8 max-[960px]:grid-cols-1">
         <aside className="sticky top-24 max-[960px]:hidden" aria-label="Package filters">
           <PackageFilterSidebar
             categories={categories}
@@ -178,7 +178,7 @@ export default async function PackagesPage({
             idPrefix="desktop"
           />
         </aside>
-        <section aria-labelledby="results-heading">
+        <section className="min-w-0" aria-labelledby="results-heading">
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
               <p className="mb-2 text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-secondary-hover">Live catalogue</p>

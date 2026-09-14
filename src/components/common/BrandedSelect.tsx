@@ -162,7 +162,7 @@ export function BrandedSelect({
                 tabIndex={index === selectedIndex ? 0 : -1}
                 type="button"
               >
-                <span>{option.label}</span>
+                <span className="min-w-0 [overflow-wrap:anywhere]">{option.label}</span>
                 {active ? <Check aria-hidden="true" className="shrink-0 text-secondary-light" size={16} /> : null}
               </button>
             );

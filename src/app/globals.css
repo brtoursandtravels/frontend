@@ -90,7 +90,8 @@
 
 .defer-render {
   content-visibility: auto;
-  contain-intrinsic-size: auto 50rem;
+  contain-intrinsic-width: auto 0;
+  contain-intrinsic-height: auto 50rem;
 }
 
 @layer base {
@@ -108,6 +109,15 @@
     color: var(--color-text-body);
     font-family: var(--font-sans);
     line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  img,
+  svg,
+  video,
+  canvas,
+  iframe {
+    max-width: 100%;
   }
 
   button,
@@ -318,6 +328,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  #mobile-navigation,
+  #mobile-navigation * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
   .customise-scroll-card {
     transition: none;
     opacity: 1;

@@ -50,7 +50,7 @@ export function SiteFooter({ site }: { site?: SiteData | null }) {
           <Link href="/terms">Terms</Link>
           <Link href="/cancellation-policy">Cancellation</Link>
         </div>
-        <div className="grid content-start gap-3 max-[1100px]:col-span-3 max-[620px]:col-span-2 [&_a]:flex [&_a]:items-start [&_a]:gap-2 [&_a]:text-[0.9rem] [&_a]:no-underline [&_p]:flex [&_p]:items-start [&_p]:gap-2 [&_svg]:shrink-0 [&_svg]:text-secondary-light">
+        <div className="grid min-w-0 content-start gap-3 max-[1100px]:col-span-3 max-[620px]:col-span-2 [&_a]:flex [&_a]:min-w-0 [&_a]:items-start [&_a]:gap-2 [&_a]:text-[0.9rem] [&_a]:no-underline [&_a>span]:min-w-0 [&_a>span]:[overflow-wrap:anywhere] [&_p]:flex [&_p]:min-w-0 [&_p]:items-start [&_p]:gap-2 [&_p>span]:min-w-0 [&_p>span]:[overflow-wrap:anywhere] [&_svg]:shrink-0 [&_svg]:text-secondary-light">
           <h3 className="mb-1 text-[0.95rem] font-extrabold text-white">Start a conversation</h3>
           {phone ? (
             <a href={`tel:${phone}`}>
