@@ -17,7 +17,7 @@ function galleryHref(query: GalleryQuery, changes: GalleryQuery) {
 export function GalleryDiscoveryBar({ destinations, packages, query }: { destinations: Destination[]; packages: PackageCard[]; query: GalleryQuery }) {
   const wall = query.view === "wall";
   return (
-    <section className="sticky top-[5rem] z-30 border-y border-border-subtle bg-bg-base/92 py-3 shadow-card backdrop-blur-xl max-[620px]:static" aria-label="Gallery discovery filters">
+    <section className="sticky top-[5rem] z-30 border-y border-border-subtle bg-bg-base/92 py-3 shadow-card backdrop-blur-xl max-[620px]:relative max-[620px]:top-0" aria-label="Gallery discovery filters">
       <div className="mx-auto grid min-w-0 w-full max-w-7xl gap-3 px-5 sm:px-8 lg:px-10">
         <div className="flex min-w-0 items-center justify-between gap-4 max-[800px]:items-start max-[620px]:flex-col">
           <nav className="flex min-w-0 flex-1 gap-2 overflow-x-auto pb-1 max-[620px]:w-full max-[620px]:flex-none max-[620px]:flex-wrap max-[620px]:overflow-x-visible" aria-label="Filter by destination">

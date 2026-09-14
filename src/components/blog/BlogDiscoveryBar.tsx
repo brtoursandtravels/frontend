@@ -9,7 +9,7 @@ function categoryHref(slug?: string) {
 
 export function BlogDiscoveryBar({ categories, activeCategory, query }: { categories: BlogCategory[]; activeCategory?: string; query?: string }) {
   return (
-    <section className="sticky top-[5rem] z-30 border-y border-border-subtle bg-bg-base/92 py-3 shadow-card backdrop-blur-xl max-[620px]:static" aria-label="Journal discovery">
+    <section className="sticky top-[5rem] z-30 border-y border-border-subtle bg-bg-base/92 py-3 shadow-card backdrop-blur-xl max-[620px]:relative max-[620px]:top-0" aria-label="Journal discovery">
       <div className="mx-auto grid w-full max-w-7xl gap-3 px-5 sm:px-8 lg:px-10">
         <nav className="flex gap-2 overflow-x-auto pb-1 max-[620px]:flex-wrap max-[620px]:overflow-x-visible" aria-label="Article categories">
           <Link className={`shrink-0 rounded-full border px-4 py-2 text-[0.75rem] font-extrabold no-underline transition max-[420px]:px-3 ${!activeCategory ? "border-primary bg-primary text-white" : "border-border-subtle bg-white text-primary hover:border-primary/40"}`} href={categoryHref()}>All dispatches</Link>
