@@ -47,6 +47,22 @@ export function whatsappLink(value: string | null | undefined) {
   return digits ? `https://wa.me/${digits}` : null;
 }
 
+export function socialLink(
+  value: string | null | undefined,
+  network: "facebook" | "instagram",
+) {
+  if (!value) return null;
+  try {
+    const url = new URL(value);
+    const domain = `${network}.com`;
+    const trustedHost =
+      url.hostname === domain || url.hostname.endsWith(`.${domain}`);
+    return url.protocol === "https:" && trustedHost ? url.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
 export function mapEmbedLink(value: string | null | undefined) {
   if (!value) return null;
   try {

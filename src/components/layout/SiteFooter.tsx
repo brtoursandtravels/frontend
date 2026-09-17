@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Camera, Mail, MapPin, Phone, UsersRound } from "lucide-react";
 import type { SiteData } from "@/lib/contracts";
-import { settingText } from "@/lib/presentation";
+import { settingText, socialLink } from "@/lib/presentation";
 import { BrandLogo } from "@/components/common/BrandLogo";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
 
@@ -13,6 +13,14 @@ export function SiteFooter({ site }: { site?: SiteData | null }) {
     "business.address",
     "address",
   ]);
+  const instagramHref = socialLink(
+    settingText(site, ["social.instagram", "contact.instagram", "instagram"]),
+    "instagram",
+  );
+  const facebookHref = socialLink(
+    settingText(site, ["social.facebook", "contact.facebook", "facebook"]),
+    "facebook",
+  );
   return (
     <footer className="bg-primary-footer text-white/75">
       <div className="mx-auto grid w-full max-w-7xl grid-cols-[1fr_minmax(20rem,0.7fr)] items-center gap-10 border-b border-white/10 px-5 py-12 sm:px-8 lg:px-10 max-[820px]:grid-cols-1">
@@ -67,7 +75,17 @@ export function SiteFooter({ site }: { site?: SiteData | null }) {
               <MapPin aria-hidden="true" size={18} /> <span>{address}</span>
             </p>
           ) : null}
-          {!phone && !email && !address ? (
+          {instagramHref ? (
+            <a href={instagramHref} rel="noreferrer" target="_blank">
+              <Camera aria-hidden="true" size={18} /> <span>Instagram</span>
+            </a>
+          ) : null}
+          {facebookHref ? (
+            <a href={facebookHref} rel="noreferrer" target="_blank">
+              <UsersRound aria-hidden="true" size={18} /> <span>Facebook</span>
+            </a>
+          ) : null}
+          {!phone && !email && !address && !instagramHref && !facebookHref ? (
             <Link href="/contact-us">Use our secure enquiry form →</Link>
           ) : null}
         </div>

@@ -6,7 +6,7 @@ import { ConsultationTimeline } from "@/components/contact/ConsultationTimeline"
 import { QuickChannelsBar } from "@/components/contact/QuickChannelsBar";
 import { EnquiryForm } from "@/components/forms/EnquiryForm";
 import { getPackage, getSite } from "@/lib/api";
-import { mapEmbedLink, settingText, whatsappLink } from "@/lib/presentation";
+import { mapEmbedLink, settingText, socialLink, whatsappLink } from "@/lib/presentation";
 
 export const revalidate = 3600;
 export const metadata: Metadata = {
@@ -35,12 +35,27 @@ export default async function ContactPage({
   const hours = settingText(site, ["contact.openingHours", "business.openingHours", "openingHours"]);
   const mapUrl = settingText(site, ["contact.mapUrl", "business.mapUrl", "mapUrl"]);
   const whatsappHref = whatsappLink(whatsapp);
+  const instagramHref = socialLink(
+    settingText(site, ["social.instagram", "contact.instagram", "instagram"]),
+    "instagram",
+  );
+  const facebookHref = socialLink(
+    settingText(site, ["social.facebook", "contact.facebook", "facebook"]),
+    "facebook",
+  );
   const mapEmbedUrl = mapEmbedLink(mapUrl);
 
   return (
     <main>
       <ContactHero />
-      <QuickChannelsBar email={email} phone={phone} whatsappHref={whatsappHref} hours={hours} />
+      <QuickChannelsBar
+        email={email}
+        facebookHref={facebookHref}
+        instagramHref={instagramHref}
+        phone={phone}
+        whatsappHref={whatsappHref}
+        hours={hours}
+      />
 
       <section
         className="mx-auto grid w-full max-w-7xl grid-cols-[0.78fr_1.22fr] gap-7 px-5 py-20 sm:px-8 lg:px-10 max-[900px]:grid-cols-1"

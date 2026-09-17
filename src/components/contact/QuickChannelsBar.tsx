@@ -1,13 +1,22 @@
-import { Mail, MessageCircle, Phone } from "lucide-react";
+import { Camera, Mail, MessageCircle, Phone, UsersRound } from "lucide-react";
 
 type QuickChannelsBarProps = {
   email?: string | null;
+  facebookHref?: string | null;
+  instagramHref?: string | null;
   phone?: string | null;
   whatsappHref?: string | null;
   hours?: string | null;
 };
 
-export function QuickChannelsBar({ email, phone, whatsappHref, hours }: QuickChannelsBarProps) {
+export function QuickChannelsBar({
+  email,
+  facebookHref,
+  instagramHref,
+  phone,
+  whatsappHref,
+  hours,
+}: QuickChannelsBarProps) {
   const channels = [
     whatsappHref ? {
       href: whatsappHref,
@@ -33,12 +42,37 @@ export function QuickChannelsBar({ email, phone, whatsappHref, hours }: QuickCha
       detail: "Ideal when you already have trip notes to share",
       external: false,
     } : null,
+    instagramHref ? {
+      href: instagramHref,
+      icon: Camera,
+      eyebrow: "Travel inspiration",
+      title: "Instagram",
+      detail: "Photos, reels and new journey ideas",
+      external: true,
+    } : null,
+    facebookHref ? {
+      href: facebookHref,
+      icon: UsersRound,
+      eyebrow: "News and updates",
+      title: "Facebook",
+      detail: "Tours, updates and travel stories",
+      external: true,
+    } : null,
   ].filter((channel): channel is NonNullable<typeof channel> => Boolean(channel));
 
   if (!channels.length) return null;
 
+  const columns =
+    channels.length >= 4
+      ? "lg:grid-cols-2 xl:grid-cols-4"
+      : channels.length === 3
+        ? "lg:grid-cols-3"
+        : channels.length === 2
+          ? "lg:grid-cols-2"
+          : "lg:grid-cols-1";
+
   return (
-    <section className="mx-auto -mt-9 grid w-full max-w-7xl gap-4 px-5 sm:px-8 lg:grid-cols-3 lg:px-10" aria-label="Contact options">
+    <section className={`mx-auto -mt-9 grid w-full max-w-7xl gap-4 px-5 sm:px-8 lg:px-10 ${columns}`} aria-label="Contact options">
       {channels.map(({ detail, external, eyebrow, href, icon: Icon, title }) => (
         <a
           className="relative z-2 grid grid-cols-[2.75rem_1fr] gap-3 rounded-xl border border-border-subtle bg-white p-5 text-text-heading no-underline shadow-card transition hover:-translate-y-1 hover:border-secondary/40 hover:shadow-card-hover"
