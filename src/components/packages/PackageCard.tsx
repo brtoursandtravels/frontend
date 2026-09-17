@@ -24,7 +24,7 @@ export function PackageCard({
       }`}
     >
       <div className="relative aspect-[16/10] overflow-hidden bg-bg-muted">
-        <Link className="absolute inset-0 block" href={`/packages/${item.slug}`} aria-label={`View ${item.title}`}>
+        <Link className="absolute inset-0 block" href={`/packages/${item.slug}`} aria-label={`View ${item.title}`} prefetch={false}>
           {item.cover ? (
             <PublicImage
               alt={item.cover.altText}
@@ -51,7 +51,7 @@ export function PackageCard({
 
       <div className="flex flex-1 flex-col p-4">
         <h3 className="m-0 font-display text-[1.1rem] font-semibold leading-snug text-text-heading">
-          <Link className="no-underline transition-colors hover:text-primary" href={`/packages/${item.slug}`}>{item.title}</Link>
+          <Link className="no-underline transition-colors hover:text-primary" href={`/packages/${item.slug}`} prefetch={false}>{item.title}</Link>
         </h3>
         {item.isDemo ? <span className="mt-2 inline-flex self-start rounded-full bg-accent-soft px-2.5 py-1 text-[0.62rem] font-extrabold uppercase text-secondary-hover">Demo content</span> : null}
         {item.highlights.length ? (
@@ -74,7 +74,7 @@ export function PackageCard({
             </span>
             {item.startingPrice ? <small className="text-[0.65rem] text-text-muted">{priceBasisLabel(item.startingPrice.basis)}</small> : null}
           </div>
-          <Link className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-primary/20 bg-bg-muted px-5 py-2 text-xs font-extrabold text-primary no-underline transition hover:border-primary hover:bg-primary hover:text-white @max-[16rem]:w-full" href={`/packages/${item.slug}`}>
+          <Link className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-primary/20 bg-bg-muted px-5 py-2 text-xs font-extrabold text-primary no-underline transition hover:border-primary hover:bg-primary hover:text-white @max-[16rem]:w-full" href={`/packages/${item.slug}`} prefetch={false}>
             Details <ArrowUpRight aria-hidden="true" size={15} />
           </Link>
         </div>

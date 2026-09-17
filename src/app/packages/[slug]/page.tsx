@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { Suspense } from "react";
 import { Check } from "lucide-react";
 import { BreadcrumbNav } from "@/components/common/BreadcrumbNav";
+import { DetailPageSkeleton } from "@/components/common/PageSkeletons";
 import { InclusionsExclusions } from "@/components/packages/InclusionsExclusions";
 import { ItineraryTimeline } from "@/components/packages/ItineraryTimeline";
 import { PackageCard } from "@/components/packages/PackageCard";
@@ -30,6 +32,7 @@ import { serverEnv } from "@/lib/env";
 import { charDhamEditorialMedia } from "@/lib/packageEditorialMedia";
 
 export const revalidate = 30;
+export const maxDuration = 60;
 
 export async function generateStaticParams() {
   const first = await getPackages({ page: 1, pageSize: 48 }).catch(() => null);
@@ -79,7 +82,23 @@ export default async function PackageDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  return (
+    <Suspense fallback={<DetailPageSkeleton label="Loading package details" />}>
+      <PackageDetailContent slug={slug} />
+    </Suspense>
+  );
+}
+
+async function PackageDetailContent({ slug }: { slug: string }) {
   let result;
+  const supportingContent = Promise.all([
+    getFaqs(slug)
+      .then((response) => response.data)
+      .catch(() => []),
+    getSite()
+      .then((response) => response.data)
+      .catch(() => null),
+  ]);
   try {
     result = await getPackageWithRedirect(slug);
   } catch (error) {
@@ -90,14 +109,7 @@ export default async function PackageDetailPage({
   }
   if (result.redirectSlug) redirect(`/packages/${result.redirectSlug}`);
   const item = result.data;
-  const [faqs, site] = await Promise.all([
-    getFaqs(item.slug)
-      .then((result) => result.data)
-      .catch(() => []),
-    getSite()
-      .then((result) => result.data)
-      .catch(() => null),
-  ]);
+  const [faqs, site] = await supportingContent;
   const whatsappHref = whatsappLink(
     settingText(site, ["contact.whatsapp", "business.whatsapp", "whatsapp"]),
   );
