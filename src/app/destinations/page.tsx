@@ -8,7 +8,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Destinations",
   description:
-    "Explore Char Dham, Kashmir, Matheran, Rajasthan and Jaisalmer tours with BR Tours and Travels.",
+    "Explore Char Dham, Kashmir, Matheran, Rajasthan, Jaisalmer, Maharashtra and North India–Nepal tours with BR Tours and Travels.",
   alternates: { canonical: "/destinations" },
 };
 
@@ -69,14 +69,15 @@ export default async function DestinationsPage() {
         <span className="absolute inset-0 bg-linear-to-t from-primary-hover/95 via-primary/45 to-black/10" />
         <div className="relative z-1 mx-auto min-h-[38rem] w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 max-[620px]:min-h-[33rem]">
           <p className="mb-4 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-light">
-            <Sparkles aria-hidden="true" size={16} /> India, five ways
+            <Sparkles aria-hidden="true" size={16} /> Seven ways to begin
           </p>
           <h1 className="m-0 max-w-4xl font-display text-[clamp(3.2rem,7vw,6.5rem)] font-semibold leading-[0.96] tracking-[-0.045em] text-white max-[620px]:text-[clamp(3.2rem,16vw,5rem)]">
             Choose a direction. We will shape the journey.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/80">
             Sacred mountain routes, quiet lakes, green hill trails, royal
-            cities and desert light—explore BR&apos;s five featured destinations.
+            cities, desert light, Maharashtra pilgrimage routes and a North
+            India–Nepal circuit.
           </p>
         </div>
       </header>
@@ -100,8 +101,12 @@ export default async function DestinationsPage() {
                   >
                     <Image
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      alt={`${destination.name} destination landscape`}
+                      alt={
+                        destination.cover?.altText ??
+                        `${destination.name} destination landscape`
+                      }
                       src={
+                        destination.cover?.url ??
                         images[destination.slug] ??
                         "/images/tours/main-tours-hero.webp"
                       }
@@ -114,7 +119,10 @@ export default async function DestinationsPage() {
                   </Link>
                   <div className="p-6">
                     <p className="mb-2 flex items-center gap-1.5 text-[0.67rem] font-extrabold uppercase tracking-wider text-secondary-hover">
-                      <MapPin aria-hidden="true" size={15} /> India
+                      <MapPin aria-hidden="true" size={15} />{" "}
+                      {destination.slug === "north-india-nepal"
+                        ? "India & Nepal"
+                        : "India"}
                     </p>
                     <h2 className="m-0 font-display text-3xl font-semibold text-text-heading">
                       {destination.name}

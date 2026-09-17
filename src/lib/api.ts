@@ -33,9 +33,13 @@ export class ApiRequestError extends Error {
 
 async function apiFetch(path: string, revalidate = 3600) {
   try {
+    const cacheOptions =
+      process.env.NODE_ENV === "development"
+        ? ({ cache: "no-store" } as const)
+        : ({ next: { revalidate } } as const);
     return await fetch(serverEnv.INTERNAL_API_BASE_URL + path, {
       headers: { accept: "application/json" },
-      next: { revalidate },
+      ...cacheOptions,
       // The API runs as a separate serverless deployment. A cold function and
       // database connection can legitimately take longer than ten seconds.
       signal: AbortSignal.timeout(25_000),

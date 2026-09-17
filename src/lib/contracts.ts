@@ -152,6 +152,7 @@ export const destinationSchema = z.object({
   slug: z.string(),
   name: z.string(),
   summary: z.string().nullable(),
+  cover: publicMediaSchema.omit({ mimeType: true }).nullable(),
   isDemo: z.boolean(),
 });
 export const categorySchema = z.object({

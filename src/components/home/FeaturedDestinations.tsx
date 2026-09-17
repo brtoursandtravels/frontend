@@ -17,6 +17,7 @@ const fallbackAssets = Object.values(destinationAssets);
 
 function assetFor(destination: Destination, index: number) {
   return (
+    destination.cover?.url ??
     destinationAssets[destination.slug as keyof typeof destinationAssets] ??
     fallbackAssets[index % fallbackAssets.length]!
   );
@@ -27,7 +28,7 @@ export function FeaturedDestinations({
 }: {
   destinations: Destination[];
 }) {
-  const items = destinations.slice(0, 5);
+  const items = destinations.slice(0, 6);
   if (!items.length) return null;
   return (
     <section
@@ -35,9 +36,9 @@ export function FeaturedDestinations({
       id="featured-destinations"
     >
       <SectionHeader
-        eyebrow="Five ways to see India"
+        eyebrow="Six ways to begin"
         title="Choose the landscape that calls to you."
-        description="Sacred Himalayan routes, quiet Kashmir mornings, Matheran forest trails, Rajasthan heritage and Jaisalmer desert light."
+        description="Sacred Himalayan routes, quiet Kashmir mornings, Matheran forest trails, Rajasthan heritage, Jaisalmer desert light and a North India–Nepal pilgrimage circuit."
         href="/destinations"
         linkLabel="All destinations"
       />
@@ -55,7 +56,10 @@ export function FeaturedDestinations({
             key={destination.id}
           >
             <Image
-              alt={`${destination.name} travel landscape`}
+              alt={
+                destination.cover?.altText ??
+                `${destination.name} travel landscape`
+              }
               src={assetFor(destination, index)}
               className={`object-cover ${animationClasses.imageZoom}`}
               fill

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, MapPin } from "lucide-react";
 import type { PackageCard as PackageCardData } from "@/lib/contracts";
 import { formatMoney, priceBasisLabel } from "@/lib/presentation";
 import { PublicImage } from "@/components/common/PublicImage";
@@ -54,6 +54,16 @@ export function PackageCard({
           <Link className="no-underline transition-colors hover:text-primary" href={`/packages/${item.slug}`}>{item.title}</Link>
         </h3>
         {item.isDemo ? <span className="mt-2 inline-flex self-start rounded-full bg-accent-soft px-2.5 py-1 text-[0.62rem] font-extrabold uppercase text-secondary-hover">Demo content</span> : null}
+        {item.highlights.length ? (
+          <ul className="my-3 grid list-none gap-1.5 p-0 text-[0.72rem] leading-snug text-text-muted">
+            {item.highlights.slice(0, 3).map((highlight) => (
+              <li className="flex items-start gap-1.5" key={highlight}>
+                <MapPin aria-hidden="true" className="mt-0.5 shrink-0 text-secondary" size={13} />
+                <span>{highlight}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
 
         <div className="mt-auto flex items-end justify-between gap-4 border-t border-border-subtle pt-4 @max-[16rem]:flex-col @max-[16rem]:items-stretch @max-[16rem]:gap-3">
           <div className="grid min-w-0">
