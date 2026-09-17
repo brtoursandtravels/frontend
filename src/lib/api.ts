@@ -19,6 +19,8 @@ import {
 } from "./contracts";
 import { serverEnv } from "./env";
 
+const catalogueRevalidateSeconds = 30;
+
 export class ApiRequestError extends Error {
   constructor(
     public readonly status: number,
@@ -101,19 +103,27 @@ export type PackageFilters = {
 };
 
 export function getPackages(options: PackageFilters = {}) {
-  return parsed(`/packages${queryString(options)}`, packageListResponseSchema);
+  return parsed(
+    `/packages${queryString(options)}`,
+    packageListResponseSchema,
+    catalogueRevalidateSeconds,
+  );
 }
 
 export function getPackage(slug: string) {
   return parsed(
     `/packages/${encodeURIComponent(slug)}`,
     packageDetailResponseSchema,
+    catalogueRevalidateSeconds,
   );
 }
 
 export async function getPackageWithRedirect(slug: string) {
   const response = await assertResponse(
-    await apiFetch(`/packages/${encodeURIComponent(slug)}`),
+    await apiFetch(
+      `/packages/${encodeURIComponent(slug)}`,
+      catalogueRevalidateSeconds,
+    ),
   );
   const payload = packageDetailResponseSchema.parse(await response.json());
   const finalSlug = decodeURIComponent(
@@ -138,11 +148,19 @@ export function getContentPage(slug: string) {
 }
 
 export function getDestinations() {
-  return parsed("/destinations", destinationsResponseSchema);
+  return parsed(
+    "/destinations",
+    destinationsResponseSchema,
+    catalogueRevalidateSeconds,
+  );
 }
 
 export function getCategories() {
-  return parsed("/categories", categoriesResponseSchema);
+  return parsed(
+    "/categories",
+    categoriesResponseSchema,
+    catalogueRevalidateSeconds,
+  );
 }
 
 export function getGalleryAlbums(

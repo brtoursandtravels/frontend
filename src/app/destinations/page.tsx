@@ -8,7 +8,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Destinations",
   description:
-    "Explore Char Dham, Kashmir, Matheran, Rajasthan, Jaisalmer, Maharashtra and North India–Nepal tours with BR Tours and Travels.",
+    "Explore Char Dham, Kashmir, Matheran, Rajasthan, Jaisalmer, Maharashtra, Madhya Pradesh and North India–Nepal tours with BR Tours and Travels.",
   alternates: { canonical: "/destinations" },
 };
 
@@ -69,14 +69,14 @@ export default async function DestinationsPage() {
         <span className="absolute inset-0 bg-linear-to-t from-primary-hover/95 via-primary/45 to-black/10" />
         <div className="relative z-1 mx-auto min-h-[38rem] w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10 max-[620px]:min-h-[33rem]">
           <p className="mb-4 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-light">
-            <Sparkles aria-hidden="true" size={16} /> Seven ways to begin
+            <Sparkles aria-hidden="true" size={16} /> Eight ways to begin
           </p>
           <h1 className="m-0 max-w-4xl font-display text-[clamp(3.2rem,7vw,6.5rem)] font-semibold leading-[0.96] tracking-[-0.045em] text-white max-[620px]:text-[clamp(3.2rem,16vw,5rem)]">
             Choose a direction. We will shape the journey.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/80">
             Sacred mountain routes, quiet lakes, green hill trails, royal
-            cities, desert light, Maharashtra pilgrimage routes and a North
+            cities, desert light, central India pilgrimage routes and a North
             India–Nepal circuit.
           </p>
         </div>

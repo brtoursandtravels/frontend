@@ -29,7 +29,7 @@ import {
 import { serverEnv } from "@/lib/env";
 import { charDhamEditorialMedia } from "@/lib/packageEditorialMedia";
 
-export const revalidate = 3600;
+export const revalidate = 30;
 
 export async function generateStaticParams() {
   const first = await getPackages({ page: 1, pageSize: 48 }).catch(() => null);

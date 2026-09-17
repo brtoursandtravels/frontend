@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
     const result = await getPackages(filters);
     return NextResponse.json(result, {
       headers: {
-        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+        "Cache-Control": "public, s-maxage=30, must-revalidate",
       },
     });
   } catch (error) {

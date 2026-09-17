@@ -12,7 +12,7 @@ import {
   type PackageFilters,
 } from "@/lib/api";
 
-export const revalidate = 3600;
+export const revalidate = 30;
 export const metadata: Metadata = {
   title: "Tour packages",
   description:
