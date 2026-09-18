@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import type { ZodType } from "zod";
 import {
   apiErrorSchema,
@@ -7,6 +8,7 @@ import {
   blogListResponseSchema,
   categoriesResponseSchema,
   contentPageResponseSchema,
+  contentPageListResponseSchema,
   destinationsResponseSchema,
   faqResponseSchema,
   galleryAlbumResponseSchema,
@@ -130,19 +132,24 @@ export async function getPackageWithRedirect(slug: string) {
   return { ...payload, redirectSlug: finalSlug !== slug ? finalSlug : null };
 }
 
-export function getSite() {
-  return parsed("/site", siteResponseSchema);
-}
+export const getSite = cache(() => {
+  return parsed("/site", siteResponseSchema, catalogueRevalidateSeconds);
+});
 
 export function getHome() {
   return parsed("/home", homeResponseSchema);
 }
 
-export function getContentPage(slug: string) {
+export const getContentPage = cache((slug: string) => {
   return parsed(
     `/pages/${encodeURIComponent(slug)}`,
     contentPageResponseSchema,
+    catalogueRevalidateSeconds,
   );
+});
+
+export function getContentPages() {
+  return parsed("/pages", contentPageListResponseSchema, catalogueRevalidateSeconds);
 }
 
 export function getDestinations() {
@@ -195,7 +202,7 @@ export function getBlog(
 }
 
 export function getBlogPost(slug: string) {
-  return parsed(`/blog/${encodeURIComponent(slug)}`, blogDetailResponseSchema);
+  return parsed(`/blog/${encodeURIComponent(slug)}`, blogDetailResponseSchema, catalogueRevalidateSeconds);
 }
 
 export function getBlogCategories() {

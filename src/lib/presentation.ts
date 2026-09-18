@@ -81,6 +81,15 @@ export function mapEmbedLink(value: string | null | undefined) {
   }
 }
 
+export function socialSettingLink(site: SiteData | null | undefined, network: "instagram" | "facebook") {
+  const key = `social.${network}`;
+  // An explicitly blank link means hidden, not a fallback to an older setting.
+  const keys = site?.settings && Object.hasOwn(site.settings, key)
+    ? [key]
+    : [`contact.${network}`, network];
+  return socialLink(settingText(site, keys), network);
+}
+
 export function formatMoney(amount: string, currency: string) {
   return new Intl.NumberFormat("en-IN", {
     style: "currency",

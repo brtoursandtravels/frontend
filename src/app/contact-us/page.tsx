@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { contentPageMetadata } from "@/lib/content-page-metadata";
 import { ArrowUpRight, MapPinned } from "lucide-react";
 import { ContactFaq } from "@/components/contact/ContactFaq";
 import { ContactHero } from "@/components/contact/ContactHero";
@@ -6,14 +7,13 @@ import { ConsultationTimeline } from "@/components/contact/ConsultationTimeline"
 import { QuickChannelsBar } from "@/components/contact/QuickChannelsBar";
 import { EnquiryForm } from "@/components/forms/EnquiryForm";
 import { getPackage, getSite } from "@/lib/api";
-import { mapEmbedLink, settingText, socialLink, whatsappLink } from "@/lib/presentation";
+import { mapEmbedLink, settingText, socialSettingLink, whatsappLink } from "@/lib/presentation";
 
 export const revalidate = 3600;
-export const metadata: Metadata = {
-  title: "Plan your journey",
-  description: "Speak with BR Tours and Travels about a considered, tailor-made journey across India and beyond.",
-  alternates: { canonical: "/contact-us" },
-};
+export function generateMetadata(): Promise<Metadata> {
+  return contentPageMetadata("contact-us", "Plan your journey",
+    "Speak with BR Tours and Travels about a considered, tailor-made journey across India and beyond.");
+}
 
 export default async function ContactPage({
   searchParams,
@@ -35,14 +35,8 @@ export default async function ContactPage({
   const hours = settingText(site, ["contact.openingHours", "business.openingHours", "openingHours"]);
   const mapUrl = settingText(site, ["contact.mapUrl", "business.mapUrl", "mapUrl"]);
   const whatsappHref = whatsappLink(whatsapp);
-  const instagramHref = socialLink(
-    settingText(site, ["social.instagram", "contact.instagram", "instagram"]),
-    "instagram",
-  );
-  const facebookHref = socialLink(
-    settingText(site, ["social.facebook", "contact.facebook", "facebook"]),
-    "facebook",
-  );
+  const instagramHref = socialSettingLink(site, "instagram");
+  const facebookHref = socialSettingLink(site, "facebook");
   const mapEmbedUrl = mapEmbedLink(mapUrl);
 
   return (

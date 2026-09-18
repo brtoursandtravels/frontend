@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
+import { contentPageMetadata } from "@/lib/content-page-metadata";
 import { ContentPage, ContentUnavailable } from "@/components/common/ContentPage";
 import { ApiRequestError, getContentPage } from "@/lib/api";
 
 export const revalidate = 3600;
-export const metadata: Metadata = {
-  title: "Terms",
-  alternates: { canonical: "/terms" },
-};
+export function generateMetadata(): Promise<Metadata> {
+  return contentPageMetadata("terms", "Terms", "Read the BR Tours and Travels booking terms and conditions.");
+}
 
 export default async function TermsPage() {
   const result = await getContentPage("terms")

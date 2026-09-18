@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
+import { contentPageMetadata } from "@/lib/content-page-metadata";
 import { ContentPage, ContentUnavailable } from "@/components/common/ContentPage";
 import { ApiRequestError, getContentPage } from "@/lib/api";
 
 export const revalidate = 3600;
-export const metadata: Metadata = {
-  title: "Cancellation policy",
-  alternates: { canonical: "/cancellation-policy" },
-};
+export function generateMetadata(): Promise<Metadata> {
+  return contentPageMetadata("cancellation-policy", "Cancellation policy", "Read the BR Tours and Travels cancellation policy.");
+}
 
 export default async function CancellationPolicyPage() {
   const result = await getContentPage("cancellation-policy")

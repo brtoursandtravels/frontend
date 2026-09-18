@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Camera, Mail, MapPin, Phone, UsersRound } from "lucide-react";
 import type { SiteData } from "@/lib/contracts";
-import { settingText, socialLink } from "@/lib/presentation";
+import { settingText, socialSettingLink } from "@/lib/presentation";
 import { BrandLogo } from "@/components/common/BrandLogo";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
 
@@ -13,14 +13,8 @@ export function SiteFooter({ site }: { site?: SiteData | null }) {
     "business.address",
     "address",
   ]);
-  const instagramHref = socialLink(
-    settingText(site, ["social.instagram", "contact.instagram", "instagram"]),
-    "instagram",
-  );
-  const facebookHref = socialLink(
-    settingText(site, ["social.facebook", "contact.facebook", "facebook"]),
-    "facebook",
-  );
+  const instagramHref = socialSettingLink(site, "instagram");
+  const facebookHref = socialSettingLink(site, "facebook");
   return (
     <footer className="bg-primary-footer text-white/75">
       <div className="mx-auto grid w-full max-w-7xl grid-cols-[1fr_minmax(20rem,0.7fr)] items-center gap-10 border-b border-white/10 px-5 py-12 sm:px-8 lg:px-10 max-[820px]:grid-cols-1">

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import { staticPageMetadata } from "@/lib/static-page-metadata";
 import Link from "next/link";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
-import { RetryPageButton } from "@/components/common/RetryPageButton";
 import { FaqAccordion } from "@/components/home/FaqAccordion";
 import { FeaturedDestinations } from "@/components/home/FeaturedDestinations";
 import { GalleryPreview } from "@/components/home/GalleryPreview";
@@ -17,20 +17,22 @@ import {
   getDestinations,
   getFaqs,
   getGalleryAlbums,
-  getHome,
   getPackages,
   getTestimonials,
 } from "@/lib/api";
 
 export const revalidate = 3600;
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-};
+export function generateMetadata(): Promise<Metadata> {
+  return staticPageMetadata("home", {
+    title: "BR Tours and Travels",
+    description: "Discover bespoke journeys across India and beyond, thoughtfully shaped by BR Tours and Travels.",
+    path: "/",
+  });
+}
 
 export default async function HomePage() {
-  const [home, packages, destinations, gallery, testimonials, blog, faqs] =
+  const [packages, destinations, gallery, testimonials, blog, faqs] =
     await Promise.all([
-      getHome().catch(() => null),
       getPackages({ pageSize: 12 }).catch(() => null),
       getDestinations().catch(() => null),
       getGalleryAlbums({ pageSize: 5 }).catch(() => null),
@@ -39,41 +41,10 @@ export default async function HomePage() {
       getFaqs().catch(() => null),
     ]);
 
-  if (!home) {
-    return (
-      <div className="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10">
-        <div className="rounded-xl border border-danger/25 bg-danger-bg p-8 shadow-card">
-          <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-danger">Homepage unavailable</p>
-          <h1 className="font-display text-[2rem] text-text-heading">Live homepage content cannot be loaded.</h1>
-          <p className="my-4 text-text-muted">We could not load the latest information. Please try again.</p>
-          <RetryPageButton className="inline-flex rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white" />
-        </div>
-      </div>
-    );
-  }
-
-  if (!home.data.sections.length) {
-    return (
-      <div className="mx-auto w-full max-w-7xl px-5 py-20 sm:px-8 lg:px-10">
-        <div className="rounded-xl border border-border-subtle bg-white p-8 shadow-card">
-          <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-hover">BR Tours and Travels</p>
-          <h1 className="font-display text-[2rem] text-text-heading">The homepage is being prepared.</h1>
-          <p className="my-4 text-text-muted">Explore the published catalogue or start a secure enquiry.</p>
-          <div className="flex flex-wrap gap-3">
-            <Link className="inline-flex rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white no-underline" href="/packages">Explore journeys</Link>
-            <Link className="inline-flex rounded-full border border-primary px-6 py-3 text-sm font-extrabold text-primary no-underline" href="/contact-us">Contact BR</Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const hero = home.data.sections.find((section) => section.type === "HERO");
-  const heroTitle = hero?.title ?? "Travel deeper. Return with more.";
   return (
     <>
       <HeroSection
-        title={heroTitle}
+        title="India journeys, shaped around you."
       />
       <FeaturedDestinations destinations={destinations?.data ?? []} />
       <TravelServices />

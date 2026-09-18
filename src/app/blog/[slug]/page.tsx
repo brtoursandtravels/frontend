@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { entryMetadata } from "@/lib/metadata";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PublicImage } from "@/components/common/PublicImage";
@@ -61,20 +62,19 @@ export async function generateMetadata({
   const result = await getBlogPost(slug).catch(() => null);
   if (!result) return { title: "Travel article" };
   const item = result.data;
+  const metadata = entryMetadata({
+    title: item.title, description: item.excerpt,
+    metaTitle: item.seo.title, metaDescription: item.seo.description,
+    path: `/blog/${item.slug}`,
+    image: item.cover ? { url: item.cover.url, alt: item.cover.altText } : undefined,
+  });
   return {
-    title: item.seo.title ?? item.title,
-    description: item.seo.description ?? item.excerpt,
-    alternates: { canonical: `/blog/${item.slug}` },
+    ...metadata,
     openGraph: {
+      ...metadata.openGraph,
       type: "article",
-      title: item.seo.title ?? item.title,
-      description: item.seo.description ?? item.excerpt,
-      url: `/blog/${item.slug}`,
       publishedTime: item.publishedAt,
       authors: item.author ? [item.author.name] : undefined,
-      images: item.cover
-        ? [{ url: item.cover.url, alt: item.cover.altText }]
-        : undefined,
     },
   };
 }

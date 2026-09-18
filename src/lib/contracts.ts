@@ -134,6 +134,10 @@ export const homeResponseSchema = z.object({
   }),
 });
 
+export const contentPageListResponseSchema = z.object({
+  data: z.array(z.object({ slug: z.string(), updatedAt: z.string() })),
+});
+
 export const contentPageResponseSchema = z.object({
   data: z.object({
     slug: z.string(),

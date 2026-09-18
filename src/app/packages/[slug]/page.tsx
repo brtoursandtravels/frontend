@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { entryMetadata } from "@/lib/metadata";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
@@ -59,21 +60,12 @@ export async function generateMetadata({
   const result = await getPackage(slug).catch(() => null);
   if (!result) return { title: "Tour package" };
   const item = result.data;
-  const image = item.cover?.url;
-  return {
-    title: item.seo.title ?? item.title,
-    description: item.seo.description ?? item.summary,
-    alternates: { canonical: `/packages/${item.slug}` },
-    openGraph: {
-      type: "website",
-      title: item.seo.title ?? item.title,
-      description: item.seo.description ?? item.summary,
-      url: `/packages/${item.slug}`,
-      images: image
-        ? [{ url: image, alt: item.cover?.altText ?? item.title }]
-        : undefined,
-    },
-  };
+  return entryMetadata({
+    title: item.title, description: item.summary,
+    metaTitle: item.seo.title, metaDescription: item.seo.description,
+    path: `/packages/${item.slug}`,
+    image: item.cover ? { url: item.cover.url, alt: item.cover.altText } : undefined,
+  });
 }
 
 export default async function PackageDetailPage({

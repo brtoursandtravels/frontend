@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { staticPageMetadata } from "@/lib/static-page-metadata";
 import Link from "next/link";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { BlogDiscoveryBar } from "@/components/blog/BlogDiscoveryBar";
@@ -11,11 +12,13 @@ import { RetryPageButton } from "@/components/common/RetryPageButton";
 import { ApiRequestError, getBlog, getBlogCategories } from "@/lib/api";
 
 export const revalidate = 3600;
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return staticPageMetadata("blog", {
   title: "Travel Journal",
   description: "Read BR travel stories, seasonal timing advice and practical destination guides for thoughtful journeys across India.",
-  alternates: { canonical: "/blog" },
-};
+    path: "/blog",
+  });
+}
 
 export default async function BlogPage({ searchParams }: { searchParams: Promise<{ q?: string; category?: string; page?: string }> }) {
   const query = await searchParams;

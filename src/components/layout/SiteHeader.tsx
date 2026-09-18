@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
   ChevronRight,
@@ -53,12 +53,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
   const drawerRef = useRef<HTMLDivElement>(null);
   const desktopNavRef = useRef<HTMLUListElement>(null);
   const activePillRef = useRef<HTMLLIElement>(null);
-  const items = useMemo(() => {
-    const configured = site?.menus.find(
-      (menu) => menu.key === "primary" || menu.key === "header",
-    )?.items;
-    return configured?.length ? configured : defaultNavigation;
-  }, [site]);
+  const items = defaultNavigation;
   const roots = items
     .filter((item) => !item.parentId)
     .sort((left, right) => left.sortOrder - right.sortOrder);

@@ -8,19 +8,13 @@ import { ResponsibleTravel } from "@/components/about/ResponsibleTravel";
 import { StorySection } from "@/components/about/StorySection";
 import { TeamShowcase } from "@/components/about/TeamShowcase";
 import { TrustStandards } from "@/components/about/TrustStandards";
-import { getContentPage } from "@/lib/api";
+import { contentPageMetadata } from "@/lib/content-page-metadata";
 
 export const revalidate = 3600;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getContentPage("about-us").catch(() => null);
-  return {
-    title: page?.data.seoTitle ?? "About BR Tours & Travels",
-    description:
-      page?.data.seoDescription ??
-      "Meet the planning philosophy behind BR Tours & Travels and discover how personal, clearly confirmed journeys are shaped.",
-    alternates: { canonical: "/about-us" },
-  };
+  return contentPageMetadata("about-us", "About BR Tours & Travels",
+    "Meet the planning philosophy behind BR Tours & Travels and discover how personal, clearly confirmed journeys are shaped.");
 }
 
 export default function AboutPage() {

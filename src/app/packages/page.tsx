@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { staticPageMetadata } from "@/lib/static-page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import { RetryPageButton } from "@/components/common/RetryPageButton";
@@ -14,12 +15,14 @@ import {
 } from "@/lib/api";
 
 export const revalidate = 30;
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return staticPageMetadata("packages", {
   title: "Tour packages",
   description:
     "Search and filter published BR tour ideas by destination, style, duration, price and travel month.",
-  alternates: { canonical: "/packages" },
-};
+    path: "/packages",
+  });
+}
 
 type Search = Record<string, string | string[] | undefined>;
 const text = (value: string | string[] | undefined) =>

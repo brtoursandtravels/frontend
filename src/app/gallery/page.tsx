@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { staticPageMetadata } from "@/lib/static-page-metadata";
 import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 import { ImageLightbox } from "@/components/common/ImageLightbox";
@@ -11,11 +12,13 @@ import { ApiRequestError, getGalleryAlbums, getPackages } from "@/lib/api";
 import { completeGalleryAlbum } from "@/lib/galleryEditorialMedia";
 
 export const revalidate = 3600;
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return staticPageMetadata("gallery", {
   title: "Travel Gallery",
   description: "Explore published BR Tours travel collections, destination photographs and visual stories from across India.",
-  alternates: { canonical: "/gallery" },
-};
+    path: "/gallery",
+  });
+}
 
 export default async function GalleryPage({ searchParams }: { searchParams: Promise<{ destination?: string; package?: string; page?: string; view?: string }> }) {
   const query = await searchParams;

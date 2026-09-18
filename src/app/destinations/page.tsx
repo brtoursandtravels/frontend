@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { staticPageMetadata } from "@/lib/static-page-metadata";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, MapPin, Sparkles } from "lucide-react";
@@ -6,12 +7,14 @@ import { RetryPageButton } from "@/components/common/RetryPageButton";
 import { ApiRequestError, getDestinations, getPackages } from "@/lib/api";
 
 export const revalidate = 3600;
-export const metadata: Metadata = {
+export function generateMetadata(): Promise<Metadata> {
+  return staticPageMetadata("destinations", {
   title: "Destinations",
   description:
     "Explore Char Dham, Kashmir, Matheran, Rajasthan, Jaisalmer, Maharashtra, Madhya Pradesh and North India–Nepal tours with BR Tours and Travels.",
-  alternates: { canonical: "/destinations" },
-};
+    path: "/destinations",
+  });
+}
 
 const images: Record<string, string> = {
   "char-dham": "/images/tours/char-dham-kedarnath.webp",
