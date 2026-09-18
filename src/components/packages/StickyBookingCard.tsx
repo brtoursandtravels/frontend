@@ -102,7 +102,7 @@ export function StickyBookingCard({
   whatsappHref?: string | null;
   pilgrimageMode?: boolean;
 }) {
-  const [adults, setAdults] = useState(2);
+  const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
   const [journeyType, setJourneyType] = useState<"GROUP" | "PRIVATE">("PRIVATE");
   const travellers = adults + children;
