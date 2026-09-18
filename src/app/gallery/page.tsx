@@ -6,7 +6,7 @@ import { PaginationControls } from "@/components/common/PaginationControls";
 import { GalleryCta } from "@/components/gallery/GalleryCta";
 import { GalleryDiscoveryBar } from "@/components/gallery/GalleryDiscoveryBar";
 import { GalleryHero } from "@/components/gallery/GalleryHero";
-import { ApiRequestError, getDestinations, getGalleryAlbums, getPackages } from "@/lib/api";
+import { ApiRequestError, getGalleryAlbums, getPackages } from "@/lib/api";
 import { completeGalleryAlbum } from "@/lib/galleryEditorialMedia";
 
 export const revalidate = 3600;
@@ -19,9 +19,8 @@ export const metadata: Metadata = {
 export default async function GalleryPage({ searchParams }: { searchParams: Promise<{ destination?: string; package?: string; page?: string; view?: string }> }) {
   const query = await searchParams;
   const page = Math.max(1, Number(query.page) || 1);
-  const [albumsResult, destinationsResult, packagesResult] = await Promise.allSettled([
+  const [albumsResult, packagesResult] = await Promise.allSettled([
     getGalleryAlbums({ destination: query.destination, package: query.package, page, pageSize: 6, includeImages: true }),
-    getDestinations(),
     getPackages({ pageSize: 48 }),
   ]);
 
@@ -46,7 +45,6 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
       images: album.images ?? (album.cover ? [album.cover] : []),
     }),
   );
-  const destinations = destinationsResult.status === "fulfilled" ? destinationsResult.value.data : [];
   const packages = packagesResult.status === "fulfilled" ? packagesResult.value.data : [];
   const selectedPackage = packages.find((item) => item.slug === query.package);
   const allImages = albums.flatMap((album) => album.images);
@@ -63,7 +61,7 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
   return (
     <main>
       <GalleryHero albumCount={listing.meta.total} imageCount={allImages.length} />
-      <GalleryDiscoveryBar destinations={destinations} packages={packages} query={query} />
+      <GalleryDiscoveryBar packages={packages} query={query} />
 
       <div className="mx-auto grid w-full max-w-7xl gap-14 px-5 py-14 sm:px-8 lg:px-10">
         <div className="flex items-center justify-between gap-4">

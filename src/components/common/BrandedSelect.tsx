@@ -15,6 +15,7 @@ export function BrandedSelect({
   options,
   defaultValue = "",
   onValueChange,
+  submitOnValueChange = false,
   className = "",
   pill = false,
   ariaLabel,
@@ -24,6 +25,7 @@ export function BrandedSelect({
   options: BrandedSelectOption[];
   defaultValue?: string;
   onValueChange?: (value: string) => void;
+  submitOnValueChange?: boolean;
   className?: string;
   pill?: boolean;
   ariaLabel?: string;
@@ -59,10 +61,17 @@ export function BrandedSelect({
   }, [defaultValue]);
 
   function choose(nextValue: string) {
+    const changed = nextValue !== value;
     setValue(nextValue);
     setOpen(false);
-    onValueChange?.(nextValue);
-    window.requestAnimationFrame(() => buttonRef.current?.focus());
+    if (changed) onValueChange?.(nextValue);
+    window.requestAnimationFrame(() => {
+      if (changed && submitOnValueChange) {
+        buttonRef.current?.form?.requestSubmit();
+        return;
+      }
+      buttonRef.current?.focus();
+    });
   }
 
   function focusOption(index: number, direction: 1 | -1 = 1) {
