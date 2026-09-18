@@ -4,25 +4,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PublicImage } from "@/components/common/PublicImage";
 import { ShareActions } from "@/components/common/ShareActions";
-import { ApiRequestError, getBlog, getBlogPost } from "@/lib/api";
+import { ApiRequestError, getBlogPost } from "@/lib/api";
 import { serverEnv } from "@/lib/env";
 
 export const revalidate = 3600;
+export const dynamicParams = true;
 
-export async function generateStaticParams() {
-  const first = await getBlog({ page: 1, pageSize: 48 }).catch(() => null);
-  if (!first) return [];
-
-  const pageCount = Math.ceil(first.meta.total / first.meta.pageSize);
-  const remaining = await Promise.all(
-    Array.from({ length: Math.max(0, pageCount - 1) }, (_, index) =>
-      getBlog({ page: index + 2, pageSize: 48 }).catch(() => null),
-    ),
-  );
-
-  return [first, ...remaining]
-    .filter((page): page is NonNullable<typeof page> => Boolean(page))
-    .flatMap((page) => page.data.map((item) => ({ slug: item.slug })));
+export function generateStaticParams(): Array<{ slug: string }> {
+  // Blog details have the same live-API dependency as packages: generate on demand.
+  return [];
 }
 
 function prepareHeadings(html: string) {

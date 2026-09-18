@@ -19,7 +19,6 @@ import {
   getFaqs,
   getPackage,
   getPackageWithRedirect,
-  getPackages,
   getSite,
 } from "@/lib/api";
 import {
@@ -34,21 +33,12 @@ import { charDhamEditorialMedia } from "@/lib/packageEditorialMedia";
 
 export const revalidate = 30;
 export const maxDuration = 60;
+export const dynamicParams = true;
 
-export async function generateStaticParams() {
-  const first = await getPackages({ page: 1, pageSize: 48 }).catch(() => null);
-  if (!first) return [];
-
-  const pageCount = Math.ceil(first.meta.total / first.meta.pageSize);
-  const remaining = await Promise.all(
-    Array.from({ length: Math.max(0, pageCount - 1) }, (_, index) =>
-      getPackages({ page: index + 2, pageSize: 48 }).catch(() => null),
-    ),
-  );
-
-  return [first, ...remaining]
-    .filter((page): page is NonNullable<typeof page> => Boolean(page))
-    .flatMap((page) => page.data.map((item) => ({ slug: item.slug })));
+export function generateStaticParams(): Array<{ slug: string }> {
+  // Generate each package on its first visit, then revalidate it every 30 seconds.
+  // A catalogue API outage must not turn a frontend deployment into a failed build.
+  return [];
 }
 
 export async function generateMetadata({

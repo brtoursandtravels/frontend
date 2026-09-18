@@ -45,3 +45,21 @@ Start the development API on port 4000 before browsing locally. API failures
 render honest retry states; static offer data never replaces failed live data.
 
 The production horizontal logo lockup is public/br-logo.png.
+
+## Package and blog build resilience
+
+Package and blog detail routes return an empty `generateStaticParams` list and
+allow new slugs at runtime. Their first visit generates the page from the live API;
+subsequent visits use the existing revalidation policy (30 seconds for packages).
+A failed detail request cannot fail the frontend build. Metadata, the package
+loading skeleton, redirects and not-found handling are retained.
+
+`INTERNAL_API_BASE_URL` must still point to a reachable API at runtime (including
+`/api/v1`). Runtime outages continue to use the retry/error UI; they are not treated
+as missing packages or replaced with fabricated content.
+
+Run `npm run test:build-outage` to test a Vercel-style production build against a
+local mock API with healthy listings and unavailable detail endpoints. It then
+checks live package/blog pages after recovery, including a newly added slug.
+The test uses the ignored `.next-build-check` output and does not contact the
+real API or modify the database.
