@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, MapPin, Sparkles } from "lucide-react";
+import { RetryPageButton } from "@/components/common/RetryPageButton";
 import { ApiRequestError, getDestinations, getPackages } from "@/lib/api";
 
 export const revalidate = 3600;
@@ -41,12 +42,9 @@ export default async function DestinationsPage() {
               ? error.message
               : "The live destination response was not usable."}
           </p>
-          <Link
+          <RetryPageButton
             className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white no-underline transition hover:bg-primary-hover"
-            href="/destinations"
-          >
-            Try again
-          </Link>
+          />
         </div>
       </div>
     );

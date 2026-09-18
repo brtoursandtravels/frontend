@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
+import { RetryPageButton } from "@/components/common/RetryPageButton";
 import { FaqAccordion } from "@/components/home/FaqAccordion";
 import { FeaturedDestinations } from "@/components/home/FeaturedDestinations";
 import { GalleryPreview } from "@/components/home/GalleryPreview";
@@ -44,10 +45,8 @@ export default async function HomePage() {
         <div className="rounded-xl border border-danger/25 bg-danger-bg p-8 shadow-card">
           <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-danger">Homepage unavailable</p>
           <h1 className="font-display text-[2rem] text-text-heading">Live homepage content cannot be loaded.</h1>
-          <p className="my-4 text-text-muted">No simulated offers have been substituted for the API failure.</p>
-          <Link className="inline-flex rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white no-underline" href="/">
-            Try again
-          </Link>
+          <p className="my-4 text-text-muted">We could not load the latest information. Please try again.</p>
+          <RetryPageButton className="inline-flex rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white" />
         </div>
       </div>
     );

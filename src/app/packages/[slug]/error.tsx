@@ -1,6 +1,6 @@
 "use client";
 
-export default function PackageError({ reset }: { reset: () => void }) {
+export default function PackageError({ retry }: { retry: () => void }) {
   return (
     <div className="mx-auto w-full max-w-7xl px-5 py-16 sm:px-8 lg:px-10">
       <div className="rounded-xl border border-danger/30 bg-danger-bg p-8 shadow-card sm:p-12">
@@ -10,7 +10,7 @@ export default function PackageError({ reset }: { reset: () => void }) {
           The package may still exist; the live backend did not return a usable
           response. This is different from a missing package.
         </p>
-        <button className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full border-0 bg-primary px-6 py-3 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-primary-hover" onClick={reset}>
+        <button className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full border-0 bg-primary px-6 py-3 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-primary-hover" onClick={retry}>
           Try again
         </button>
       </div>

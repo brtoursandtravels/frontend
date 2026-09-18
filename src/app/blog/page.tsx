@@ -7,6 +7,7 @@ import { BlogNewsletterBanner } from "@/components/blog/BlogNewsletterBanner";
 import { FeaturedArticleHero } from "@/components/blog/FeaturedArticleHero";
 import { JournalHighlights } from "@/components/blog/JournalHighlights";
 import { PaginationControls } from "@/components/common/PaginationControls";
+import { RetryPageButton } from "@/components/common/RetryPageButton";
 import { ApiRequestError, getBlog, getBlogCategories } from "@/lib/api";
 
 export const revalidate = 3600;
@@ -32,7 +33,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
           <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-danger">Journal unavailable</p>
           <h1 className="font-display text-4xl font-semibold text-text-heading sm:text-5xl">The travel journal cannot be loaded right now.</h1>
           <p className="mt-4 text-text-muted">{error instanceof ApiRequestError ? error.message : "The live article response was not usable."}</p>
-          <Link className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white no-underline" href="/blog">Try again</Link>
+          <RetryPageButton className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white" />
         </div>
       </main>
     );

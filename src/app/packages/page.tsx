@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { RetryPageButton } from "@/components/common/RetryPageButton";
 import { PackageActiveFilters } from "@/components/packages/PackageActiveFilters";
 import { PackageFilterSidebar } from "@/components/packages/PackageFilterSidebar";
 import { InfinitePackageGrid } from "@/components/packages/InfinitePackageGrid";
@@ -76,9 +77,7 @@ export default async function PackagesPage({
               ? error.message
               : "The live package response was not usable."}
           </p>
-          <Link className="mt-4 inline-flex rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white no-underline" href="/packages">
-            Retry without filters
-          </Link>
+          <RetryPageButton className="mt-4 inline-flex rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white" />
         </div>
       </div>
     );

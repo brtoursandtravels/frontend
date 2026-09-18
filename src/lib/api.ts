@@ -18,6 +18,7 @@ import {
   testimonialResponseSchema,
 } from "./contracts";
 import { serverEnv } from "./env";
+import { fetchPublicRead } from "./fetch-public-read";
 
 const catalogueRevalidateSeconds = 30;
 
@@ -39,12 +40,9 @@ async function apiFetch(path: string, revalidate = 3600) {
       process.env.NODE_ENV === "development"
         ? ({ cache: "no-store" } as const)
         : ({ next: { revalidate } } as const);
-    return await fetch(serverEnv.INTERNAL_API_BASE_URL + path, {
+    return await fetchPublicRead(serverEnv.INTERNAL_API_BASE_URL + path, {
       headers: { accept: "application/json" },
       ...cacheOptions,
-      // The API runs as a separate serverless deployment. A cold function and
-      // database connection can legitimately take longer than ten seconds.
-      signal: AbortSignal.timeout(25_000),
     });
   } catch {
     throw new ApiRequestError(

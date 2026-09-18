@@ -12,7 +12,8 @@
     "build": "next build",
     "start": "next start --port 3000",
     "lint": "eslint src next.config.ts --max-warnings=0",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:public-read": "node --experimental-strip-types --test tests/fetch-public-read.test.mjs"
   },
   "dependencies": {
     "@fontsource/lato": "5.3.0",

@@ -50,7 +50,10 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       { error: "Packages are temporarily unavailable." },
-      { status: error instanceof ApiRequestError ? error.status : 503 },
+      {
+        status: error instanceof ApiRequestError ? error.status : 503,
+        headers: { "Cache-Control": "private, no-store" },
+      },
     );
   }
 }

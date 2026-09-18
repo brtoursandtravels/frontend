@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 import { ImageLightbox } from "@/components/common/ImageLightbox";
 import { PaginationControls } from "@/components/common/PaginationControls";
+import { RetryPageButton } from "@/components/common/RetryPageButton";
 import { GalleryCta } from "@/components/gallery/GalleryCta";
 import { GalleryDiscoveryBar } from "@/components/gallery/GalleryDiscoveryBar";
 import { GalleryHero } from "@/components/gallery/GalleryHero";
@@ -32,7 +33,7 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
           <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-danger">Gallery unavailable</p>
           <h1 className="font-display text-4xl font-semibold text-text-heading sm:text-5xl">The visual journal cannot be loaded right now.</h1>
           <p className="mt-4 text-text-muted">{error instanceof ApiRequestError ? error.message : "The live gallery response was not usable."}</p>
-          <Link className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white no-underline" href="/gallery">Try again</Link>
+          <RetryPageButton className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white" />
         </div>
       </main>
     );
