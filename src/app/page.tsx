@@ -21,7 +21,7 @@ import {
   getTestimonials,
 } from "@/lib/api";
 
-export const revalidate = 3600;
+export const revalidate = 30;
 export function generateMetadata(): Promise<Metadata> {
   return staticPageMetadata("home", {
     title: "BR Tours and Travels",

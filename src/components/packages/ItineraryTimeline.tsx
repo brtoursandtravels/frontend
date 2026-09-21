@@ -1,6 +1,6 @@
 "use client";
 
-import { BedDouble, CarFront, ChevronDown, Footprints, Images, MapPin, Plane, Route, Utensils } from "lucide-react";
+import { BedDouble, ChevronDown, Footprints, Images, MapPin, Plane, Route, Utensils } from "lucide-react";
 import { useState } from "react";
 import type { PackageDetail } from "@/lib/contracts";
 import { PublicImage } from "@/components/common/PublicImage";
@@ -41,6 +41,7 @@ export function ItineraryTimeline({
   }
 
   function imageForDay(day: PackageDetail["itinerary"][number], index: number) {
+    if (day.image) return day.image;
     if (!media.length) return null;
     if (!yatraMode) return media[index % media.length] ?? null;
     const searchText = `${day.title} ${day.description}`;
@@ -117,15 +118,12 @@ export function ItineraryTimeline({
                   <div className={`grid ${preview ? "grid-cols-[1fr_15rem]" : "grid-cols-1"} @max-[34rem]:grid-cols-1`}>
                     <div className="p-5">
                       <p className="m-0 text-sm leading-7 text-text-muted">{day.description}</p>
-                      {yatraMode ? (
-                        <div className="mt-4 flex flex-wrap gap-2 text-[0.66rem] font-bold text-primary">
-                          <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-2"><BedDouble aria-hidden="true" size={14} /> Halt confirmed in final plan</span>
-                          <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-2"><Utensils aria-hidden="true" size={14} /> Meals shown in inclusions</span>
-                          <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-2"><CarFront aria-hidden="true" size={14} /> Timings reviewed</span>
-                        </div>
-                      ) : (
-                        <span className="mt-4 inline-flex items-center gap-2 rounded-full bg-white px-3 py-2 text-[0.68rem] font-bold text-primary"><MapPin aria-hidden="true" size={15} /> Planned route and experiences</span>
-                      )}
+                      {day.activities.length ? <ul className="mt-4 space-y-2 pl-5 text-sm text-text-muted">{day.activities.map((activity, i) => <li key={i}>{activity}</li>)}</ul> : null}
+                      <div className="mt-4 flex flex-wrap gap-2 text-[0.68rem] font-bold text-primary">
+                        {day.accommodation ? <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-2"><BedDouble aria-hidden="true" size={14} />{day.accommodation}</span> : null}
+                        {day.meals ? <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-2"><Utensils aria-hidden="true" size={14} />{day.meals}</span> : null}
+                        {!day.accommodation && !day.meals ? <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-2"><MapPin aria-hidden="true" size={15} />Planned route and experiences</span> : null}
+                      </div>
                     </div>
                     {preview ? (
                       <div className="relative min-h-44 overflow-hidden @max-[34rem]:order-first">

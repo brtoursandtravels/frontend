@@ -7,7 +7,7 @@ import { ShareActions } from "@/components/common/ShareActions";
 import { ApiRequestError, getBlogPost } from "@/lib/api";
 import { serverEnv } from "@/lib/env";
 
-export const revalidate = 3600;
+export const revalidate = 30;
 export const dynamicParams = true;
 
 export function generateStaticParams(): Array<{ slug: string }> {

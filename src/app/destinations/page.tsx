@@ -6,7 +6,7 @@ import { ArrowUpRight, MapPin, Sparkles } from "lucide-react";
 import { RetryPageButton } from "@/components/common/RetryPageButton";
 import { ApiRequestError, getDestinations, getPackages } from "@/lib/api";
 
-export const revalidate = 3600;
+export const revalidate = 30;
 export function generateMetadata(): Promise<Metadata> {
   return staticPageMetadata("destinations", {
   title: "Destinations",

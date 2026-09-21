@@ -9,7 +9,7 @@ import { EnquiryForm } from "@/components/forms/EnquiryForm";
 import { getPackage, getSite } from "@/lib/api";
 import { mapEmbedLink, settingText, socialSettingLink, whatsappLink } from "@/lib/presentation";
 
-export const revalidate = 3600;
+export const revalidate = 30;
 export function generateMetadata(): Promise<Metadata> {
   return contentPageMetadata("contact-us", "Plan your journey",
     "Speak with BR Tours and Travels about a considered, tailor-made journey across India and beyond.");

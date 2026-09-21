@@ -3,7 +3,7 @@ import { contentPageMetadata } from "@/lib/content-page-metadata";
 import { ContentPage, ContentUnavailable } from "@/components/common/ContentPage";
 import { ApiRequestError, getContentPage } from "@/lib/api";
 
-export const revalidate = 3600;
+export const revalidate = 30;
 export function generateMetadata(): Promise<Metadata> {
   return contentPageMetadata("terms", "Terms", "Read the BR Tours and Travels booking terms and conditions.");
 }

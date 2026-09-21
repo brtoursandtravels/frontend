@@ -7,7 +7,7 @@ import { PaginationControls } from "@/components/common/PaginationControls";
 import { RetryPageButton } from "@/components/common/RetryPageButton";
 import { ApiRequestError, getBlog } from "@/lib/api";
 
-export const revalidate = 3600;
+export const revalidate = 30;
 export function generateMetadata(): Promise<Metadata> {
   return staticPageMetadata("blog", {
   title: "Travel Journal",

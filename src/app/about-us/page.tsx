@@ -10,7 +10,7 @@ import { TeamShowcase } from "@/components/about/TeamShowcase";
 import { TrustStandards } from "@/components/about/TrustStandards";
 import { contentPageMetadata } from "@/lib/content-page-metadata";
 
-export const revalidate = 3600;
+export const revalidate = 30;
 
 export async function generateMetadata(): Promise<Metadata> {
   return contentPageMetadata("about-us", "About BR Tours & Travels",

@@ -58,11 +58,17 @@ export const packageDetailSchema = packageCardSchema.extend({
       dayNumber: z.number(),
       title: z.string(),
       description: z.string(),
+      activities: z.array(z.string()).default([]),
+      meals: z.string().nullable().default(null),
+      accommodation: z.string().nullable().default(null),
+      image: publicMediaSchema.omit({ mimeType: true }).nullable().default(null),
     }),
   ),
   departures: z.array(
     z.object({
       id: z.string(),
+      status: z.enum(["SCHEDULED", "FILLING_FAST", "CANCELLED", "COMPLETED"]).default("SCHEDULED"),
+      seatsAvailable: z.number().int().nonnegative().nullable().default(null),
       startDate: z.string(),
       endDate: z.string(),
       price: moneySchema.nullable(),

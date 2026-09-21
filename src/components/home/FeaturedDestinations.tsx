@@ -28,7 +28,7 @@ export function FeaturedDestinations({
 }: {
   destinations: Destination[];
 }) {
-  const items = destinations.slice(0, 6);
+  const items = destinations.slice(0, 5);
   if (!items.length) return null;
   return (
     <section
@@ -36,9 +36,9 @@ export function FeaturedDestinations({
       id="featured-destinations"
     >
       <SectionHeader
-        eyebrow="Six ways to begin"
+        eyebrow="Featured destinations"
         title="Choose the landscape that calls to you."
-        description="Sacred Himalayan routes, quiet Kashmir mornings, Matheran forest trails, Rajasthan heritage, Jaisalmer desert light and a North India–Nepal pilgrimage circuit."
+        description="Explore our featured destinations and find a journey that suits your pace."
         href="/destinations"
         linkLabel="All destinations"
       />

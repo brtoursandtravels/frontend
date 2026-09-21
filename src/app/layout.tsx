@@ -8,6 +8,9 @@ import { getSite } from "@/lib/api";
 import { serverEnv } from "@/lib/env";
 import "./globals.css";
 
+// Keep every public page on the same freshness interval, including new routes.
+export const revalidate = 30;
+
 export const metadata: Metadata = {
   metadataBase: new URL(serverEnv.NEXT_PUBLIC_SITE_URL),
   title: {

@@ -183,9 +183,9 @@ export default async function PackagesPage({
         <section className="min-w-0" aria-labelledby="results-heading">
           <div className="mb-5 flex items-end justify-between gap-4">
             <div>
-              <p className="mb-2 text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-secondary-hover">Live catalogue</p>
+              <p className="mb-2 text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-secondary-hover">Explore our tours</p>
               <h2 className="m-0 font-display text-3xl text-text-heading" id="results-heading">
-                {result.meta.total} {result.meta.total === 1 ? "idea" : "ideas"}{" "}
+                {result.meta.total} {result.meta.total === 1 ? "package" : "packages"}{" "}
                 found
               </h2>
             </div>

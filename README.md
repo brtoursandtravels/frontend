@@ -6,9 +6,14 @@ environment file. Nothing must be installed at workspace root.
 
 `vercel.json` keeps server rendering in Mumbai near the API and database.
 Public API results are shared within each render, including package metadata
-and detail content. Editable API responses revalidate every 30 seconds so admin
-edits and deletions reach subsequent page visits without a rebuild. Package and
-gallery images come from admin-selected media, including Char Dham packages;
+and detail content. All public content pages, the sitemap and editable API
+responses use a 30-second revalidation interval. The root layout supplies this
+default for new pages too. Once cached content is older than 30 seconds, the next
+request triggers a background refresh; subsequent visitors receive the refreshed
+content. This is request-driven regeneration, not a scheduled full-site build or
+an automatic browser reload. Query-driven listings still render per request and
+reuse the 30-second API cache; development bypasses caching. Package and gallery
+images come from admin-selected media, including Char Dham packages;
 hardcoded image additions no longer override those selections.
 Gallery's package selector uses `/api/v1/package-options` instead of downloading
 complete package cards. Deploy the matching API before this frontend version.
@@ -59,7 +64,7 @@ The production horizontal logo lockup is public/br-logo.png.
 
 Package and blog detail routes return an empty `generateStaticParams` list and
 allow new slugs at runtime. Their first visit generates the page from the live API;
-subsequent visits use the existing revalidation policy (30 seconds for packages).
+subsequent visits use the same 30-second revalidation policy as other public pages.
 A failed detail request cannot fail the frontend build. Metadata, the package
 loading skeleton, redirects and not-found handling are retained.
 

@@ -3,13 +3,14 @@ import { entryMetadata } from "@/lib/metadata";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
-import { Check } from "lucide-react";
+import { BedDouble, BusFront, Check } from "lucide-react";
 import { BreadcrumbNav } from "@/components/common/BreadcrumbNav";
 import { DetailPageSkeleton } from "@/components/common/PageSkeletons";
 import { InclusionsExclusions } from "@/components/packages/InclusionsExclusions";
 import { ItineraryTimeline } from "@/components/packages/ItineraryTimeline";
 import { PackageCard } from "@/components/packages/PackageCard";
 import { PackageGalleryModal } from "@/components/packages/PackageGalleryModal";
+import { PackageInformationCard } from "@/components/packages/PackageInformationCard";
 import { StickyBookingCard } from "@/components/packages/StickyBookingCard";
 import { YatraEssentials } from "@/components/packages/YatraEssentials";
 import { YatraPreparationGuide } from "@/components/packages/YatraPreparationGuide";
@@ -139,7 +140,7 @@ async function PackageDetailContent({ slug }: { slug: string }) {
                 Demo content—not a confirmed offer
               </span>
             ) : null}
-            <p className="mt-5 max-w-3xl text-lg leading-relaxed text-text-muted">{item.overview}</p>
+            <p className="mt-5 max-w-3xl whitespace-pre-line text-lg leading-relaxed text-text-muted [overflow-wrap:anywhere]">{item.overview}</p>
             <div className="mt-7 flex flex-wrap gap-8 border-t border-border-subtle pt-5 text-sm text-text-body">
               <span className="grid">
                 <strong>{item.days}</strong> days
@@ -182,18 +183,8 @@ async function PackageDetailContent({ slug }: { slug: string }) {
               <InclusionsExclusions inclusions={item.inclusions} exclusions={item.exclusions} />
             </section>
             {isCharDham ? <YatraPreparationGuide /> : null}
-            {item.transportInformation ? (
-              <section className="mb-6 rounded-xl border border-border-subtle bg-white p-6 shadow-card">
-                <h2 className="mt-0 font-display text-3xl text-text-heading">Pickup and transport</h2>
-                <p>{item.transportInformation}</p>
-              </section>
-            ) : null}
-            {item.accommodationNotes ? (
-              <section className="mb-6 rounded-xl border border-border-subtle bg-white p-6 shadow-card">
-                <h2 className="mt-0 font-display text-3xl text-text-heading">Accommodation notes</h2>
-                <p>{item.accommodationNotes}</p>
-              </section>
-            ) : null}
+            <PackageInformationCard id="package-transport" title="Pickup and transport" description={item.transportInformation} icon={BusFront} />
+            <PackageInformationCard id="package-accommodation" title="Accommodation notes" description={item.accommodationNotes} icon={BedDouble} />
             {faqs.length ? (
               <section className="mb-6 rounded-xl border border-border-subtle bg-white p-6 shadow-card">
                 <p className="mb-2 text-xs font-extrabold uppercase tracking-wider text-secondary-hover">Before you enquire</p>
@@ -234,6 +225,8 @@ async function PackageDetailContent({ slug }: { slug: string }) {
                 <div className="grid gap-3">
                   {item.departures.map((departure) => (
                     <article className="grid gap-1 rounded-md bg-bg-muted p-3 text-sm [&_span]:text-text-muted" key={departure.id}>
+                      {departure.status === "FILLING_FAST" ? <strong className="text-secondary-hover">Filling fast</strong> : null}
+                      {departure.seatsAvailable !== null ? <span>{departure.seatsAvailable === 0 ? "Fully booked" : `${departure.seatsAvailable} seats available`}</span> : null}
                       <strong>
                         {formatDate(departure.startDate)} –{" "}
                         {formatDate(departure.endDate)}

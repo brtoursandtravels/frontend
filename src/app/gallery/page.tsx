@@ -10,7 +10,7 @@ import { GalleryDiscoveryBar } from "@/components/gallery/GalleryDiscoveryBar";
 import { GalleryHero } from "@/components/gallery/GalleryHero";
 import { ApiRequestError, getGalleryAlbums, getPackageOptions } from "@/lib/api";
 
-export const revalidate = 3600;
+export const revalidate = 30;
 export function generateMetadata(): Promise<Metadata> {
   return staticPageMetadata("gallery", {
   title: "Travel Gallery",
