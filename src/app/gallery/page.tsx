@@ -8,7 +8,7 @@ import { RetryPageButton } from "@/components/common/RetryPageButton";
 import { GalleryCta } from "@/components/gallery/GalleryCta";
 import { GalleryDiscoveryBar } from "@/components/gallery/GalleryDiscoveryBar";
 import { GalleryHero } from "@/components/gallery/GalleryHero";
-import { ApiRequestError, getGalleryAlbums, getPackages } from "@/lib/api";
+import { ApiRequestError, getGalleryAlbums, getPackageOptions } from "@/lib/api";
 import { completeGalleryAlbum } from "@/lib/galleryEditorialMedia";
 
 export const revalidate = 3600;
@@ -25,7 +25,7 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
   const page = Math.max(1, Number(query.page) || 1);
   const [albumsResult, packagesResult] = await Promise.allSettled([
     getGalleryAlbums({ destination: query.destination, package: query.package, page, pageSize: 6, includeImages: true }),
-    getPackages({ pageSize: 48 }),
+    getPackageOptions(),
   ]);
 
   if (albumsResult.status === "rejected") {

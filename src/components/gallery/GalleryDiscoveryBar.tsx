@@ -14,7 +14,7 @@ function galleryHref(query: GalleryQuery, changes: GalleryQuery) {
   return `/gallery${params.size ? `?${params}` : ""}`;
 }
 
-export function GalleryDiscoveryBar({ packages, query }: { packages: PackageCard[]; query: GalleryQuery }) {
+export function GalleryDiscoveryBar({ packages, query }: { packages: Pick<PackageCard, "slug" | "title">[]; query: GalleryQuery }) {
   const wall = query.view === "wall";
   return (
     <section className="sticky top-[5rem] z-30 border-y border-border-subtle bg-bg-base/92 py-3 shadow-card backdrop-blur-xl max-[620px]:relative max-[620px]:top-0" aria-label="Gallery discovery filters">

@@ -4,6 +4,12 @@ Independent Next.js 16 App Router website backed entirely by the Express API.
 It has its own package.json, package-lock.json, npm installation and local
 environment file. Nothing must be installed at workspace root.
 
+`vercel.json` keeps server rendering in Mumbai near the API and database.
+Public API results are shared within each render, including package metadata
+and detail content; the existing persistent revalidation intervals are retained.
+Gallery's package selector uses `/api/v1/package-options` instead of downloading
+complete package cards. Deploy the matching API before this frontend version.
+
 The UI uses Tailwind CSS 4 through the official PostCSS integration.
 `src/app/globals.css` is the single color/theme source: it defines the complete
 BR palette, semantic Tailwind utilities, focus/status/surface tokens, radii and

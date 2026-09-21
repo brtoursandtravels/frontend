@@ -1,6 +1,6 @@
 import "server-only";
 import { cache } from "react";
-import type { ZodType } from "zod";
+import { z, type ZodType } from "zod";
 import {
   apiErrorSchema,
   blogCategoriesResponseSchema,
@@ -69,14 +69,17 @@ async function assertResponse(response: Response) {
   );
 }
 
-async function parsed<T>(
+// fetchPublicRead uses an AbortSignal, which opts out of Next's fetch memoization.
+// Share parsed results within each render so metadata, layout and page do not
+// issue duplicate API requests. Persistent revalidation still follows apiFetch.
+const parsed = cache(async function parsePublicResponse<T>(
   path: string,
   schema: ZodType<T>,
   revalidate?: number,
 ): Promise<T> {
   const response = await assertResponse(await apiFetch(path, revalidate));
   return schema.parse(await response.json());
-}
+});
 
 function queryString(values: Record<string, string | number | boolean | undefined>) {
   const query = new URLSearchParams();
@@ -110,15 +113,12 @@ export function getPackages(options: PackageFilters = {}) {
   );
 }
 
-export function getPackage(slug: string) {
-  return parsed(
-    `/packages/${encodeURIComponent(slug)}`,
-    packageDetailResponseSchema,
-    catalogueRevalidateSeconds,
-  );
+export async function getPackage(slug: string) {
+  const { data } = await getPackageWithRedirect(slug);
+  return { data };
 }
 
-export async function getPackageWithRedirect(slug: string) {
+export const getPackageWithRedirect = cache(async (slug: string) => {
   const response = await assertResponse(
     await apiFetch(
       `/packages/${encodeURIComponent(slug)}`,
@@ -130,6 +130,11 @@ export async function getPackageWithRedirect(slug: string) {
     new URL(response.url).pathname.split("/").at(-1) ?? slug,
   );
   return { ...payload, redirectSlug: finalSlug !== slug ? finalSlug : null };
+});
+
+const packageOptionsSchema = z.object({ data: z.array(z.object({ slug: z.string(), title: z.string() })) });
+export function getPackageOptions() {
+  return parsed("/package-options", packageOptionsSchema, catalogueRevalidateSeconds);
 }
 
 export const getSite = cache(() => {
