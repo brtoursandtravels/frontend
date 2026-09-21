@@ -9,7 +9,6 @@ import { GalleryCta } from "@/components/gallery/GalleryCta";
 import { GalleryDiscoveryBar } from "@/components/gallery/GalleryDiscoveryBar";
 import { GalleryHero } from "@/components/gallery/GalleryHero";
 import { ApiRequestError, getGalleryAlbums, getPackageOptions } from "@/lib/api";
-import { completeGalleryAlbum } from "@/lib/galleryEditorialMedia";
 
 export const revalidate = 3600;
 export function generateMetadata(): Promise<Metadata> {
@@ -43,21 +42,19 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
   }
 
   const listing = albumsResult.value;
-  const albums = listing.data.map((album) =>
-    completeGalleryAlbum({
-      ...album,
-      images: album.images ?? (album.cover ? [album.cover] : []),
-    }),
-  );
+  const albums = listing.data.map((album) => ({
+    ...album,
+    images: album.images ?? (album.cover ? [album.cover] : []),
+  }));
   const packages = packagesResult.status === "fulfilled" ? packagesResult.value.data : [];
   const selectedPackage = packages.find((item) => item.slug === query.package);
   const allImages = albums.flatMap((album) => album.images);
-  const wallView = query.view === "wall";
+  const wallView = query.view !== "albums";
   const hrefFor = (nextPage: number) => {
     const params = new URLSearchParams();
     if (query.destination) params.set("destination", query.destination);
     if (query.package) params.set("package", query.package);
-    if (wallView) params.set("view", "wall");
+    params.set("view", wallView ? "wall" : "albums");
     if (nextPage > 1) params.set("page", String(nextPage));
     return `/gallery${params.size ? `?${params}` : ""}`;
   };
@@ -107,7 +104,7 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
             <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.16em] text-secondary-hover">No matching collection</p>
             <h2 className="m-0 font-display text-3xl font-semibold text-text-heading">Try a wider view of India.</h2>
             <p className="mx-auto mt-3 max-w-xl text-text-muted">Clear the current filters to return to every published album.</p>
-            <Link className="mt-6 inline-flex min-h-11 items-center rounded-full bg-primary px-5 py-2.5 text-sm font-extrabold text-white no-underline" href="/gallery">Clear all filters</Link>
+            <Link className="mt-6 inline-flex min-h-11 items-center rounded-full bg-primary px-5 py-2.5 text-sm font-extrabold text-white no-underline" href={wallView ? "/gallery" : "/gallery?view=albums"}>Clear all filters</Link>
           </div>
         )}
 

@@ -6,7 +6,10 @@ environment file. Nothing must be installed at workspace root.
 
 `vercel.json` keeps server rendering in Mumbai near the API and database.
 Public API results are shared within each render, including package metadata
-and detail content; the existing persistent revalidation intervals are retained.
+and detail content. Editable API responses revalidate every 30 seconds so admin
+edits and deletions reach subsequent page visits without a rebuild. Package and
+gallery images come from admin-selected media, including Char Dham packages;
+hardcoded image additions no longer override those selections.
 Gallery's package selector uses `/api/v1/package-options` instead of downloading
 complete package cards. Deploy the matching API before this frontend version.
 

@@ -29,7 +29,6 @@ import {
   whatsappLink,
 } from "@/lib/presentation";
 import { serverEnv } from "@/lib/env";
-import { charDhamEditorialMedia } from "@/lib/packageEditorialMedia";
 
 export const revalidate = 30;
 export const maxDuration = 60;
@@ -96,9 +95,7 @@ async function PackageDetailContent({ slug }: { slug: string }) {
     settingText(site, ["contact.whatsapp", "business.whatsapp", "whatsapp"]),
   );
   const isCharDham = /char-dham/i.test(item.slug);
-  const media = isCharDham
-    ? charDhamEditorialMedia
-    : item.media.length
+  const media = item.media.length
       ? item.media
       : item.cover
         ? [item.cover]

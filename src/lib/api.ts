@@ -36,7 +36,7 @@ export class ApiRequestError extends Error {
   }
 }
 
-async function apiFetch(path: string, revalidate = 3600) {
+async function apiFetch(path: string, revalidate = catalogueRevalidateSeconds) {
   try {
     const cacheOptions =
       process.env.NODE_ENV === "development"
@@ -222,5 +222,5 @@ export function getFaqs(packageSlug?: string) {
 }
 
 export function getTestimonials() {
-  return parsed("/testimonials", testimonialResponseSchema, 300);
+  return parsed("/testimonials", testimonialResponseSchema, catalogueRevalidateSeconds);
 }
