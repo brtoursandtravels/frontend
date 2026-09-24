@@ -29,22 +29,35 @@ export function settingText(
 ): string | null {
   for (const key of keys) {
     const value = site?.settings[key];
-    if (typeof value === "string" && value.trim()) return value.trim();
+    if (typeof value === "string") return value.trim() || null;
     const record = asObject(value);
     for (const property of ["value", "text", "url", "href", "label"]) {
       const candidate = record[property];
-      if (typeof candidate === "string" && candidate.trim())
-        return candidate.trim();
+      if (typeof candidate === "string") return candidate.trim() || null;
     }
   }
   return null;
 }
 
+// Calls and WhatsApp share the single phone field managed in Public settings.
+export function contactPhone(site: SiteData | null | undefined) {
+  return settingText(site, ["contact.phone", "business.phone", "phone"]);
+}
+
 export function whatsappLink(value: string | null | undefined) {
   if (!value) return null;
-  if (/^https:\/\/(?:wa\.me|api\.whatsapp\.com)\//i.test(value)) return value;
-  const digits = value.replace(/\D/g, "");
-  return digits ? `https://wa.me/${digits}` : null;
+  const text = value.trim();
+  if (/^\+?[\d\s().-]+$/.test(text)) {
+    const digits = text.replace(/\D/g, "");
+    return /^\d{7,15}$/.test(digits) ? `https://wa.me/${digits}` : null;
+  }
+  try {
+    const url = new URL(text);
+    if (url.protocol !== "https:" || url.username || url.password) return null;
+    if (url.hostname === "wa.me" && /^\/\d{7,15}\/?$/.test(url.pathname)) return url.toString();
+    if (url.hostname === "api.whatsapp.com" && url.pathname === "/send" && /^\d{7,15}$/.test(url.searchParams.get("phone") ?? "")) return url.toString();
+  } catch { /* Invalid links are not displayed. */ }
+  return null;
 }
 
 export function socialLink(
@@ -57,7 +70,7 @@ export function socialLink(
     const domain = `${network}.com`;
     const trustedHost =
       url.hostname === domain || url.hostname.endsWith(`.${domain}`);
-    return url.protocol === "https:" && trustedHost ? url.toString() : null;
+    return url.protocol === "https:" && !url.username && !url.password && trustedHost ? url.toString() : null;
   } catch {
     return null;
   }

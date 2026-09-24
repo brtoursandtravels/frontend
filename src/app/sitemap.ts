@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getBlog, getContentPages, getPackages } from "@/lib/api";
+import { getBlog, getPackages } from "@/lib/api";
 import { serverEnv } from "@/lib/env";
 
 export const revalidate = 30;
@@ -18,10 +18,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/terms",
     "/cancellation-policy",
   ];
-  const [packages, posts, pages] = await Promise.all([
+  const [packages, posts] = await Promise.all([
     allPackageSlugs(),
     allBlogPosts(),
-    getContentPages().catch(() => null),
   ]);
   return [
     ...fixed.map((path) => ({
@@ -33,12 +32,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: new URL(`/packages/${slug}`, origin).toString(),
       changeFrequency: "weekly" as const,
       priority: 0.8,
-    })),
-    ...(pages?.data ?? []).filter((page) => !fixed.includes(`/${page.slug}`)).map((page) => ({
-      url: new URL(`/${page.slug}`, origin).toString(),
-      lastModified: new Date(page.updatedAt),
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
     })),
     ...posts.map((post) => ({
       url: new URL(`/blog/${post.slug}`, origin).toString(),

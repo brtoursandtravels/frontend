@@ -35,7 +35,7 @@ export function NewsletterForm() {
             "idempotency-key": idempotencyKey.current,
           },
           body: JSON.stringify({
-            type: "CONTACT",
+            type: "NEWSLETTER",
             name: "Newsletter subscriber",
             email: parsed.data,
             subject: "Travel journal updates",

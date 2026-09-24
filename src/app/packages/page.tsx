@@ -171,8 +171,8 @@ export default async function PackagesPage({
           idPrefix="mobile"
         />
       </details>
-      <div className="grid grid-cols-[18rem_minmax(0,1fr)] items-start gap-8 max-[960px]:grid-cols-1">
-        <aside className="sticky top-24 max-[960px]:hidden" aria-label="Package filters">
+      <div className="grid grid-cols-[20rem_minmax(0,1fr)] items-start gap-8 max-[960px]:grid-cols-1">
+        <aside className="sticky top-20 max-[960px]:hidden [@media(max-height:580px)]:static" aria-label="Package filters">
           <PackageFilterSidebar
             categories={categories}
             destinations={destinations}

@@ -27,13 +27,14 @@ const travellerCountSchemas = {
 };
 
 const enquirySchema = z.object({
+  type: z.enum(["CONTACT", "PACKAGE_ENQUIRY", "BOOKING_REQUEST"]),
   name: z.string().trim().min(2, "Enter your name.").max(120),
   email: z.string().trim().email("Enter a valid email address.").max(254),
   phone: z
     .string()
     .trim()
     .refine(
-      (value) => !value || /^[+()\d\s-]{7,40}$/.test(value),
+      (value) => !value || (/^[+()\d\s-]{7,40}$/.test(value) && /^\d{7,15}$/.test(value.replace(/\D/g, ""))),
       "Enter a valid phone number.",
     ),
   subject: z.string().trim().max(200),
@@ -54,6 +55,10 @@ const enquirySchema = z.object({
   privacyAccepted: z
     .boolean()
     .refine(Boolean, "Please acknowledge the privacy notice."),
+}).superRefine((value, context) => {
+  if (value.type === "CONTACT" && !value.phone) {
+    context.addIssue({ code: "custom", path: ["phone"], message: "Enter your phone number." });
+  }
 });
 
 type Receipt = z.infer<typeof inquiryReceiptSchema>["data"];
@@ -131,6 +136,7 @@ export function EnquiryForm({
     }
     const textValue = (field: string) => String(data.get(field) ?? "");
     const result = enquirySchema.safeParse({
+      type: intent,
       name: textValue("name"),
       email: textValue("email"),
       phone: textValue("phone"),
@@ -350,12 +356,14 @@ export function EnquiryForm({
           {errorFor("email")}
         </label>
         <label className={labelClass}>
-          Phone
+          <span>Phone{intent === "CONTACT" ? <RequiredMark /> : null}</span>
           <input
             className={fieldClass}
             name="phone"
             type="tel"
             autoComplete="tel"
+            required={intent === "CONTACT"}
+            maxLength={40}
             aria-invalid={Boolean(errors.phone)}
             aria-describedby={errors.phone ? "phone-error" : undefined}
           />

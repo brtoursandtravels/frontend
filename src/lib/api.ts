@@ -7,8 +7,6 @@ import {
   blogDetailResponseSchema,
   blogListResponseSchema,
   categoriesResponseSchema,
-  contentPageResponseSchema,
-  contentPageListResponseSchema,
   destinationsResponseSchema,
   faqResponseSchema,
   galleryAlbumResponseSchema,
@@ -143,18 +141,6 @@ export const getSite = cache(() => {
 
 export function getHome() {
   return parsed("/home", homeResponseSchema);
-}
-
-export const getContentPage = cache((slug: string) => {
-  return parsed(
-    `/pages/${encodeURIComponent(slug)}`,
-    contentPageResponseSchema,
-    catalogueRevalidateSeconds,
-  );
-});
-
-export function getContentPages() {
-  return parsed("/pages", contentPageListResponseSchema, catalogueRevalidateSeconds);
 }
 
 export function getDestinations() {

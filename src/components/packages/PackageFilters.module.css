@@ -1,0 +1,150 @@
+.panel {
+  padding: 1.25rem;
+}
+
+.heading {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.form {
+  display: grid;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.field,
+.pair {
+  display: grid;
+  min-width: 0;
+  gap: 0.375rem;
+}
+
+.pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.wide {
+  grid-column: 1 / -1;
+}
+
+.form input:not([type="hidden"]) {
+  width: 100%;
+  min-width: 0;
+  min-height: 2.75rem;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-base);
+  padding: 0.5rem 0.75rem;
+  font-weight: 400;
+}
+
+/* Keep every filter and the submit button visible below the laptop navigation. */
+@media (min-width: 961px) {
+  .panel {
+    padding: 0.875rem;
+  }
+
+  .heading {
+    margin-bottom: 0.625rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .heading > p:first-child {
+    margin-bottom: 0.25rem;
+    font-size: 0.625rem;
+    line-height: 0.875rem;
+  }
+
+  .heading > h2 {
+    font-size: 1.4375rem;
+    line-height: 1.625rem;
+  }
+
+  .description {
+    display: none;
+  }
+
+  .form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.375rem 0.625rem;
+    line-height: 1rem;
+  }
+
+  .field {
+    gap: 0.1875rem;
+  }
+
+  .pair {
+    gap: 0.625rem;
+  }
+
+  .form input:not([type="hidden"]),
+  .form button[aria-haspopup="listbox"] {
+    height: 2.25rem;
+    min-height: 2.25rem;
+    padding: 0.375rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .form button[aria-haspopup="listbox"] {
+    gap: 0.375rem;
+  }
+
+  .form button[aria-haspopup="listbox"] > span:last-child {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .form button[type="submit"] {
+    min-height: 2.375rem;
+    margin-top: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+    line-height: 1.125rem;
+  }
+
+  .sort [role="listbox"] {
+    top: auto;
+    bottom: calc(100% + 0.45rem);
+  }
+}
+
+/* Leave room for the floating contact buttons on shorter laptop viewports. */
+@media (min-width: 961px) and (max-height: 650px) {
+  .panel {
+    padding: 0.75rem;
+  }
+
+  .heading {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.375rem;
+  }
+
+  .heading > h2 {
+    font-size: 1.3125rem;
+    line-height: 1.5rem;
+  }
+
+  .form {
+    row-gap: 0.25rem;
+  }
+
+  .field {
+    gap: 0.125rem;
+  }
+
+  .form input:not([type="hidden"]),
+  .form button[aria-haspopup="listbox"] {
+    height: 2rem;
+    min-height: 2rem;
+  }
+
+  .form button[type="submit"] {
+    min-height: 2.25rem;
+  }
+}

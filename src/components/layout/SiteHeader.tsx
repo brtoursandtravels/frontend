@@ -9,14 +9,14 @@ import {
   Compass,
   Mail,
   Menu,
-  MessageCircle,
   Phone,
   Sparkles,
   X,
 } from "lucide-react";
 import type { SiteData } from "@/lib/contracts";
-import { settingText, whatsappLink } from "@/lib/presentation";
+import { contactPhone, settingText, whatsappLink } from "@/lib/presentation";
 import { BrandLogo } from "@/components/common/BrandLogo";
+import { SocialContactLinks, WhatsAppIcon } from "@/components/common/SocialContactLinks";
 
 const defaultNavigation = [
   { id: "home", parentId: null, href: "/", label: "Home", sortOrder: 0 },
@@ -57,15 +57,9 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
   const roots = items
     .filter((item) => !item.parentId)
     .sort((left, right) => left.sortOrder - right.sortOrder);
-  const phone = settingText(site, ["contact.phone", "business.phone", "phone"]);
+  const phone = contactPhone(site);
+  const whatsappHref = whatsappLink(phone);
   const email = settingText(site, ["contact.email", "business.email", "email"]);
-  const whatsapp = settingText(site, [
-    "contact.whatsapp",
-    "business.whatsapp",
-    "whatsapp",
-  ]);
-  const whatsappHref = whatsappLink(whatsapp);
-  const whatsappDisplay = whatsapp ?? "+91 00000 00000";
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 24);
@@ -152,43 +146,23 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
   return (
     <>
       <div className="relative z-80 border-b border-secondary/20 bg-[#051b1c] text-white/75 max-[760px]:hidden">
-        <div className="relative mx-auto flex min-h-9 w-full max-w-7xl items-center gap-5 px-5 text-[0.72rem] font-bold sm:px-8 lg:px-10">
-          <div className="flex items-center gap-5 [&_a]:inline-flex [&_a]:items-center [&_a]:gap-1.5 [&_a]:no-underline [&_a]:transition-colors [&_a:hover]:text-secondary-light">
-            {phone ? (
-              <a href={`tel:${phone}`}>
-                <Phone aria-hidden="true" size={13} /> {phone}
-              </a>
-            ) : null}
-            {email ? (
-              <a className="max-[900px]:hidden" href={`mailto:${email}`}>
-                <Mail aria-hidden="true" size={13} /> {email}
-              </a>
-            ) : null}
-          </div>
-
-          <p className="absolute left-1/2 m-0 flex -translate-x-1/2 items-center gap-1.5 whitespace-nowrap text-white/58 max-[1100px]:hidden">
+        <div className="mx-auto grid min-h-10 w-full max-w-7xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-5 text-[0.72rem] font-bold sm:px-8 lg:gap-5 lg:px-10">
+          {email ? (
+            <a className="col-start-1 row-start-1 inline-flex min-w-0 max-w-full items-center gap-2 justify-self-start no-underline transition-colors hover:text-secondary-light" href={`mailto:${email}`} title={email}>
+              <Mail aria-hidden="true" className="shrink-0" size={14} />
+              <span className="truncate">{email}</span>
+            </a>
+          ) : null}
+          <p className="col-start-2 row-start-1 m-0 flex items-center justify-center gap-1.5 text-center text-white/58">
             <Sparkles aria-hidden="true" className="text-secondary-light" size={13} />
             Bespoke tours & customized holidays across India
           </p>
-
           {whatsappHref ? (
-            <a
-              className="ml-auto inline-flex items-center gap-1.5 font-extrabold text-secondary-light no-underline transition-colors hover:text-white"
-              href={whatsappHref}
-              rel="noreferrer"
-              target="_blank"
-            >
-              <MessageCircle aria-hidden="true" size={13} /> WhatsApp: {whatsappDisplay}
+            <a className="col-start-3 row-start-1 inline-flex min-w-0 max-w-full items-center gap-2 justify-self-end text-secondary-light no-underline transition-colors hover:text-white" href={whatsappHref} aria-label={`WhatsApp: ${phone}`} title={`WhatsApp: ${phone}`} target="_blank" rel="noopener noreferrer">
+              <WhatsAppIcon className="size-[18px] shrink-0" />
+              <span className="truncate whitespace-nowrap">{phone}</span>
             </a>
-          ) : (
-            <Link
-              className="ml-auto inline-flex items-center gap-1.5 font-extrabold text-secondary-light no-underline transition-colors hover:text-white"
-              href="/contact-us"
-              aria-label="WhatsApp number placeholder; open contact page"
-            >
-              <MessageCircle aria-hidden="true" size={13} /> WhatsApp: {whatsappDisplay}
-            </Link>
-          )}
+          ) : null}
         </div>
       </div>
 
@@ -363,29 +337,13 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
               </span>
             </Link>
 
-            {phone || email || whatsappDisplay ? (
+            {phone || email ? (
               <div className="mt-5 flex min-w-0 flex-wrap gap-x-5 gap-y-2 text-xs text-white/68 [&_a]:flex [&_a]:min-w-0 [&_a]:max-w-full [&_a]:items-center [&_a]:gap-2 [&_a]:break-all [&_a]:no-underline [&_a]:transition-colors [&_a:hover]:text-secondary-light [&_svg]:shrink-0">
-                {phone ? (
-                  <a href={`tel:${phone}`}>
-                    <Phone aria-hidden="true" size={15} /> {phone}
-                  </a>
-                ) : null}
-                {email ? (
-                  <a href={`mailto:${email}`}>
-                    <Mail aria-hidden="true" size={15} /> {email}
-                  </a>
-                ) : null}
-                {whatsappHref ? (
-                  <a href={whatsappHref} rel="noreferrer" target="_blank">
-                    <MessageCircle aria-hidden="true" size={15} /> {whatsappDisplay}
-                  </a>
-                ) : (
-                  <Link href="/contact-us" onClick={() => setOpen(false)}>
-                    <MessageCircle aria-hidden="true" size={15} /> {whatsappDisplay}
-                  </Link>
-                )}
+                {email ? <a href={`mailto:${email}`}><Mail aria-hidden="true" size={15} /> {email}</a> : null}
+                {phone ? <a href={`tel:${phone}`}><Phone aria-hidden="true" size={15} /> {phone}</a> : null}
               </div>
             ) : null}
+            <SocialContactLinks site={site} className="mt-3 text-white/80" />
           </div>
         </div>
       </div>

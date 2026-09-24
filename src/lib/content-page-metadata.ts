@@ -1,14 +1,14 @@
 import "server-only";
-import { getContentPage } from "./api";
+import { staticContentPages } from "./static-content-pages";
 import { staticPageMetadata } from "./static-page-metadata";
 
 export async function contentPageMetadata(slug: string, title: string, description: string) {
-  const result = await getContentPage(slug).catch(() => null);
+  const page = Object.values(staticContentPages).find(page => page.slug === slug);
   return staticPageMetadata(slug, {
-    title: result?.data.title || title,
+    title: page?.title || title,
     description,
-    metaTitle: result?.data.seoTitle,
-    metaDescription: result?.data.seoDescription,
+    metaTitle: page?.seoTitle,
+    metaDescription: page?.seoDescription,
     path: `/${slug}`,
   });
 }

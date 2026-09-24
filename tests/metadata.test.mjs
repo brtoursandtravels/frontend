@@ -1,7 +1,20 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { entryMetadata, staticMetadata } from "../src/lib/metadata.ts";
-import { socialSettingLink } from "../src/lib/presentation.ts";
+import { contactPhone, settingText, socialSettingLink, whatsappLink } from "../src/lib/presentation.ts";
+
+test("contact settings support legacy values and explicit clearing hides old aliases", () => {
+  const keys = ["contact.email", "business.email", "email"];
+  assert.equal(settingText({ settings: { email: { value: " legacy@example.com " } } }, keys), "legacy@example.com");
+  assert.equal(settingText({ settings: { "contact.email": " test@example.com ", email: "old@example.com" } }, keys), "test@example.com");
+  assert.equal(settingText({ settings: { "contact.email": " ", email: "old@example.com" } }, keys), null);
+  assert.equal(settingText({ settings: {} }, keys), null);
+});
+test("WhatsApp accepts configured numbers and chat links while invalid links remain hidden", () => {
+  assert.equal(whatsappLink("+91 79907 21001"), "https://wa.me/917990721001");
+  for (const value of ["https://wa.me/917990721001", "https://api.whatsapp.com/send?phone=917990721001&text=Hello"]) assert.equal(whatsappLink(value), value);
+  for (const value of ["", "123", "javascript:123456789", "https://evil.test/123456789", "https://user:password@wa.me/123456789", "https://wa.me/invalid", "https://api.whatsapp.com/send?phone=bad"]) assert.equal(whatsappLink(value), null);
+});
 
 const entry = { title: "Kashmir Tour", description: "Explore Kashmir with BR Travels.", path: "/packages/kashmir" };
 test("saved metadata drives the title, description and sharing tags", () => {
@@ -59,4 +72,14 @@ test("invalid social links are never rendered", () => {
   for (const value of ["javascript:alert(1)", "https://instagram.com.evil.test/", "http://instagram.com/test"]) {
     assert.equal(socialSettingLink({ menus: [], settings: { "social.instagram": value } }, "instagram"), null);
   }
+});
+
+
+test("calls and WhatsApp use the shared phone setting and ignore the retired WhatsApp field", () => {
+  const settings = { "contact.phone": "+91 98765 43210", "contact.whatsapp": "+91 11111 11111" };
+  assert.equal(contactPhone({ settings }), "+91 98765 43210");
+  assert.equal(whatsappLink(contactPhone({ settings })), "https://wa.me/919876543210");
+  assert.equal(contactPhone({ settings: { ...settings, "contact.phone": "" } }), null);
+  assert.equal(whatsappLink(contactPhone({ settings: { ...settings, "contact.phone": "" } })), null);
+  assert.equal(contactPhone({ settings: { "contact.whatsapp": "+91 11111 11111" } }), null);
 });

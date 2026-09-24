@@ -6,7 +6,6 @@ type QuickChannelsBarProps = {
   instagramHref?: string | null;
   phone?: string | null;
   whatsappHref?: string | null;
-  hours?: string | null;
 };
 
 export function QuickChannelsBar({
@@ -15,7 +14,6 @@ export function QuickChannelsBar({
   instagramHref,
   phone,
   whatsappHref,
-  hours,
 }: QuickChannelsBarProps) {
   const channels = [
     whatsappHref ? {
@@ -31,7 +29,7 @@ export function QuickChannelsBar({
       icon: Phone,
       eyebrow: "Direct voice consultation",
       title: phone,
-      detail: hours ?? "Call during business hours",
+      detail: "Call during business hours",
       external: false,
     } : null,
     email ? {

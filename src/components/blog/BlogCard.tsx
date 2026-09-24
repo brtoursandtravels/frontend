@@ -6,7 +6,6 @@ import { PublicImage } from "@/components/common/PublicImage";
 type RelatedTour = { slug: string; title: string; days: number };
 
 export function BlogCard({ item, relatedTour }: { item: BlogCardData; relatedTour?: RelatedTour }) {
-  const authorInitials = item.author?.name.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase();
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-border-subtle bg-white shadow-card transition duration-300 hover:-translate-y-1.5 hover:border-secondary/35 hover:shadow-card-hover">
       <Link className="relative aspect-[16/10] overflow-hidden bg-primary-soft" href={`/blog/${item.slug}`} aria-label={`Read ${item.title}`}>
@@ -19,10 +18,7 @@ export function BlogCard({ item, relatedTour }: { item: BlogCardData; relatedTou
         <div className="flex items-center gap-2 text-[0.7rem] font-bold text-text-muted"><Clock3 aria-hidden="true" size={14} /><span>{item.readingMinutes} min read</span><span>·</span><time dateTime={item.publishedAt}>{new Intl.DateTimeFormat("en-IN", { dateStyle: "medium" }).format(new Date(item.publishedAt))}</time></div>
         <h2 className="mb-0 mt-4 font-display text-[1.45rem] font-semibold leading-tight text-text-heading"><Link className="no-underline transition-colors hover:text-primary" href={`/blog/${item.slug}`}>{item.title}</Link></h2>
         <p className="mt-4 line-clamp-3 text-[0.925rem] leading-relaxed text-text-muted">{item.excerpt}</p>
-        <div className="mt-auto pt-5">
-          {item.author ? <div className="flex items-center gap-2 border-t border-border-subtle pt-4 text-[0.75rem] font-bold text-text-muted"><span className="grid size-8 place-items-center rounded-full bg-primary-soft text-[0.65rem] font-extrabold text-primary" aria-hidden="true">{authorInitials}</span><span>{item.author.name}</span></div> : null}
-          {relatedTour ? <Link className="mt-4 block border-t border-border-subtle pt-4 text-[0.73rem] font-extrabold text-primary no-underline transition hover:text-secondary-hover" href={`/packages/${relatedTour.slug}`}>Featured journey: {relatedTour.title} ({relatedTour.days}D) →</Link> : null}
-        </div>
+        {relatedTour ? <Link className="mt-auto block border-t border-border-subtle pt-4 text-[0.73rem] font-extrabold text-primary no-underline transition hover:text-secondary-hover" href={`/packages/${relatedTour.slug}`}>Featured journey: {relatedTour.title} ({relatedTour.days}D) →</Link> : null}
       </div>
     </article>
   );

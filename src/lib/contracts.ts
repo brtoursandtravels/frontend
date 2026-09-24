@@ -140,23 +140,6 @@ export const homeResponseSchema = z.object({
   }),
 });
 
-export const contentPageListResponseSchema = z.object({
-  data: z.array(z.object({ slug: z.string(), updatedAt: z.string() })),
-});
-
-export const contentPageResponseSchema = z.object({
-  data: z.object({
-    slug: z.string(),
-    title: z.string(),
-    contentHtml: z.string(),
-    seoTitle: z.string().nullable(),
-    seoDescription: z.string().nullable(),
-    ownerReviewDue: z.boolean(),
-    updatedAt: z.string(),
-    isDemo: z.boolean(),
-  }),
-});
-
 export const destinationSchema = z.object({
   id: z.string(),
   slug: z.string(),
@@ -217,7 +200,6 @@ export const blogCardSchema = z.object({
   cover: publicMediaSchema.nullable(),
   publishedAt: z.string(),
   readingMinutes: z.number(),
-  author: z.object({ name: z.string() }).nullable(),
   relatedTour: z
     .object({ slug: z.string(), title: z.string(), days: z.number() })
     .nullable()
@@ -234,17 +216,10 @@ export const blogCategoriesResponseSchema = z.object({
 export const blogDetailResponseSchema = z.object({
   data: blogCardSchema.extend({
     contentHtml: z.string(),
-    tags: z.array(z.object({ slug: z.string(), name: z.string() })),
-    author: z
-      .object({ name: z.string(), bio: z.string().nullable() })
-      .nullable(),
     seo: z.object({
       title: z.string().nullable(),
       description: z.string().nullable(),
     }),
-    relatedArticles: z.array(
-      blogCardSchema.omit({ readingMinutes: true, author: true, isDemo: true }),
-    ),
     relatedPackages: z.array(
       z.object({
         id: z.string(),

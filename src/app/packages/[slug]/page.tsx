@@ -23,10 +23,10 @@ import {
   getSite,
 } from "@/lib/api";
 import {
+  contactPhone,
   formatDate,
   formatMoney,
   priceBasisLabel,
-  settingText,
   whatsappLink,
 } from "@/lib/presentation";
 import { serverEnv } from "@/lib/env";
@@ -92,9 +92,7 @@ async function PackageDetailContent({ slug }: { slug: string }) {
   if (result.redirectSlug) redirect(`/packages/${result.redirectSlug}`);
   const item = result.data;
   const [faqs, site] = await supportingContent;
-  const whatsappHref = whatsappLink(
-    settingText(site, ["contact.whatsapp", "business.whatsapp", "whatsapp"]),
-  );
+  const whatsappHref = whatsappLink(contactPhone(site));
   const isCharDham = /char-dham/i.test(item.slug);
   const media = item.media.length
       ? item.media

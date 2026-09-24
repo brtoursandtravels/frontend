@@ -16,7 +16,7 @@ export function FeaturedArticleHero({ item, relatedTour }: { item: BlogCard; rel
         <p className="mb-4 flex flex-wrap items-center gap-2 text-[0.7rem] font-extrabold uppercase tracking-[0.13em] text-secondary-light"><span className="inline-flex items-center gap-1"><Star aria-hidden="true" size={13} fill="currentColor" /> Cover story</span><span className="text-white/30">·</span>{item.category?.name ?? "Travel journal"}</p>
         <h2 className="m-0 font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.07] tracking-[-0.03em] text-white" id={`featured-${item.id}`}>{item.title}</h2>
         <p className="mt-5 line-clamp-4 text-[0.98rem] leading-relaxed text-white/72">{item.excerpt}</p>
-        <div className="mt-5 flex flex-wrap items-center gap-3 text-[0.75rem] font-bold text-white/62"><Clock3 aria-hidden="true" size={15} /><span>{item.readingMinutes} min read</span>{item.author ? <><span>·</span><span>By {item.author.name}</span></> : null}</div>
+        <div className="mt-5 flex flex-wrap items-center gap-3 text-[0.75rem] font-bold text-white/62"><Clock3 aria-hidden="true" size={15} /><span>{item.readingMinutes} min read</span></div>
         {relatedTour ? <Link className="mt-4 text-[0.75rem] font-extrabold text-secondary-light no-underline" href={`/packages/${relatedTour.slug}`}>Featured journey: {relatedTour.title} ({relatedTour.days}D) →</Link> : null}
         <Link className="mt-7 inline-flex min-h-12 w-fit items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-extrabold text-white no-underline transition hover:-translate-y-0.5 hover:bg-accent-hover" href={`/blog/${item.slug}`}>Read the full dispatch <ArrowRight aria-hidden="true" size={17} /></Link>
       </div>

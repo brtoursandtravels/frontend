@@ -1,15 +1,11 @@
-import Link from "next/link";
-import type { z } from "zod";
-import type { contentPageResponseSchema } from "@/lib/contracts";
-
-type ContentPageData = z.infer<typeof contentPageResponseSchema>["data"];
+import type { StaticContentPage } from "@/lib/static-content-pages";
 
 export function ContentPage({
   page,
   eyebrow,
   children,
 }: {
-  page: ContentPageData;
+  page: StaticContentPage;
   eyebrow: string;
   children?: React.ReactNode;
 }) {
@@ -29,24 +25,6 @@ export function ContentPage({
         dangerouslySetInnerHTML={{ __html: page.contentHtml }}
       />
       {children}
-    </div>
-  );
-}
-
-export function ContentUnavailable({ title }: { title: string }) {
-  return (
-    <div className="mx-auto w-full max-w-5xl px-5 py-16 sm:px-8">
-      <div className="rounded-xl border border-danger/30 bg-danger-bg p-8 shadow-card sm:p-12">
-        <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-danger">Service interruption</p>
-        <h1 className="font-display text-4xl font-semibold text-text-heading sm:text-5xl">{title}</h1>
-        <p className="mt-4 text-text-muted">
-          The live content service did not return a usable response. No policy
-          or company information has been invented as a fallback.
-        </p>
-        <Link className="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white no-underline transition hover:bg-primary-hover" href="/contact-us">
-          Contact page
-        </Link>
-      </div>
     </div>
   );
 }

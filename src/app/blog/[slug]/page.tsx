@@ -64,7 +64,6 @@ export async function generateMetadata({
       ...metadata.openGraph,
       type: "article",
       publishedTime: item.publishedAt,
-      authors: item.author ? [item.author.name] : undefined,
     },
   };
 }
@@ -94,9 +93,6 @@ export default async function BlogPostPage({
     description: item.excerpt,
     datePublished: item.publishedAt,
     mainEntityOfPage: articleUrl,
-    ...(item.author
-      ? { author: { "@type": "Person", name: item.author.name } }
-      : {}),
     ...(item.cover
       ? {
           image: new URL(
@@ -128,7 +124,6 @@ export default async function BlogPostPage({
               )}
             </time>
             <span>{item.readingMinutes} min read</span>
-            {item.author ? <span>By {item.author.name}</span> : null}
           </div>
           {item.isDemo ? (
             <span className="inline-flex rounded-full bg-accent-soft px-3 py-1.5 text-[0.65rem] font-extrabold uppercase text-secondary-hover">Demo editorial content</span>
@@ -166,42 +161,15 @@ export default async function BlogPostPage({
             </aside>
           ) : null}
           <div
-            className="min-w-0 text-base leading-8 text-text-body [&_a]:font-semibold [&_a]:text-primary [&_a]:[overflow-wrap:anywhere] [&_blockquote]:my-8 [&_blockquote]:border-l-4 [&_blockquote]:border-secondary [&_blockquote]:bg-bg-muted [&_blockquote]:p-5 [&_h2]:scroll-mt-28 [&_h2]:mt-12 [&_h2]:font-display [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:text-text-heading [&_h3]:scroll-mt-28 [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-text-heading [&_iframe]:max-w-full [&_img]:my-8 [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-xl [&_li]:my-2 [&_ol]:my-5 [&_p]:my-5 [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto [&_ul]:my-5 [&_video]:h-auto [&_video]:max-w-full"
+            className="min-w-0 text-base leading-8 text-text-body [&_a]:font-semibold [&_a]:text-primary [&_a]:[overflow-wrap:anywhere] [&_blockquote]:my-8 [&_blockquote]:border-l-4 [&_blockquote]:border-secondary [&_blockquote]:bg-bg-muted [&_blockquote]:p-5 [&_h2]:scroll-mt-28 [&_h2]:mt-12 [&_h2]:font-display [&_h2]:text-3xl [&_h2]:font-semibold [&_h2]:text-text-heading [&_h3]:scroll-mt-28 [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-text-heading [&_iframe]:max-w-full [&_img]:my-8 [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-xl [&_h4]:mt-6 [&_h4]:text-lg [&_h4]:font-bold [&_h4]:text-text-heading [&_li]:my-2 [&_li>p]:my-1 [&_ol]:my-5 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:my-5 [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_table]:block [&_table]:max-w-full [&_table]:overflow-x-auto [&_ul]:my-5 [&_ul]:list-disc [&_ul]:pl-6 [&_video]:h-auto [&_video]:max-w-full"
             dangerouslySetInnerHTML={{ __html: prepared.html }}
           />
         </div>
-        {item.author ? (
-          <section className="mx-auto mt-12 max-w-4xl rounded-xl border border-border-subtle bg-bg-muted p-6">
-            <p className="mb-2 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-hover">About the author</p>
-            <h2 className="m-0 font-display text-3xl text-text-heading">{item.author.name}</h2>
-            {item.author.bio ? (
-              <p>{item.author.bio}</p>
-            ) : (
-              <p>No public biography has been supplied.</p>
-            )}
-          </section>
-        ) : null}
-        {item.tags.length ? (
-          <div className="mx-auto mt-8 flex max-w-4xl flex-wrap gap-2" aria-label="Article tags">
-            {item.tags.map((tag) => (
-              <span className="rounded-full bg-primary-soft px-3 py-1.5 text-xs font-bold text-primary" key={tag.slug}>{tag.name}</span>
-            ))}
-          </div>
-        ) : null}
-        {item.relatedArticles.length || item.relatedPackages.length ? (
+        {item.relatedPackages.length ? (
           <section className="mt-16 border-t border-border-subtle pt-10">
             <p className="mb-2 text-xs font-extrabold uppercase tracking-[0.18em] text-secondary-hover">Continue exploring</p>
-            <h2 className="m-0 font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] text-text-heading">Related reading and tours</h2>
+            <h2 className="m-0 font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] text-text-heading">Related tours</h2>
             <div className="mt-8 grid grid-cols-3 gap-5 max-[820px]:grid-cols-1">
-              {item.relatedArticles.map((related) => (
-                <article className="rounded-xl border border-border-subtle bg-white p-5 shadow-card" key={related.id}>
-                  <span className="text-[0.65rem] font-extrabold uppercase tracking-wider text-secondary-hover">{related.category?.name ?? "Article"}</span>
-                  <h3 className="mt-3 mb-0 font-display text-2xl text-text-heading">
-                    <Link className="no-underline hover:text-primary" href={`/blog/${related.slug}`}>{related.title}</Link>
-                  </h3>
-                  <p className="mt-3 text-sm text-text-muted">{related.excerpt}</p>
-                </article>
-              ))}
               {item.relatedPackages.map((related) => (
                 <article className="rounded-xl border border-border-subtle bg-white p-5 shadow-card" key={related.id}>
                   <span className="text-[0.65rem] font-extrabold uppercase tracking-wider text-secondary-hover">
