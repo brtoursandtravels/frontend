@@ -1,8 +1,7 @@
 .env*
 .vercel/
 .next/
-.next-e2e/
-.next-perf/
+.next-*/
 node_modules/
 test-results/
 playwright-report/

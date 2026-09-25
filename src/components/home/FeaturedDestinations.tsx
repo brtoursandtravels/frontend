@@ -36,11 +36,11 @@ export function FeaturedDestinations({
       id="featured-destinations"
     >
       <SectionHeader
-        eyebrow="Featured destinations"
-        title="Choose the landscape that calls to you."
-        description="Explore our featured destinations and find a journey that suits your pace."
+        eyebrow="Places to visit"
+        title="Where would you like to travel?"
+        description="Explore these places and find a trip you would enjoy."
         href="/destinations"
-        linkLabel="All destinations"
+        linkLabel="View all places"
       />
       <div className="grid auto-rows-[18rem] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
         {items.map((destination, index) => (
@@ -72,14 +72,14 @@ export function FeaturedDestinations({
             <span className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 z-2 p-6">
               <p className="mb-2 flex items-center gap-1.5 text-[0.72rem] font-extrabold uppercase tracking-wider text-secondary-light">
-                <MapPin aria-hidden="true" size={16} /> Curated destination
+                <MapPin aria-hidden="true" size={16} /> Explore this place
               </p>
               <h3 className="m-0 font-display text-[1.65rem] font-semibold leading-tight text-white">
                 {destination.name}
               </h3>
               <span className="mt-2 block max-w-md text-[0.95rem] leading-relaxed text-white/80">
                 {destination.summary ??
-                  "Discover journeys shaped around this region."}
+                  "See the trips you can take here."}
               </span>
             </div>
             <ArrowUpRight

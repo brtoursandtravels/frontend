@@ -13,9 +13,9 @@ const services = [
   {
     number: "01",
     icon: CarFront,
-    title: "Car rentals & private transfers",
+    title: "Car rentals & airport transfers",
     description:
-      "Comfortable point-to-point, airport and multi-city travel with a route planned around your timing.",
+      "Book a car for airport pickup, travel between cities or your full trip, based on your schedule.",
     subject: "Car Rental and Private Transfer",
   },
   {
@@ -23,7 +23,7 @@ const services = [
     icon: MountainSnow,
     title: "Adventure & nature tours",
     description:
-      "Thoughtfully paced mountain, wildlife and outdoor journeys shaped for your comfort and experience level.",
+      "Enjoy mountains, wildlife and outdoor trips planned to suit your comfort and experience.",
     subject: "Adventure and Nature Tour",
   },
   {
@@ -31,31 +31,31 @@ const services = [
     icon: BusFront,
     title: "Bus & coach rentals",
     description:
-      "Practical group transport for families, pilgrimages and private groups, matched to your route and party size.",
+      "Choose a bus for a family trip, pilgrimage or group tour, based on your route and group size.",
     subject: "Bus and Coach Rental",
   },
   {
     number: "04",
     icon: MapPinned,
-    title: "Curated group tours",
+    title: "Group tours",
     description:
-      "End-to-end tour planning that brings transport, stays, sightseeing and daily coordination into one clear plan.",
-    subject: "Curated Group Tour",
+      "We help arrange transport, hotels and sightseeing for your group in one clear travel plan.",
+    subject: "Group Tour",
   },
   {
     number: "05",
     icon: Palmtree,
-    title: "Domestic holiday packages",
+    title: "Holiday packages in India",
     description:
-      "Flexible holidays across India for couples, families and groups, personalised to your dates, pace and budget.",
+      "Plan a holiday in India with your partner, family or friends, based on your dates and budget.",
     subject: "Domestic Holiday Package",
   },
 ] as const;
 
 const serviceBenefits = [
   "Couples, families & groups",
-  "One planning point of contact",
-  "Clear inclusions before booking",
+  "One team to help you",
+  "Know what is included before booking",
 ] as const;
 
 export function TravelServices() {
@@ -85,10 +85,10 @@ export function TravelServices() {
               className="m-0 max-w-xl text-balance font-display text-[clamp(2rem,4vw,3.35rem)] font-semibold leading-[1.04] tracking-[-0.035em] text-white"
               id="travel-services-title"
             >
-              Everything your journey needs, thoughtfully arranged.
+              Travel services for your trip.
             </h2>
             <p className="mb-0 mt-5 max-w-lg text-[0.96rem] leading-relaxed text-white/75">
-              From a single transfer to a complete holiday, BR Tours &amp; Travels helps bring the moving parts together around one considered itinerary.
+              Need an airport pickup, a car, a bus or a full holiday plan? Our team can help you arrange it.
             </p>
           </div>
 
@@ -149,15 +149,15 @@ export function TravelServices() {
 
           <div className="flex items-center justify-between gap-6 border-t border-border-subtle py-6 max-[620px]:flex-col max-[620px]:items-start">
             <div>
-              <p className="m-0 text-sm font-extrabold text-text-heading">Not sure which service fits?</p>
-              <p className="mb-0 mt-1 text-[0.82rem] text-text-muted">Tell us the trip you have in mind. We will help define the rest.</p>
+              <p className="m-0 text-sm font-extrabold text-text-heading">Not sure what you need?</p>
+              <p className="mb-0 mt-1 text-[0.82rem] text-text-muted">Tell us about your trip. We will help you choose the right service.</p>
             </div>
             <Link
               className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-to-br from-accent to-secondary px-6 py-3 text-sm font-extrabold text-white no-underline shadow-accent-sm transition hover:-translate-y-0.5 hover:shadow-glow max-[620px]:w-full"
               href="/contact-us?subject=Travel%20Planning#contact-form"
               prefetch={false}
             >
-              Plan with us <ArrowRight aria-hidden="true" size={18} />
+              Talk to our team <ArrowRight aria-hidden="true" size={18} />
             </Link>
           </div>
         </div>

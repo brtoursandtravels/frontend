@@ -5,7 +5,6 @@ import { ArrowRight, MapPin } from "lucide-react";
 import { ImageLightbox } from "@/components/common/ImageLightbox";
 import { PaginationControls } from "@/components/common/PaginationControls";
 import { RetryPageButton } from "@/components/common/RetryPageButton";
-import { GalleryCta } from "@/components/gallery/GalleryCta";
 import { GalleryDiscoveryBar } from "@/components/gallery/GalleryDiscoveryBar";
 import { GalleryHero } from "@/components/gallery/GalleryHero";
 import { ApiRequestError, getGalleryAlbums, getPackageOptions } from "@/lib/api";
@@ -109,7 +108,6 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
         )}
 
         <PaginationControls page={listing.meta.page} pageSize={listing.meta.pageSize} total={listing.meta.total} hrefForPage={hrefFor} />
-        <GalleryCta />
       </div>
     </main>
   );

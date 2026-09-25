@@ -1,17 +1,17 @@
 import { Headphones, MessageCircle, Route, ShieldCheck } from "lucide-react";
 
 const stages = [
-  { number: "01", icon: MessageCircle, title: "Listen", text: "We learn who is travelling, what matters and what should feel effortless." },
-  { number: "02", icon: Route, title: "Shape", text: "A practical route takes form around your pace, dates and preferred experiences." },
-  { number: "03", icon: ShieldCheck, title: "Verify", text: "Availability, inclusions and terms are checked before you make a decision." },
-  { number: "04", icon: Headphones, title: "Support", text: "A human point of contact stays close before and throughout the journey." },
+  { number: "01", icon: MessageCircle, title: "Tell us your plans", text: "Share your dates, budget, who is coming and what you would like to do." },
+  { number: "02", icon: Route, title: "Plan your trip", text: "We help you choose the places, activities and travel plan that suit you." },
+  { number: "03", icon: ShieldCheck, title: "Check the details", text: "We check what is available and explain the costs and booking terms before you decide." },
+  { number: "04", icon: Headphones, title: "Get help along the way", text: "You can contact our team for help before you leave and while you travel." },
 ] as const;
 
 export function JourneyTimeline() {
   return (
     <section className="rounded-xl bg-primary p-[clamp(1.5rem,4vw,3.5rem)] text-white shadow-card" aria-labelledby="timeline-title">
       <p className="mb-3 text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-secondary-light">How we work</p>
-      <h2 className="m-0 whitespace-nowrap font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] tracking-[-0.025em] text-white max-[900px]:whitespace-normal" id="timeline-title">A clear path from first idea to travel day.</h2>
+      <h2 className="m-0 whitespace-nowrap font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] tracking-[-0.025em] text-white max-[900px]:whitespace-normal" id="timeline-title">How we plan your trip with you.</h2>
       <ol className="relative mt-9 grid list-none grid-cols-4 gap-5 p-0 max-[800px]:grid-cols-1">
         {stages.map(({ number, icon: Icon, title, text }, index) => (
           <li className="relative z-1 max-[800px]:grid max-[800px]:grid-cols-[3rem_1fr] max-[800px]:gap-4" key={number}>

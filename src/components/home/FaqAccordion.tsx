@@ -9,9 +9,9 @@ export function FaqAccordion({ faqs }: { faqs: Faq[] }) {
       <div className="w-full self-start text-left [&_header]:items-start [&_header]:text-left [&_header>div]:mx-0">
         <SectionHeader
           align="left"
-          eyebrow="Before you plan"
-          title="A few useful answers."
-          description="Clear expectations make the first conversation more useful."
+          eyebrow="Common questions"
+          title="Questions about planning a trip?"
+          description="Find answers to questions travellers often ask before booking."
         />
       </div>
       <div className="border-t border-border-subtle">

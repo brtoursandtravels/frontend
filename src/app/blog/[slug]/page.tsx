@@ -125,9 +125,6 @@ export default async function BlogPostPage({
             </time>
             <span>{item.readingMinutes} min read</span>
           </div>
-          {item.isDemo ? (
-            <span className="inline-flex rounded-full bg-accent-soft px-3 py-1.5 text-[0.65rem] font-extrabold uppercase text-secondary-hover">Demo editorial content</span>
-          ) : null}
           <ShareActions title={item.title} />
         </header>
         {item.cover ? (

@@ -13,9 +13,9 @@ export const staticContentPages = {
   "about-us": {
     slug: "about-us",
     title: "About BR Tours and Travels",
-    contentHtml: "<p>BR Tours and Travels helps travellers explore Char Dham, Kashmir, Matheran, Rajasthan and Jaisalmer through clear, enquiry-led planning.</p><h2>How planning works</h2><p>Share your dates, group size, preferred pace and priorities. The team then shapes the route and confirms the applicable stays, transport, availability, price and terms in writing.</p>",
+    contentHtml: "<p>BR Tours and Travels helps you plan trips to Char Dham, Kashmir, Matheran, Rajasthan and Jaisalmer.</p><h2>How we plan your trip</h2><p>Tell us your travel dates, how many people are coming and what you would like to do. We help plan the route, check which hotels and transport are available, and share the costs and booking terms in writing before you book.</p>",
     seoTitle: "About BR Tours and Travels",
-    seoDescription: "Meet BR Tours and Travels and learn how personalised India journeys are planned and confirmed.",
+    seoDescription: "Learn about BR Tours and Travels and how we help you plan a trip in India, check the details and get help while travelling.",
     ownerReviewDue: false,
   },
   privacy: {

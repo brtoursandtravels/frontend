@@ -1,18 +1,18 @@
 import { BadgeCheck, Headphones, ReceiptText } from "lucide-react";
 
 const standards = [
-  { icon: BadgeCheck, title: "Reviewed recommendations", text: "Stays, services and guides are considered for their fit with the route—not simply added from a catalogue." },
-  { icon: ReceiptText, title: "Clarity before payment", text: "Pricing, inclusions, exclusions and applicable terms are explained before confirmation." },
-  { icon: Headphones, title: "Human travel support", text: "You know how to reach the team when practical questions or changes need attention." },
+  { icon: BadgeCheck, title: "Hotels and guides that suit your trip", text: "We check that the suggested hotels, services and guides fit your travel plans." },
+  { icon: ReceiptText, title: "Clear prices", text: "We explain the price, what it covers, any extra costs and the booking terms before you book." },
+  { icon: Headphones, title: "A team you can reach", text: "We share how to contact our team if you have questions or your plans change." },
 ] as const;
 
 export function TrustStandards() {
   return (
     <section aria-labelledby="standards-title">
       <div>
-        <p className="mb-3 text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-secondary-hover">Confidence by design</p>
-        <h2 className="m-0 font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] tracking-[-0.025em] text-text-heading" id="standards-title">Trust is built into the process.</h2>
-        <p className="mt-4 text-[0.95rem] leading-7 text-text-muted">Clear decisions matter more than borrowed badges. These are the practical standards travellers should expect when planning with BR.</p>
+        <p className="mb-3 text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-secondary-hover">Why choose BR</p>
+        <h2 className="m-0 font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] tracking-[-0.025em] text-text-heading" id="standards-title">Clear details and help when you need it.</h2>
+        <p className="mt-4 text-[0.95rem] leading-7 text-text-muted">We explain your travel options, costs and booking terms so you know what to expect.</p>
       </div>
       <div className="mt-7 grid grid-cols-3 gap-5 max-[760px]:grid-cols-1">
         {standards.map(({ icon: Icon, title, text }) => (

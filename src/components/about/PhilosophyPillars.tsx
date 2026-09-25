@@ -1,18 +1,18 @@
 import { BadgeCheck, Compass, Landmark, ReceiptText } from "lucide-react";
 
 const pillars = [
-  { number: "01", icon: Compass, title: "Bespoke, never cloned", text: "Every conversation begins with your pace, interests and practical needs—not a generic template.", note: "Designed around you" },
-  { number: "02", icon: BadgeCheck, title: "Carefully considered stays", text: "Recommendations balance location, comfort, character and suitability for the journey you want.", note: "Fit before fashion" },
-  { number: "03", icon: Landmark, title: "Grounded local context", text: "Routes are shaped around sensible travel times, regional character and experiences worth slowing down for.", note: "Place-led planning" },
-  { number: "04", icon: ReceiptText, title: "No hidden surprises", text: "Inclusions, exclusions, availability and applicable terms are clarified before a request becomes a booking.", note: "Clarity first" },
+  { number: "01", icon: Compass, title: "Plans that suit you", text: "We plan around your dates, interests and budget, with time for the things you enjoy.", note: "Your choices matter" },
+  { number: "02", icon: BadgeCheck, title: "Places to stay", text: "We suggest hotels that suit your trip, with a convenient location and the comfort you need.", note: "Stay comfortably" },
+  { number: "03", icon: Landmark, title: "Time to enjoy each place", text: "We allow time for travel, sightseeing and rest, so you can enjoy each stop without rushing.", note: "Take your time" },
+  { number: "04", icon: ReceiptText, title: "Clear costs and details", text: "Before you book, we explain what is included, what costs extra and which booking terms apply.", note: "Know before you book" },
 ] as const;
 
 export function PhilosophyPillars() {
   return (
     <section aria-labelledby="pillars-title">
       <div>
-        <p className="mb-3 text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-secondary-hover">The craft of travel</p>
-        <h2 className="m-0 whitespace-nowrap font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] tracking-[-0.025em] text-text-heading max-[900px]:whitespace-normal" id="pillars-title">Four principles behind every BR journey.</h2>
+        <p className="mb-3 text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-secondary-hover">What you can expect</p>
+        <h2 className="m-0 whitespace-nowrap font-display text-[clamp(1.85rem,3vw,3rem)] font-semibold leading-[1.08] tracking-[-0.025em] text-text-heading max-[900px]:whitespace-normal" id="pillars-title">How we help you plan your trip.</h2>
       </div>
       <div className="mt-8 grid grid-cols-4 gap-4 max-[1000px]:grid-cols-2 max-[620px]:grid-cols-1">
         {pillars.map(({ number, icon: Icon, title, text, note }) => (

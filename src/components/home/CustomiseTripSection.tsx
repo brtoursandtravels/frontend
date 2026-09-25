@@ -7,20 +7,20 @@ const steps = [
   {
     number: "01",
     icon: Compass,
-    title: "Describe your dream trip",
-    text: "Tell us about your ideal getaway—destinations, dates, travel style and the special moments you wish to experience.",
+    title: "Tell us about your trip",
+    text: "Share where you want to go, your dates, your budget and what you would like to do.",
   },
   {
     number: "02",
     icon: UsersRound,
-    title: "Get matched with experts",
-    text: "Our verified regional travel specialists craft two tailored itinerary proposals with transparent pricing.",
+    title: "Get help from our team",
+    text: "Our team will suggest two trip plans based on your choices and explain the costs.",
   },
   {
     number: "03",
     icon: ShieldCheck,
-    title: "Book with total confidence",
-    text: "Fine-tune every day until it fits you perfectly. Confirm and book only when you are completely satisfied.",
+    title: "Check the plan and book",
+    text: "Review the daily plan and ask for any changes. Book when you are happy with the details.",
   },
 ] as const;
 
@@ -43,16 +43,16 @@ export function CustomiseTripSection() {
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
         <header className="mx-auto max-w-3xl text-center">
           <p className="mb-3 inline-flex items-center gap-2 text-[0.75rem] font-extrabold uppercase tracking-[0.16em] text-secondary-hover">
-            <Sparkles aria-hidden="true" size={16} /> Bespoke travel design
+            <Sparkles aria-hidden="true" size={16} /> A trip planned for you
           </p>
           <h2
             className="m-0 text-balance font-display text-[clamp(2rem,4vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.035em] text-text-heading"
             id="customise-trip-title"
           >
-            Customise <span className="text-accent-hover">your trip with us.</span>
+            Plan <span className="text-accent-hover">your trip your way.</span>
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-[0.95rem] leading-relaxed text-text-body">
-            No pre-packaged compromises. Share your travel dreams and our destination specialists will shape every stay, route and private experience around you.
+            Tell us what you enjoy. We will help you choose places to visit, hotels and activities that suit you.
           </p>
         </header>
 
@@ -94,15 +94,15 @@ export function CustomiseTripSection() {
             className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-7 py-3 text-[0.9rem] font-extrabold text-white no-underline shadow-accent-md transition hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-glow-teal"
             href="/contact-us?subject=custom-trip#contact-form"
           >
-            Start a Trip Request
+            Plan my trip
             <ArrowRight className="transition-transform group-hover:translate-x-1 motion-reduce:transform-none" aria-hidden="true" size={18} />
           </Link>
           <p className="mt-3 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-[0.78rem] font-bold text-primary">
-            <span className="inline-flex items-center gap-1"><Check aria-hidden="true" size={14} strokeWidth={3} /> 100% tailor-made</span>
+            <span className="inline-flex items-center gap-1"><Check aria-hidden="true" size={14} strokeWidth={3} /> Planned around you</span>
             <span aria-hidden="true">•</span>
-            <span>Zero booking obligation</span>
+            <span>No need to book right away</span>
             <span aria-hidden="true">•</span>
-            <span>Dedicated concierge</span>
+            <span>Help from our team</span>
           </p>
         </div>
       </div>

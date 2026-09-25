@@ -3,8 +3,8 @@ import { Headphones, Plane, ShieldCheck, Star } from "lucide-react";
 const metrics = [
   { icon: Star, value: "4.9/5", label: "Traveller rating" },
   { icon: Plane, value: "10,000+", label: "Happy travellers" },
-  { icon: ShieldCheck, value: "Verified", label: "Stays and guides" },
-  { icon: Headphones, value: "24/7", label: "Travel support" },
+  { icon: ShieldCheck, value: "Checked", label: "Hotels and guides" },
+  { icon: Headphones, value: "24/7", label: "Help during your trip" },
 ] as const;
 
 export function ImpactMetrics() {

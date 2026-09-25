@@ -14,7 +14,7 @@ export const revalidate = 30;
 
 export async function generateMetadata(): Promise<Metadata> {
   return contentPageMetadata("about-us", "About BR Tours & Travels",
-    "Meet the planning philosophy behind BR Tours & Travels and discover how personal, clearly confirmed journeys are shaped.");
+    "Learn about BR Tours & Travels and how we help you plan your trip, understand the costs and get support while travelling.");
 }
 
 export default function AboutPage() {

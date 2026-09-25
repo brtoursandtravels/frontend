@@ -18,13 +18,13 @@ export const metadata: Metadata = {
     template: "%s | BR Tours and Travels",
   },
   description:
-    "Discover bespoke journeys across India and beyond, thoughtfully shaped by BR Tours and Travels.",
+    "Plan your next trip with BR Tours and Travels. Explore tour packages, car and bus rentals, and holidays planned around your dates and budget.",
   openGraph: {
     type: "website",
     siteName: "BR Tours and Travels",
     title: "BR Tours and Travels",
     description:
-      "Discover bespoke journeys across India and beyond, thoughtfully shaped by BR Tours and Travels.",
+      "Plan your next trip with BR Tours and Travels. Explore tour packages, car and bus rentals, and holidays planned around your dates and budget.",
     url: "/",
   },
   robots: { index: true, follow: true },

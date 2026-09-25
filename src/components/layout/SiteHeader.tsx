@@ -155,7 +155,7 @@ export function SiteHeader({ site }: { site?: SiteData | null }) {
           ) : null}
           <p className="col-start-2 row-start-1 m-0 flex items-center justify-center gap-1.5 text-center text-white/58">
             <Sparkles aria-hidden="true" className="text-secondary-light" size={13} />
-            Bespoke tours & customized holidays across India
+            Tours and holidays across India
           </p>
           {whatsappHref ? (
             <a className="col-start-3 row-start-1 inline-flex min-w-0 max-w-full items-center gap-2 justify-self-end text-secondary-light no-underline transition-colors hover:text-white" href={whatsappHref} aria-label={`WhatsApp: ${phone}`} title={`WhatsApp: ${phone}`} target="_blank" rel="noopener noreferrer">

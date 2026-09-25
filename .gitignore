@@ -1,8 +1,6 @@
 node_modules/
 .next/
-.next-e2e/
-.next-perf/
-.next-build-check/
+.next-*/
 out/
 coverage/
 test-results/

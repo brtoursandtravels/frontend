@@ -53,7 +53,6 @@ export function PackageCard({
         <h3 className="m-0 font-display text-[1.1rem] font-semibold leading-snug text-text-heading">
           <Link className="no-underline transition-colors hover:text-primary" href={`/packages/${item.slug}`} prefetch={false}>{item.title}</Link>
         </h3>
-        {item.isDemo ? <span className="mt-2 inline-flex self-start rounded-full bg-accent-soft px-2.5 py-1 text-[0.62rem] font-extrabold uppercase text-secondary-hover">Demo content</span> : null}
         {item.highlights.length ? (
           <ul className="my-3 grid list-none gap-1.5 p-0 text-[0.72rem] leading-snug text-text-muted">
             {item.highlights.slice(0, 3).map((highlight) => (

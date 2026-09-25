@@ -9,10 +9,10 @@ export function GalleryPreview({ albums }: { albums: GalleryAlbumCard[] }) {
   return (
     <section className="defer-render mx-auto w-full max-w-7xl px-5 py-24 sm:px-8 lg:px-10 max-[820px]:py-[4.5rem]">
       <SectionHeader
-        eyebrow="Postcards from the road"
-        title="A glimpse of what could be next."
+        eyebrow="Travel photos"
+        title="See photos from our trips."
         href="/gallery"
-        linkLabel="Open the gallery"
+        linkLabel="View all photos"
       />
       <div className="grid grid-cols-3 grid-rows-[repeat(2,16rem)] gap-3 max-[820px]:grid-cols-2 max-[820px]:grid-rows-[repeat(3,14rem)] max-[620px]:grid-cols-1 max-[620px]:grid-rows-none">
         {items.map((album, index) => (

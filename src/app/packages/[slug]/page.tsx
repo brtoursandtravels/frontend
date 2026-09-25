@@ -133,11 +133,6 @@ async function PackageDetailContent({ slug }: { slug: string }) {
                 <span className="rounded-full bg-bg-muted px-3 py-1.5 text-xs font-bold text-primary" key={category.slug}>{category.name}</span>
               ))}
             </div>
-            {item.isDemo ? (
-              <span className="inline-flex rounded-full bg-accent-soft px-3 py-1.5 text-[0.65rem] font-extrabold uppercase text-secondary-hover">
-                Demo content—not a confirmed offer
-              </span>
-            ) : null}
             <p className="mt-5 max-w-3xl whitespace-pre-line text-lg leading-relaxed text-text-muted [overflow-wrap:anywhere]">{item.overview}</p>
             <div className="mt-7 flex flex-wrap gap-8 border-t border-border-subtle pt-5 text-sm text-text-body">
               <span className="grid">

@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { contentPageMetadata } from "@/lib/content-page-metadata";
-import { ArrowUpRight, MapPinned } from "lucide-react";
 import { ContactFaq } from "@/components/contact/ContactFaq";
 import { ContactHero } from "@/components/contact/ContactHero";
 import { ConsultationTimeline } from "@/components/contact/ConsultationTimeline";
-import { QuickChannelsBar } from "@/components/contact/QuickChannelsBar";
 import { EnquiryForm } from "@/components/forms/EnquiryForm";
 import { getPackage, getSite } from "@/lib/api";
-import { contactPhone, mapEmbedLink, settingText, socialSettingLink, whatsappLink } from "@/lib/presentation";
+import { contactPhone, whatsappLink } from "@/lib/presentation";
 
 export const revalidate = 30;
 export function generateMetadata(): Promise<Metadata> {
@@ -29,24 +27,11 @@ export default async function ContactPage({
   const site = siteResult?.data;
   const packageItem = packageResult?.data;
   const phone = contactPhone(site);
-  const email = settingText(site, ["contact.email", "business.email", "email"]);
-  const address = settingText(site, ["contact.address", "business.address", "address"]);
-  const mapUrl = settingText(site, ["contact.mapUrl", "business.mapUrl", "mapUrl"]);
   const whatsappHref = whatsappLink(phone);
-  const instagramHref = socialSettingLink(site, "instagram");
-  const facebookHref = socialSettingLink(site, "facebook");
-  const mapEmbedUrl = mapEmbedLink(mapUrl);
 
   return (
     <main>
       <ContactHero />
-      <QuickChannelsBar
-        email={email}
-        facebookHref={facebookHref}
-        instagramHref={instagramHref}
-        phone={phone}
-        whatsappHref={whatsappHref}
-      />
 
       <section
         className="mx-auto grid w-full max-w-7xl grid-cols-[0.78fr_1.22fr] gap-7 px-5 py-20 sm:px-8 lg:px-10 max-[900px]:grid-cols-1"
@@ -68,29 +53,6 @@ export default async function ContactPage({
           />
         </div>
       </section>
-
-      {mapUrl || address ? (
-        <section className="mx-auto w-full max-w-7xl px-5 pb-20 sm:px-8 lg:px-10" aria-labelledby="atelier-title">
-          <div className="grid min-h-80 grid-cols-[0.8fr_1.2fr] overflow-hidden rounded-xl bg-bg-warm shadow-card max-[820px]:grid-cols-1">
-            <div className="flex flex-col justify-center p-[clamp(1.5rem,4vw,3rem)]">
-              <MapPinned className="mb-4 text-secondary-hover" aria-hidden="true" size={28} />
-              <p className="mb-3 text-[0.72rem] font-extrabold uppercase tracking-[0.16em] text-secondary-hover">Visit our travel atelier</p>
-              <h2 className="m-0 font-display text-[clamp(1.8rem,2.8vw,2.8rem)] font-semibold leading-[1.08] text-text-heading" id="atelier-title">Plan together, in person.</h2>
-              <p className="mt-4 text-[0.9rem] leading-relaxed text-text-muted">{address ?? "Our configured business location"}</p>
-              {mapUrl ? (
-                <a className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 self-start rounded-full bg-primary px-6 py-3 text-sm font-extrabold text-white no-underline transition hover:bg-primary-hover" href={mapUrl} target="_blank" rel="noreferrer">
-                  Get driving directions <ArrowUpRight aria-hidden="true" size={17} />
-                </a>
-              ) : null}
-            </div>
-            {mapEmbedUrl ? (
-              <iframe className="min-h-80 w-full border-0 bg-bg-muted" src={mapEmbedUrl} title="BR Tours location map" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
-            ) : (
-              <div className="min-h-80 bg-[url('/images/travel/contact-concierge-hero-v1.webp')] bg-cover bg-center" role="img" aria-label="BR Tours travel planning studio" />
-            )}
-          </div>
-        </section>
-      ) : null}
 
       <div className="bg-bg-warm"><ContactFaq /></div>
     </main>
