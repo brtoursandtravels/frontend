@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { serverEnv } from "@/lib/env";
+import { siteOrigin } from "@/lib/env";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/admin/", "/api/"],
     },
-    sitemap: new URL("/sitemap.xml", serverEnv.NEXT_PUBLIC_SITE_URL).toString(),
-    host: serverEnv.NEXT_PUBLIC_SITE_URL,
+    sitemap: new URL("/sitemap.xml", siteOrigin).toString(),
+    host: siteOrigin,
   };
 }

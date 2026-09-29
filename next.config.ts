@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
-const apiProxyTarget = process.env.API_PROXY_TARGET;
+const apiBaseUrl = process.env.INTERNAL_API_BASE_URL;
+const apiProxyTarget = apiBaseUrl?.replace(/\/api\/v1\/?$/, "");
+if (apiBaseUrl && apiProxyTarget === apiBaseUrl) {
+  throw new Error("INTERNAL_API_BASE_URL must end with /api/v1");
+}
 const scriptSource =
   process.env.NODE_ENV === "production"
     ? "script-src 'self' 'unsafe-inline'"

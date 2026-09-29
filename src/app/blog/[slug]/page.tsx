@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { PublicImage } from "@/components/common/PublicImage";
 import { ShareActions } from "@/components/common/ShareActions";
 import { ApiRequestError, getBlogPost } from "@/lib/api";
-import { serverEnv } from "@/lib/env";
+import { siteOrigin } from "@/lib/env";
 
 export const revalidate = 30;
 export const dynamicParams = true;
@@ -84,7 +84,7 @@ export default async function BlogPostPage({
   const prepared = prepareHeadings(item.contentHtml);
   const articleUrl = new URL(
     `/blog/${item.slug}`,
-    serverEnv.NEXT_PUBLIC_SITE_URL,
+    siteOrigin,
   ).toString();
   const structuredData = {
     "@context": "https://schema.org",
@@ -97,7 +97,7 @@ export default async function BlogPostPage({
       ? {
           image: new URL(
             item.cover.url,
-            serverEnv.NEXT_PUBLIC_SITE_URL,
+            siteOrigin,
           ).toString(),
         }
       : {}),

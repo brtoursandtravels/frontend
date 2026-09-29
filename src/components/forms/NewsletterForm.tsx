@@ -27,7 +27,7 @@ export function NewsletterForm() {
     if (!idempotencyKey.current) idempotencyKey.current = crypto.randomUUID();
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL ?? "/api/v1"}/inquiries`,
+        "/api/v1/inquiries",
         {
           method: "POST",
           headers: {

@@ -25,12 +25,17 @@ shadows. Named component classes consume those variables on top of utilities.
 
 ## Environment
 
-- `.env.local` owns local development values.
+- Copy `.env.example` to the ignored `.env.local` and set the API URL there.
+- `INTERNAL_API_BASE_URL` is the server-side API URL ending in `/api/v1`.
+  It also supplies the same-origin API and media proxy target.
+- Vercel supplies the canonical production domain through its
+  `VERCEL_PROJECT_PRODUCTION_URL` system variable. Local builds use
+  `http://localhost:3000`. Browser requests use the same-origin `/api/v1` path.
 
-`INTERNAL_API_BASE_URL` is server-only and is used for SSR.
-`NEXT_PUBLIC_API_BASE_URL` remains `/api/v1` for browser calls.
-`API_PROXY_TARGET` exists only for local same-origin rewrites. Database, session
-and SMTP values never belong in this project.
+Set `INTERNAL_API_BASE_URL` in the hosting environment for deployment. The
+Vercel project must expose system environment variables. For self-hosting,
+provide `VERCEL_PROJECT_PRODUCTION_URL` with the public hostname. Keep API
+credentials, database, session and SMTP values out of this frontend.
 
 ## Implemented routes
 

@@ -29,7 +29,7 @@ import {
   priceBasisLabel,
   whatsappLink,
 } from "@/lib/presentation";
-import { serverEnv } from "@/lib/env";
+import { siteOrigin } from "@/lib/env";
 
 export const revalidate = 30;
 export const maxDuration = 60;
@@ -110,7 +110,7 @@ async function PackageDetailContent({ slug }: { slug: string }) {
     description: item.summary,
     url: new URL(
       `/packages/${item.slug}`,
-      serverEnv.NEXT_PUBLIC_SITE_URL,
+      siteOrigin,
     ).toString(),
     touristType: item.categories.map((category) => category.name),
   };

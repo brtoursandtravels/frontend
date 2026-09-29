@@ -5,14 +5,14 @@ import { FloatingContactBar } from "@/components/layout/FloatingContactBar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { getSite } from "@/lib/api";
-import { serverEnv } from "@/lib/env";
+import { siteOrigin } from "@/lib/env";
 import "./globals.css";
 
 // Keep every public page on the same freshness interval, including new routes.
 export const revalidate = 30;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(serverEnv.NEXT_PUBLIC_SITE_URL),
+  metadataBase: new URL(siteOrigin),
   title: {
     default: "BR Tours and Travels",
     template: "%s | BR Tours and Travels",
@@ -40,7 +40,7 @@ export default async function RootLayout({
     "@context": "https://schema.org",
     "@type": "TravelAgency",
     name: "BR Tours and Travels",
-    url: serverEnv.NEXT_PUBLIC_SITE_URL,
+    url: siteOrigin,
   };
   return (
     <html lang="en" data-scroll-behavior="smooth">
