@@ -25,7 +25,7 @@ shadows. Named component classes consume those variables on top of utilities.
 
 ## Environment
 
-- Copy `.env.example` to the ignored `.env.local` and set the API URL there.
+- Create an ignored `.env.local` and set the API URL there.
 - `INTERNAL_API_BASE_URL` is the server-side API URL ending in `/api/v1`.
   It also supplies the same-origin API and media proxy target.
 - Vercel supplies the canonical production domain through its
